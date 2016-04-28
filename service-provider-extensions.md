@@ -41,7 +41,7 @@ The apis entry keys are the service shortnames and are used as references when g
 The transport protocol is indicated but the RSD is not complete enough to illustrate how to perform a request.
 For this reason the developers should consult the official Moodle documentation.
 
-Currently available on [github](https://github.com/arael/moodle_rsd)
+Code available on [github](https://github.com/arael/moodle_rsd)
 
 
 ##eduid authorization provider
@@ -76,5 +76,16 @@ The get_app_token endpoint is used to generate the app token. It receives the ac
 If the access token is still valid it is used to identify the user and generate the app token.
 The app token and the expiration time are then passed as a response to the Swiss edu-ID app.
 
+###eduid authorization provider interfaces
 
-Currently available on [github](https://github.com/arael/moodle_eduid)
+####get_service_access.php
+Accepts: Header Field -> Authorization: grant_token_value
+Response: JSON object { access_token: access_token_value, expires_in: time}
+
+####get_app_token.php
+Accepts: Header Field -> Authorization: access_token_value
+		 POST parameter service_shortname
+Response: JSON object { token: app_token_value, expires_in: time}
+
+
+Code available on [github](https://github.com/arael/moodle_eduid)
