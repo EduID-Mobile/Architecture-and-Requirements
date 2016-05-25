@@ -18,7 +18,7 @@ The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'S
 
 * __edu-ID App__: The edu-ID App provides a trusted environment on the users' mobile device. The edu-ID App is a navtive mobile app that is installed on a user's mobile device.
 
-* __Third Party App__: A thrid party app refers to mobile apps on the users' devices that are not tightly integrated with a service infrastructure.
+* __Third Party App__: A thrid party app refers to mobile apps on the users' devices that are not tightly integrated with a service infrastructure and/or is provided by a potentially untrusted party outside of the truested federation domain.
 
 * __Academic Service__: An academic service is system that offers a set of functions to authorised users within the federation of academic institutions.
 
@@ -44,6 +44,34 @@ This document does not spefify any Identity Provider (IDP) Functions. IDP functi
 
 ## Academic Service - edu-ID App Architecture Overview
 
+The edu-ID mobile app is not a stand alone mobile application but mediates processes and data of services within the academic domain and third-party apps. Therefore, the edu-ID Mobile App is part of an IT ecosystem that spawn across two trust domains:
+
+Firstly, the edu-ID links to the Swiss academic trust domain, which is managed via a central edu-ID service as federation manager that connects distributed services at academic institutions participating in the federation. In the context of this document this trust domain is called the Academic Trust Domain.
+
+Secondly, it is part of the user-and-app-store trust domain on the users' devices. This trust domain is courated by the end-users by installing apps on their devices and controlled by the app store host. The app store hosts manage access to application developers by setting and enforcing quality and security guidelines. Within the context of this document this trust domain is called User Device.
+
+Within these trust domains there is exaclty one edu-ID service in the Academic Trust Domain and exactly one edu-ID mobile app on the User Device. The edu-ID service and the edu-ID Mobile App are tightly connected. This connection is controlled by the host of the edu-ID service, which creates a separate edu-ID trust domain that bridges the Academic Trust Domain to the User Device.
+
+The Academic Trust Domain connects many distributed "academic services". These services are typically hosted by the institutions that are participating in the federation.
+
+On the User Devices there can be many apps that are related to the users' productivity. These apps are installed and arranged by the owners of the User Devices.
+
+![Illustration of the edu-ID Mobile App ecosystem and trust domains](images/eduid_app_architecture.png)
+
+Some of the services in the Academic Trust Doamin services expose service APIs for loosely-coupled machine-to-machine communication. Whereas tightly-coupled machine-to-machine communication requires explicit connections of two services typically initiated system wide by the system administrators, losely-coupled machine-to-machine communication allows unmanaged ad-hoc communications between services, tools and components. Tightly-coupled machine-to-machine communication can only be performed if all commuicators are known at the time of service coupling and controlable. Such connections create a pre-defined trust domain. In highly dynamic environments that spawn trust domains and involve many stakeholders, tight-coupling is resource intensive and does not easily scale. Loosely-coupled machine-to-machine communication overcomes the overhead of tight coupling by distributing coupling responsibility to different stakeholders.
+
+### edu-ID Mobile App Ecosystem Stakeholders
+
+* Federation Management
+
+* Service Provider
+
+* Resource Owner
+
+* Device Owner
+
+* Application Developer
+
 ### Minimal Security Requirements
 
 * User names and passwords are NEVER exposed to third party apps.
@@ -67,6 +95,8 @@ This document does not spefify any Identity Provider (IDP) Functions. IDP functi
 * Service administrators can impose access policies for users and apps.
 
 * edu-ID administrators can revoke access for users or their identities.
+
+* edu-ID administrators can invalidate access for specific edu-ID mobile app versions.
 
 * Federation services need to authenticate when verifying the identity of edu-ID Mobile App users.
 
