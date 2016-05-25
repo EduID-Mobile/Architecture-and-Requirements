@@ -10,7 +10,7 @@ This document describes the overarching system architecture and service interact
 
 ## Terms of Reference
 
-The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in this document are to be interpreted as described in [RFC2119](https://tools.ietf.org/html/rfc2119).
+The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in this document are to be interpreted as described in [RFC-2119](https://tools.ietf.org/html/rfc2119).
 
 ## Terminology
 
@@ -48,7 +48,7 @@ This document does not spefify any Identity Provider (IDP) Functions. IDP functi
 
 The edu-ID mobile app is not a stand alone mobile application but mediates processes and data of services within the academic domain and third-party apps. Therefore, the edu-ID Mobile App is part of an IT ecosystem that spawn across two trust domains:
 
-Firstly, the edu-ID links to the Swiss academic trust domain, which is managed via a central edu-ID service as federation manager that connects distributed services at academic institutions participating in the federation. In the context of this document this trust domain is called the Academic Trust Domain.
+Firstly, the edu-ID links to the Swiss academic trust domain, which is managed via a central edu-ID service as federation manager that connects distributed services at academic institutions participating in the federation. These distributed services include for example data storage, web-conferencing, online collaboration, or learning management systems. In the context of this document this trust domain is called the Academic Trust Domain.
 
 Secondly, it is part of the user-and-app-store trust domain on the users' devices. This trust domain is courated by the end-users by installing apps on their devices and controlled by the app store host. The app store hosts manage access to application developers by setting and enforcing quality and security guidelines. Within the context of this document this trust domain is called User Device.
 
@@ -70,17 +70,17 @@ The edu-ID Mobile App ecosystem primarily focuses on client authorization and do
 
 The edu-ID Mobile App architecture is build on top of the [OAuth 2.0 Framework](https://tools.ietf.org/html/rfc6749). The OAuth 2.0 Framework defines a process flow for authorized access to resource services from a wide range of clients. This framework is extended by [OAuth 2.0 Assertions](https://tools.ietf.org/html/rfc7521). OAuth 2.0 Assertions provide means to relay authorization across protocols and services.
 
-The edu-ID Mobile App architecture __enhances__ the OAuth 2.0 Framework by cascading the specified OAuth 2.0 workflow and assertions. By doing so, the architecture does not add any new concepts to OAuth 2.0 aligns the specifications' concept into a coherent business logic.
+The edu-ID Mobile App architecture __enhances__ the OAuth 2.0 Framework by cascading the specified OAuth 2.0 workflow and assertions. By doing so, the architecture does not add any new concepts to the OAuth 2.0 Framework but aligns the specifications' concepts into a coherent business logic for machine-to-machine trust negociation. This logic is not part of the OAuth 2.0 specifications and is therefore left to actual OAuth 2.0 service implementations.
 
 ### edu-ID Mobile App Ecosystem Stakeholders
+
+Human stakeholders play a key role in the process of machine-to-machine communication across trust domains. Therefore, the experience of integrating and using the infrastructure must not add complexity to the app development, system maintenance, or device usage. Four key stakeholders are identified for the architecture.
 
 * Federation Management
 
 * Service Provider
 
-* Resource Owner
-
-* Device Owner
+* Mobile Device Owner
 
 * Application Developer
 
@@ -114,11 +114,26 @@ The edu-ID Mobile App architecture __enhances__ the OAuth 2.0 Framework by casca
 
 * [ ] Federation services need to authenticate when verifying the identity of edu-ID Mobile App users.
 
-## Infrastructure Service Components
+* [ ] Federation services may revoke access to certain versions of the edu-ID Mobile App on certain or all supported plattforms.
 
-The four components of the edu-ID Mobile App ecosystem rely on the interplay of several interdependent components. Each of these components provides service endpoints of the enhanced OAuth 2.0 Framework.
+## Infrastructure Service Components and Core Process
+
+The four components of the edu-ID Mobile App ecosystem rely on the interplay of several interdependent components. Each of these components provides service endpoints of the enhanced OAuth 2.0 Framework. The components are related to three main processes.
 
 ![edu-ID Mobile App Component Overview](images/eduid_app_architecture-details.png)
+
+
+### 1. User Authorization
+
+The user authorization process refers to the sequence of steps to tie an user identity to an edu-ID Mobile App instance on a mobile device. This process consists of connecting an edu-ID Mobile App instannce to the edu-ID Federation Service via the device assertion protocol (1), the OAuth user authentication (2) and exchange of user attributes (2a), and the service usage (3) and protocol discovery (3a and 3b). Including service usage resources and protocol discovery into this process is for user convenience in large federations, in which users access only a minor subset of available services. This enables the edu-ID Mobile App to filter the services to which a user has connected one or more identities instead of giving access to all possible services. The protocol discovery (3b) supports the edu-ID Mobile App to identify suitable services that match protocol requests of third party apps.
+
+### 2. Service Assertion
+
+The service assertion process refers to the steps that authorise an edu-ID Mobile App instance to an academic service. Only if the edu-ID Mobile App has granted access to an academic service, it will relay access authorization to third-party apps for that service. This process consists of requesting an authorization grant from the edu-ID Federation Service (4), which results in a unique service grant token for the given service. The edu-ID Mobile App requests authorization to the selected service by forwarding the service grant token to it (5). The service grant token is a single use token that authenticates a user to exactly one service. Only the selected academic service can validate service grant token with the edu-ID Federation Service and receive optional profile information from it (6). The academic services MUST only grant or reject access  and issue a service access token on the grounds of the results of validating the service grant token with the edu-ID Federation Service for completing the authorization of the edu-ID Mobile App. At any point the edu-ID Federation Service MAY invalidate all tokens for an edu-ID Mobile App instance with an academic service. In this case, the academic service MUST invalidate the service access token as well as all app access tokens that are issued for the now invalid service access token (10).
+
+### 3. App Assertion
+
+The app assertion process refers to granting access to one or more protocol endpoints of an academic service to a third-party app. This process is initiated by the third-party app by requesting access to one or more protocols using the mobile device's operating system mechanics for inter-app communication as a result of a user interaction (7). This request is forwarded by the mobile operating system to the edu-ID Mobile App, which selects possible services on the grounds of the requested protocols. The edu-ID Mobile App informs the mobile device owner that an app requests access to the suitable services and provide the mobile device owner the opportunity to select none, one, some, or all suitable services to be accessed by the requesting app. For each selected service the edu-ID Mobile App asserts the third-party app's access using the edu-ID Mobile App's service access token (8). At this point academic services MAY grant or reject access for the requesting app. Academic services SHOULD only grant an app access token for the requested protocol endpoints. For each academic service that issues an app access token, the edu-ID Mobile App will send the protocol endpoints as well as the related app access token to the third-party app. The third-party app MUST authorize all requests to the protocol endpoints of an academic service using the issued app access token (9).
 
 ### edu-ID Architecture Extensions
 
