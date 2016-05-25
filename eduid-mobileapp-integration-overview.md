@@ -36,6 +36,8 @@ The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'S
 
   * __access token__: An access token is a token that identifies a series of requests to service endpoints.
 
+* __Trust Domain__: A trust domain defines an environment of shared trust between applications and/or services, in which data can reliably exchanged.
+
 ## Key References
 
 This document relies on the OAuth 2.0 Authorization Framework as specified in [RFC-6749](https://tools.ietf.org/html/rfc6749) and on the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants as specified in [RFC-7521](https://tools.ietf.org/html/rfc7521).
@@ -58,7 +60,17 @@ On the User Devices there can be many apps that are related to the users' produc
 
 ![Illustration of the edu-ID Mobile App ecosystem and trust domains](images/eduid_app_architecture.png)
 
-Some of the services in the Academic Trust Doamin services expose service APIs for loosely-coupled machine-to-machine communication. Whereas tightly-coupled machine-to-machine communication requires explicit connections of two services typically initiated system wide by the system administrators, losely-coupled machine-to-machine communication allows unmanaged ad-hoc communications between services, tools and components. Tightly-coupled machine-to-machine communication can only be performed if all commuicators are known at the time of service coupling and controlable. Such connections create a pre-defined trust domain. In highly dynamic environments that spawn trust domains and involve many stakeholders, tight-coupling is resource intensive and does not easily scale. Loosely-coupled machine-to-machine communication overcomes the overhead of tight coupling by distributing coupling responsibility to different stakeholders.
+Some of the services in the Academic Trust Doamin services expose service APIs for loosely-coupled machine-to-machine communication. Whereas tightly-coupled machine-to-machine communication requires explicit connections of two services typically initiated system wide by the system administrators, losely-coupled machine-to-machine communication allows unmanaged ad-hoc communications between services, tools and components. Tightly-coupled machine-to-machine communication can only be performed if all commuicators are known at the time of service coupling and controlable. Such connections create a pre-defined trust domain. In highly dynamic environments that spawn trust domains and involve many stakeholders, tight-coupling is resource intensive and does not easily scale. Loosely-coupled machine-to-machine communication overcomes the overhead of tight coupling by distributing coupling responsibility across the different stakeholders in the ecosystem.
+
+Conventional [SAML]() Authentication and Authorization provides reliable identification and single-signon solutions within web-based trust domains. SAML-based approaches have been used to connect native mobile apps and distributed services. These approaches vary on the different platforms and require that native mobile apps are part of the same trust domain as the accessed services. SAML-based approaches are known to be prone to identity theft and viotation of intellectual property rights (IPR) if trust domains are naively assumed for native applications [REFERENCE](). This limits the applicability of SAML for loosely-coupled machine-to-machine communications, for which ad-hoc trust domains are established.
+
+The edu-ID Mobile App ecosystem primarily focuses on client authorization and does not include an identity layer. Such layer might be provided by dedicated identity services based on LDIF, OpenID or Web-finger. Security aspects related to the identity profile layer are not addressed by the edu-ID Mobile App architecture.
+
+### Enhanced OAuth 2.0 Framework
+
+The edu-ID Mobile App architecture is build on top of the [OAuth 2.0 Framework](https://tools.ietf.org/html/rfc6749). The OAuth 2.0 Framework defines a process flow for authorized access to resource services from a wide range of clients. This framework is extended by [OAuth 2.0 Assertions](https://tools.ietf.org/html/rfc7521). OAuth 2.0 Assertions provide means to relay authorization across protocols and services.
+
+The edu-ID Mobile App architecture __enhances__ the OAuth 2.0 Framework by cascading the specified OAuth 2.0 workflow and assertions. By doing so, the architecture does not add any new concepts to OAuth 2.0 aligns the specifications' concept into a coherent business logic.
 
 ### edu-ID Mobile App Ecosystem Stakeholders
 
@@ -78,7 +90,9 @@ Some of the services in the Academic Trust Doamin services expose service APIs f
 
 * Third party apps NEVER interact directly with the authorization services of the edu-ID infrastructure.
 
-* Third party apps NEVER receive or request service endpoints without explicit authoriation of the users and services.
+* Third party apps NEVER receive service endpoints locations without explicit authorization of the users and services.
+
+* Third party apps gain access ONLY to explicitly requested protocol endpoints or combinations of protocol endpoints.
 
 ### Advanced Security Requirements
 
@@ -102,6 +116,9 @@ Some of the services in the Academic Trust Doamin services expose service APIs f
 
 ## Infrastructure Service Components
 
+The four components of the edu-ID Mobile App ecosystem rely on the interplay of several interdependent components. Each of these components provides service endpoints of the enhanced OAuth 2.0 Framework.
+
+![edu-ID Mobile App Component Overview](images/eduid_app_architecture-details.png)
 
 ### edu-ID Architecture Extensions
 
