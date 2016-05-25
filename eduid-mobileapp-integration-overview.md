@@ -116,7 +116,7 @@ Human stakeholders play a key role in the process of machine-to-machine communic
 
 * [ ] Federation services may revoke access to certain versions of the edu-ID Mobile App on certain or all supported plattforms.
 
-## Infrastructure Service Components and Core Process
+## Infrastructure Service Interfaces and Core Process
 
 The four components of the edu-ID Mobile App ecosystem rely on the interplay of several interdependent components. Each of these components provides service endpoints of the enhanced OAuth 2.0 Framework. The components are related to three main processes.
 
@@ -140,6 +140,8 @@ The service assertion process refers to the steps that authorise an edu-ID Mobil
 The app assertion process refers to granting access to one or more protocol endpoints of an academic service to a third-party app. This process is initiated by the third-party app by requesting access to one or more protocols using the mobile device's operating system mechanics for inter-app communication as a result of a user interaction (7). This request is forwarded by the mobile operating system to the edu-ID Mobile App, which selects possible services on the grounds of the requested protocols. The edu-ID Mobile App informs the mobile device owner that an app requests access to the suitable services and provide the mobile device owner the opportunity to select none, one, some, or all suitable services to be accessed by the requesting app. For each selected service the edu-ID Mobile App asserts the third-party app's access using the edu-ID Mobile App's service access token (8). At this point academic services MAY grant or reject access for the requesting app. Academic services SHOULD only grant an app access token for the requested protocol endpoints. For each academic service that issues an app access token, the edu-ID Mobile App will send the protocol endpoints as well as the related app access token to the third-party app. The third-party app MUST authorize all requests to the protocol endpoints of an academic service using the issued app access token (9). If the third-party app receives an invalid token error from an service endpoint, it SHOULD re-initiate the app assertation process (7). Only if the academic service has issued a refresh token with the app access token, the third-party app MAY request a new app access token from the academic service.
 
 ![edu-ID App Assertion Process](images/eduid_app_assertion.png)
+
+## Infrastructure Components and Service Endpoints
 
 ### edu-ID Architecture Extensions
 
