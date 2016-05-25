@@ -62,7 +62,7 @@ On the User Devices there can be many apps that are related to the users' produc
 
 Some of the services in the Academic Trust Doamin services expose service APIs for loosely-coupled machine-to-machine communication. Whereas tightly-coupled machine-to-machine communication requires explicit connections of two services typically initiated system wide by the system administrators, losely-coupled machine-to-machine communication allows unmanaged ad-hoc communications between services, tools and components. Tightly-coupled machine-to-machine communication can only be performed if all commuicators are known at the time of service coupling and controlable. Such connections create a pre-defined trust domain. In highly dynamic environments that spawn trust domains and involve many stakeholders, tight-coupling is resource intensive and does not easily scale. Loosely-coupled machine-to-machine communication overcomes the overhead of tight coupling by distributing coupling responsibility across the different stakeholders in the ecosystem.
 
-Conventional [SAML]() Authentication and Authorization provides reliable identification and single-signon solutions within web-based trust domains. SAML-based approaches have been used to connect native mobile apps and distributed services. These approaches vary on the different platforms and require that native mobile apps are part of the same trust domain as the accessed services. SAML-based approaches are known to be prone to identity theft and viotation of intellectual property rights (IPR) if trust domains are naively assumed for native applications [REFERENCE](). This limits the applicability of SAML for loosely-coupled machine-to-machine communications, for which ad-hoc trust domains are established.
+Conventional [SAML]() Authentication and Authorization provides reliable identification and single-signon solutions within web-based trust domains. SAML-based approaches have been used to connect native mobile apps and distributed services. These approaches vary on the different platforms and require that native mobile apps are part of the same trust domain as the accessed services. SAML-based approaches are known to be prone to identity theft and viotation of intellectual property rights (IPR) if trust domains are naively assumed for native applications [REFERENCE MISSING](). This limits the applicability of SAML for loosely-coupled machine-to-machine communications, for which ad-hoc trust domains are established.
 
 The edu-ID Mobile App ecosystem primarily focuses on client authorization and does not include an identity layer. Such layer might be provided by dedicated identity services based on LDIF, OpenID or Web-finger. Security aspects related to the identity profile layer are not addressed by the edu-ID Mobile App architecture.
 
@@ -86,33 +86,33 @@ The edu-ID Mobile App architecture __enhances__ the OAuth 2.0 Framework by casca
 
 ### Minimal Security Requirements
 
-* User names and passwords are NEVER exposed to third party apps.
+* [ ] User names and passwords are NEVER exposed to third party apps.
 
-* Third party apps NEVER interact directly with the authorization services of the edu-ID infrastructure.
+* [ ] Third party apps NEVER interact directly with the authorization services of the edu-ID infrastructure.
 
-* Third party apps NEVER receive service endpoints locations without explicit authorization of the users and services.
+* [ ] Third party apps NEVER receive service endpoints locations without explicit authorization of the users and services.
 
-* Third party apps gain access ONLY to explicitly requested protocol endpoints or combinations of protocol endpoints.
+* [ ] Third party apps gain access ONLY to explicitly requested protocol endpoints or combinations of protocol endpoints.
 
 ### Advanced Security Requirements
 
-* User credentials are never transmitted in clear text over the Internet.
+* [ ] User credentials are never transmitted in clear text over the Internet.
 
-* Users can revoke all access to academic services from a device by logging out of the edu-ID app.
+* [ ] Users can revoke all access to academic services from a device by logging out of the edu-ID app.
 
-* Users can remotely revoke device access for all or individual devices.
+* [ ] Users can remotely revoke device access for all or individual devices.
 
-* Users can remotely revoke access to individual services.
+* [ ] Users can remotely revoke access to individual services.
 
-* Service administrators can revoke mobile access for individual users and apps.
+* [ ] Service administrators can revoke mobile access for individual users and apps.
 
-* Service administrators can impose access policies for users and apps.
+* [ ] Service administrators can impose access policies for users and apps.
 
-* edu-ID administrators can revoke access for users or their identities.
+* [ ] edu-ID administrators can revoke access for users or their identities.
 
-* edu-ID administrators can invalidate access for specific edu-ID mobile app versions.
+* [ ] edu-ID administrators can invalidate access for specific edu-ID mobile app versions.
 
-* Federation services need to authenticate when verifying the identity of edu-ID Mobile App users.
+* [ ] Federation services need to authenticate when verifying the identity of edu-ID Mobile App users.
 
 ## Infrastructure Service Components
 
