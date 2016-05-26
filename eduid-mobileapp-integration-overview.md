@@ -541,37 +541,11 @@ The response has been shortened for readability purposes.
 ### Protocol Discovery
 
 
-
-
----
-
-
-The edu-ID app will authenticate itself via a service grant token that is issued by the edu-ID service for one academic service in the federation. If provided to an academic service, the academic service can validate the token with the edu-ID service. A service grant token is bound to one academic service and can be validated only by that service.
-
-If a service grant token has been used by an academic service, the edu-ID service will immediately invalidate the service grant token and present the user information to the academic service. The edu-ID Service will track, which edu-ID Apps have requested access to which services for allowing users to invalidate their devices within the federation.
-
-On the grounds of the user information an academic service can authorise a user's edu-ID app via an edu-ID access token. The service access token is unique for each edu-ID app instance. Academic services MAY additionally assign a time-to-live (TTL) interval to the edu-ID access token.
-
-The edu-ID access token authorises a user on a given device. The edu-ID access token is a shared secret between the edu-ID App and the Academic Service. The edu-ID access token MUST ONLY be used with the app authorisation protocol endpoint of the service.
-
-The edu-ID App uses the edu-ID access token to authorise a third party app for one or more protocol endpoints of an academic service. In this process the edu-ID will present its access token, the App ID, and the requested protocols to the academic service. The academic service MAY reject to authorise certain App ID-protocol combinations.
-
-If a protocol request by the edu-ID App is granted, the academic service will send an app access token to the edu-ID App. The edu-ID App will provide this app access token to the requesting third party app. This app token is unique for the requested App ID and service protocols. Academic services MAY additionally associate a TTL interval to the app access token that can be different to the TTL for the related edu-ID access token.
-
-App access tokens are used as shared secrets between the academic service and a third party app. The edu-ID App MUST NOT use app access tokens unless it requests to invalidate them.
-
-As long an app access token is valid a third party app may use the app access token to access the authorised protocol endpoints on behalf of the user.
-
-If an academic service invalidates an app access token the thrid party app MUST receive an error message that indicate that the app needs to re-authorise.
-
-If an academic service invalidates an edu-ID access token, it MUST invalidate all app access tokens that were granted using the edu-ID access token.
-
-A user or the edu-ID app MAY request to invalidate the edu-ID access token for a given device. In this case all related app access tokens related to this edu-ID access token MUST be also invalidated.
-
-The edu-ID Service MAY request the academic services to invalidate certain devices. In this case the edu-ID access token and the related app tokens MUST be invalidated.
-
-
-
 ## References
 
-URI
+* [RFC-6749](https://tools.ietf.org/html/rfc6749)
+* [RFC-7521](https://tools.ietf.org/html/rfc7521)
+* [OAuth 2.0 Message Authentication Code (MAC) Tokens](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05)
+* [Swiss edu-ID Architecture](https://projects.switch.ch/export/sites/projects/edu-ID/.galleries/documents/SwissEduIDArchitecture_Rev1.pdf)
+* [RSD2 service discovery](https://github.com/BLC-HTWChur/rsd2-specification/blob/master/rsd2-specification.md)
+
