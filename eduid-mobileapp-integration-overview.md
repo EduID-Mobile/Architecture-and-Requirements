@@ -356,7 +356,37 @@ This component SHOULD exclude services that do not expose services.
 
 ##### Endpoints
 
-TO BE WRITTEN
+###### service-discovery
+
+__Accepted methods__:
+
+* GET
+
+__Accepted Content-Types__:
+
+* Not Applicable
+
+__Authorization__:
+
+The edu-ID Mobile App instance MUST send an Autorization header using the authorization method of its edu-ID access token. Both service endpoints MUST refuse access to unauthorized edu-ID Mobile App instances.
+
+Request:
+
+```
+GET /eduid/service/service-discovery HTTP/1.1
+HOST www.eduid.ch
+Auhorization: MAC kid=DfSc3K2OWH,ts=1463244822,mac=98b4b91feccc97604c5559d94f39c92b9168b178
+
+```
+
+Response:
+
+```
+HTTP/1.1 200 OK
+Content-type: application/json
+
+["https://moodle.htwchur.ch","https://ilias.unibe.ch","https://www2.icorsi.ch/"]
+```
 
 #### Service Assertion
 
