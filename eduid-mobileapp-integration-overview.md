@@ -134,11 +134,15 @@ The user authorization process refers to the sequence of steps to tie an user id
 
 ![edu-ID App Authorization Process](images/eduid_app_architecture_authorization.png)
 
+In the above figure the blue box refers to the steps as specified for OAuth 2.0. The green boxes refer to OAuth Authorization service endpoints and the orange boxes refer to resource service endpoints.
+
 ### 2. Service Assertion
 
 The service assertion process refers to the steps that authorise an edu-ID Mobile App instance to an academic service. Only if the edu-ID Mobile App has granted access to an academic service, it will relay access authorization to third-party apps for that service. This process consists of requesting an authorization grant from the edu-ID Federation Service (4), which results in a unique service grant token for the given service. The edu-ID Mobile App requests authorization to the selected service by forwarding the service grant token to it (5). The service grant token is a single use token that authenticates a user to exactly one service. Only the selected academic service can validate service grant token with the edu-ID Federation Service (6) and receive optional profile information from it (6*). The academic services MUST only grant or reject access  and issue a service access token on the grounds of the results of validating the service grant token with the edu-ID Federation Service for completing the authorization of the edu-ID Mobile App. At any point the edu-ID Federation Service or the edu-ID Mobile App MAY invalidate some or all tokens for an edu-ID Mobile App instance with an academic service. In both cases, the academic service MUST invalidate the requested token and all tokens that are issued for that token in the app assertion process (10).
 
 ![edu-ID Service Assertion Process](images/eduid_app_service_assertion.png)
+
+In the above figure the blue box refers to the steps as specified for OAuth 2.0. The green boxes refer to OAuth Authorization service endpoints and the orange boxes refer to resource service endpoints.
 
 ### 3. App Assertion
 
@@ -213,7 +217,7 @@ Content-type: application/json
 Response:
 
 ```
-200 OK
+HTTP/1.1 200 OK
 Content-type: application/json
 
 {"client_id":"BE74E66B-67DE-429A-B8D5-202BFB6298D4","client_secret":"9DEE73EF5696","code":"A069A6FC.B164BDD9EBE-451CBB22167F5BAD2912C7054609_A6E.7985A3064338D"}
@@ -298,7 +302,7 @@ Content-type: application/json
 Response:
 
 ```
-200 OK
+HTTP/1.1 200 OK
 Content-type: application/json
 
 {"challenge":"lGuC5-Iun1GyXI"}
@@ -326,7 +330,7 @@ Content-type: application/json
 Response:
 
 ```
-200 OK
+HTTP/1.1 200 OK
 Content-type: application/json
 
 {"token_type":"mac",
@@ -366,21 +370,27 @@ The service assertion component is part of asserting authorization for academic 
 
 All endpoints are only available to OAuth authorized requests.
 
-###### service
+###### assertion
 
-The service endpoint is only available to authorized edu-ID Mobile Apps.
+The assertion endpoint is only available to authorized edu-ID Mobile Apps.
 
 TO BE WRITTEN
 
-###### validate
+###### assertion/validate
 
-The validate endpoint is only available to academic services.
+The assertion/validate endpoint is only available to authorized academic services.
 
 TO BE WRITTEN
 
 #### Protocol Discovery
 
-The edu-ID Mobile App MAY prefetch protocol endpoints during the user authorization process
+The protocol discovery is based on the publicly available protocol endpoints that for an academic service. Protocol endpoints combine one or more service endpoints following a well defined **protocol** of accessing the endpoints. Therefore, a protocol endpoint is a root path for the service endpoints of the related protocol. The protocol discovery component's prime function is to support the edu-ID Mobile App during the app assertion process to select suitable services for a thir-party app's protocol request (7).
+
+An instance may directly forward the requested protocol list, upon which the protocol discovery component MUST respond a list of protocol endpoints that contains all academic services that expose the exact protocols as requested. The protocol discovery will return the unprocessed service discovery information as provided by the academic services.
+
+The edu-ID Mobile App MAY prefetch protocol endpoints for a authorized user's services during the user authorization process.
+
+The protocol discovery is tightly coupled to the edu-ID Federation Service's protocol detection. The protocol detection verifies the services that are exposed by the academic services. The protocol detection uses the [RSD2 service discovery](https://github.com/BLC-HTWChur/rsd2-specification/blob/master/rsd2-specification.md).
 
 ##### Related Processes
 
@@ -392,13 +402,104 @@ The edu-ID Mobile App MAY prefetch protocol endpoints during the user authorizat
 
 All endpoints are only available to OAuth authorized requests from edu-ID Mobile Apps.
 
-###### services
+All service endpoints respond a list (JSON Array) of unprocessed RSD2 data as provided by the academic service.
 
-TO BE WRITTEN
+
+__Accepted methods__:
+
+* POST
+
+__Accepted Content-Types__:
+
+* application/json
+
+__Authorization__:
+
+The edu-ID Mobile App instance MUST send an Autorization header using the authorization method of its edu-ID access token. Both service endpoints MUST refuse access to unauthorized edu-ID Mobile App instances.
+
+###### service-protocols
+
+This service-protocols endpoint accepts a list of requested protocol names and returns the academic services' discovery information to an edu-ID Mobile App instance. This service endpoint MUST expose all services that expose the exact list of requested protocols.
+
+
+__Input Message__:
+
+* unnamed list of academic service links exposed by the academic services in their RSD2 data.
+
+__Response Message__:
+
+The response message is of content-type ```application/json```.
+
+* unnamed list of RSD2 definitions of matching academic services.
+
+__Example__:
+
+Request:
+
+```
+POST /eduid/service/service-protocols HTTP/1.1
+HOST www.eduid.ch
+Auhorization: MAC kid=DfSc3K2OWH,ts=1463244822,mac=98b4b91feccc97604c5559d94f39c92b9168b178
+Content-type: application/json
+
+["https://moodle.htwchur.ch","https://ilias.unibe.ch","https://www2.icorsi.ch/"]
+```
+
+Response:
+
+```
+HTTP/1.1 200 OK
+Content-type: application/json
+
+[{"engineName": "moodle@ HTW Chur",
+  "engineLink": "",
+  "homePageLink": "https://moodle.htwchur.ch",
+  "homePageIcon": "/favico.png","apis": {...}}, ...]
+```
+
+The response has been shortened for readability purposes.
 
 ###### protocols
 
-TO BE WRITTEN
+This protocols endpoint accepts a list of academic services and returns the academic services' discovery information to an edu-ID Mobile App instance. If an requested service does not expose any services via RSD2, no information will be included for that service.
+
+__Input Message__:
+
+* unnamed list of protocol names as exposed by the academic services in their RSD2 data.
+
+__Response Message__:
+
+The response message is of content-type ```application/json```.
+
+* unnamed list of RSD2 definitions of matching academic services
+
+__Example__:
+
+Request:
+
+```
+POST /eduid/service/service-protocols HTTP/1.1
+HOST www.eduid.ch
+Auhorization: MAC kid=DfSc3K2OWH,ts=1463244822,mac=98b4b91feccc97604c5559d94f39c92b9168b178
+Content-type: application/json
+
+["org.moodle.mobile","gov.adlnet.xapi","org.imsglobal.qti"]
+```
+
+Response:
+
+```
+HTTP/1.1 200 OK
+Content-type: application/json
+
+[{
+  "engineName": "moodle@ HTW Chur",
+  "engineLink": "",
+  "homePageLink": "https://moodle.htwchur.ch",
+  "homePageIcon": "/favico.png","apis": {...}}, ...]
+```
+
+The response has been shortened for readability purposes.
 
 ### Academic Protocol Endpoints and components
 
