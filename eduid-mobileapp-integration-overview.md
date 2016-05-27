@@ -138,7 +138,7 @@ In the above figure the blue box refers to the steps as specified for OAuth 2.0.
 
 ### 2. Service Assertion
 
-The service assertion process refers to the steps that authorise an edu-ID Mobile App instance to an academic service. Only if the edu-ID Mobile App has granted access to an academic service, it will relay access authorization to third-party apps for that service. This process consists of requesting an authorization grant from the edu-ID Federation Service (4), which results in a unique service grant token for the given service. The edu-ID Mobile App requests authorization to the selected service by forwarding the service grant token to it (5). The service grant token is a single use token that authenticates a user to exactly one service. Only the selected academic service can validate service grant token with the edu-ID Federation Service (6) and receive optional profile information from it (6*). The academic services MUST only grant or reject access  and issue a service access token on the grounds of the results of validating the service grant token with the edu-ID Federation Service for completing the authorization of the edu-ID Mobile App. At any point the edu-ID Federation Service or the edu-ID Mobile App MAY invalidate some or all tokens for an edu-ID Mobile App instance with an academic service. In both cases, the academic service MUST invalidate the requested token and all tokens that are issued for that token in the app assertion process (10).
+The service assertion process refers to the steps that authorise an edu-ID Mobile App instance to an academic service. Only if the edu-ID Mobile App has granted access to an academic service, it will relay access authorization to third-party apps for that service. This process consists of requesting an authorization grant from the edu-ID Federation Service (4), which results in a unique service grant token for the given service. The edu-ID Mobile App requests authorization to the selected service by forwarding the service grant token to it (5). The service grant token authenticates a user to exactly one service. The service grant token can be automatically validated by the academic services. OPTIONALLY, the selected academic service can validate a client token included with the service grant token with the edu-ID Federation Service (6) and/or request profile information from it (6*). The academic services MUST only grant or reject access  and issue a service access token on the grounds of the results of validating the service grant token with the edu-ID Federation Service for completing the authorization of the edu-ID Mobile App. At any point the edu-ID Federation Service or the edu-ID Mobile App MAY invalidate some or all tokens for an edu-ID Mobile App instance with an academic service. In both cases, the academic service MUST invalidate the requested token and all tokens that are issued for that token in the app assertion process (10).
 
 ![edu-ID Service Assertion Process](images/eduid_app_service_assertion.png)
 
@@ -184,9 +184,13 @@ The client must add a [Basic Authorization](https://tools.ietf.org/html/rfc7617)
 
 __Input Message__:
 
-* client_name: user readable name of the device on which the edu-ID Mobile App is running. This name is typically provided by the Device Owner in the system setup. The client_name is used for identifying individual clients.
+* client_assertion_type: The client assertion type MUST be the url-encoded string ```urn:ietf:params:oauth:grant-type:authorization_code:device``` (as plain text: ```urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Aclient-authorization_code```)
 
-* device_id: unique identifier of the device the edu-ID is running. Depending on the device plaform the device id is specific to the edu-ID Mobile App instance and may change between installations and mobile operating system upgrades.
+* grant_type: the grant type MUST be ```eduid_client```.
+
+* client_id: user readable name of the device on which the edu-ID Mobile App is running. This name is typically provided by the Device Owner in the system setup. The client_name is used for identifying individual clients.
+
+* client_assertion: must be set to the unique identifier of the device the edu-ID is running. Depending on the device plaform the device id is specific to the edu-ID Mobile App instance and may change between installations and mobile operating system upgrades.
 
 __Response Message__:
 
@@ -211,7 +215,7 @@ HOST www.eduid.ch
 Auhorization: Basic Y2guZWR1aWQubW9iaWxlLmlvcy4yMDE2MDUyNjpoZWxsb1dvcmxk
 Content-type: application/json
 
-{"client_name":"example device","device_id":"41AFFE15-7666-426B-8DD6-AED1BBAF70CC"}
+{"client_assertion_type": "urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Aclient-authorization_code","client_id":"example device","client_assertion":"41AFFE15-7666-426B-8DD6-AED1BBAF70CC","grant_type":"eduid_client"}
 ```
 
 Response:
@@ -277,6 +281,8 @@ The response message is of content-type ```application/json```.
 * challenge: string that used for password hashing.
 
 __Input Message__ (authentication mode):
+
+* response_type: the response type must have the value ```code``` because no grant redirection is possible.
 
 * challenge: The challenge is a sha1 hash of the direct concatenation of the client_secret and the code.
 
@@ -390,7 +396,17 @@ Content-type: application/json
 
 #### Service Assertion
 
-The service assertion component is part of asserting authorization for academic sercies to the edu-ID Mobile App. This component is used by the edu-ID Mobile App to get access an academic service. It is also used by the academic service in order to verify a provided authorization grant with the edu-ID Federation Service. This component tracks, which academic services have been accessed and provides this information to the service discovery. The component can use accepted authorization grants to inform the accepting academic service that the requesting edu-ID Mobile App access token has been invalidated. If the service assertion revokes an accepted grant token, the accepting accademic service MUST invalidate all active tokens that originate to that grant token.
+The service assertion component is part of asserting authorization for academic sercies to the edu-ID Mobile App. This component is used by the edu-ID Mobile App to get access an academic service. The academic service can automatically verify the assertation token bassed on shared secrets between the academic service and the edu-ID Federation Server. The academic service may use the the assertion token to request user profile information if necessary.
+
+This component tracks, which academic services have been accessed and provides this information to the service discovery. The component can use accepted authorization grants to inform the accepting academic service that the requesting edu-ID Mobile App access token has been invalidated. If the service assertion revokes an accepted grant, the accepting accademic service MUST invalidate all active tokens that originate to that grant token.
+
+The asserted JWT uses a unique user token that identifies the authorised user to the academic service as subject of the assertion. This user token can be used by the academic service to verify the user identity. This claim is identified by the key ```https://www.eduid.ch/usertoken```.
+
+Additionally, the assertion includes a claim is a unique bearer token that identifies the client to the academic service as a client token. This claim is identified by the key ```https://www.eduid.ch/client```. The edu-ID Federation Service MAY use this client token in order to revoke access to the service.
+
+The assertion is secured by a JWS signature that uses a shared secret between the academic service and the edu-ID Federation Service as key for the signature algorithm. This enables the targeted service to verify the validity of the assertation without accessing the edu-ID Federation Service.
+
+If configured, the assertion may include additional claims requested by the academic service from the edu-ID Federation Server.
 
 ##### Related Process
 
@@ -400,17 +416,50 @@ The service assertion component is part of asserting authorization for academic 
 
 All endpoints are only available to OAuth authorized requests.
 
-###### assertion
+###### service-assertion
 
-The assertion endpoint is only available to authorized edu-ID Mobile Apps.
+__Accepted methods__:
 
-TO BE WRITTEN
+* POST
 
-###### assertion/validate
+__Accepted Content-Types__:
 
-The assertion/validate endpoint is only available to authorized academic services.
+* application/json
 
-TO BE WRITTEN
+* application/x-www-form-urlencoded
+
+__Input Message__
+
+* service_uri: URI to the academic service the authorized client seeks to access.
+
+__Response Message__
+
+As response the endpoint returns an client assertion token using a [JWS signed](https://tools.ietf.org/html/rfc7797) [JSON Web-Tokens (JWT)](https://tools.ietf.org/html/rfc7523) as assertion. The edu-ID Mobile App instance MUST present the unaltered assertation to the academic service it whishes to access.
+
+__Example__
+
+
+Request:
+
+```
+POST /eduid/service/service-protocols HTTP/1.1
+HOST www.eduid.ch
+Auhorization: MAC kid=DfSc3K2OWH,ts=1463244822,mac=98b4b91feccc97604c5559d94f39c92b9168b178
+Content-type: application/json
+
+{"service_uri":"https://moodle.htwchur.ch"}
+```
+
+Response:
+
+```
+HTTP/1.1 200 OK
+Content-type: application/json
+
+{"grant_type":"urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer",
+ "assertion":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2VkdWlkLmNoIiwiYXVkIjoiaHR0cHM6Ly9tb29kbGUuaHR3Y2h1ci5jaCIsInN1YiI6ImFzZGlxdzQtMHNhZG9lcmlwIiwiZXhwIjoiMTQ2MzI0NDUyMiIsImh0dHBzOi8vZWR1aWQuY2gvY2xpZW50IjogInNmc29xOTRrYWwuZDAtOTQ5MTRzRiJ9.c610b3e69d5c9a833a63da16338c8eeac0c7a2e6709df8dae299b3a3ceb3646e"}
+```
+
 
 #### Protocol Discovery
 
@@ -573,9 +622,11 @@ The response has been shortened for readability purposes.
 
 ## References
 
-* [RFC-6749](https://tools.ietf.org/html/rfc6749)
-* [RFC-7521](https://tools.ietf.org/html/rfc7521)
-* [OAuth 2.0 Message Authentication Code (MAC) Tokens](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05)
+* [RFC-6749: The OAuth 2.0 Autorization Framework](https://tools.ietf.org/html/rfc6749)
+* [RFC-7521: Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants](https://tools.ietf.org/html/rfc7521)
+* [RFC-2617: The Basic HTTP Authorization Scheme](https://tools.ietf.org/html/rfc7617)
+* [RFC-7523: JSON Web-Tokens (JWT)](https://tools.ietf.org/html/rfc7523)
+* [OAuth 2.0 Message Authentication Code (MAC) Tokens (IETF RFC Draft)](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05)
 * [Swiss edu-ID Architecture](https://projects.switch.ch/export/sites/projects/edu-ID/.galleries/documents/SwissEduIDArchitecture_Rev1.pdf)
 * [RSD2 service discovery](https://github.com/BLC-HTWChur/rsd2-specification/blob/master/rsd2-specification.md)
 
