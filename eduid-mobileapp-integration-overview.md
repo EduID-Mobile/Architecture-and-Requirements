@@ -418,9 +418,36 @@ All endpoints are only available to OAuth authorized requests.
 
 ###### service-assertion
 
-__Accepted methods__:
+__GET method__
 
-* POST
+The get method expects a client grant token as search string to authorized services.
+
+__Response message__
+
+If the provided client grant token has been issued to the requesting service, then the response will return the user token as provided in the subject of the client assertion. Otherwise the response will be a 403 Forbidden error.
+
+__Example__
+
+Request:
+
+```
+GET /eduid/service/service-protocols?sfsoq94kal.d0-94914sF HTTP/1.1
+HOST www.eduid.ch
+Auhorization: MAC kid=DfS0K2OWH,ts=1463244822,mac=98b4b91... ...78
+Content-type: application/json
+
+```
+
+Response:
+
+```
+HTTP/1.1 200 OK
+Content-type: application/json
+
+{"sub":"asdiqw4-0sadoerip"}
+```
+
+__POSTS method__
 
 __Accepted Content-Types__:
 
@@ -437,7 +464,6 @@ __Response Message__
 As response the endpoint returns an client assertion token using a [JWS signed](https://tools.ietf.org/html/rfc7797) [JSON Web-Tokens (JWT)](https://tools.ietf.org/html/rfc7523) as assertion. The edu-ID Mobile App instance MUST present the unaltered assertation to the academic service it whishes to access.
 
 __Example__
-
 
 Request:
 
@@ -482,7 +508,6 @@ The protocol discovery is tightly coupled to the edu-ID Federation Service's pro
 All endpoints are only available to OAuth authorized requests from edu-ID Mobile Apps.
 
 All service endpoints respond a list (JSON Array) of unprocessed RSD2 data as provided by the academic service.
-
 
 __Accepted methods__:
 
@@ -584,19 +609,41 @@ The response has been shortened for readability purposes.
 
 #### Service Exposure
 
+The service exposure is an [RSD2](https://github.com/BLC-HTWChur/rsd2-specification/blob/master/rsd2-specification.md) interface that exposes web-service protocols offered by an academic service. In order to be recognised by this architecture it requires at least 2 endpoints:
+
+* The /service.txt that provides the pointes to the actual rsd2 endpoints.
+
+* One of the defined RSD2 endpoints for XML, JSON, or YAML-formatted RSD2 information.
+
 #### edu-ID Authorization
+
+The edu-ID Authorization component's key function is to handle OAuth2 authorization assertions. Additionally, the component has an token revocation endpoint that can be used by the edu-ID Federation Service or an edu-ID Mobile App instance for invalidating edu-ID client and app tokens for a user. Finally, the edu-ID Authorization includes token validation that refer back to the edu-ID Federation service.
+
+The edu-ID Authorization component token validation accepts grant assertions issued by the edu-ID Federation Service. These assertions are issued by the service-assertion endpoint of the edu-ID Federation Service to authorized edu-ID Mobile App instances. The assertions are issued specifically for the academic service and the service can validate the assertion based on a shared secret between the edu-ID Federation Service and the academic service. For known subjects the assertion handling MAY accept the assertion immediately. For unknown subjects it is RECOMMENDED to validate the client token and the user token with the edu-ID Fefertion Service. For client tokens it is RECOMMENDED that the academic service does not enforce automatic timing out of the client. If the academic service automatically invalidates client tokens, then it must inform the edu-ID Federation Service that the related client grant token is no longer valid. In this case the edu-ID MObile App MUST request a new assertion for the service.
+
+The token revocation accepts an app token, a client token, a user token or a client grant token. Depending on the token presented to the revocation, the revocation will invalidate all related tokens. An authorized edu-ID Mobile App can only revoke the current access token or app tokens. Revoking app tokens allows edu-ID Mobile App instances to remove access for selected mobile apps  to the academic service. This is typically done on user request. An edu-ID Mobile App instance may revoke its own client token. This happens if the user logs out or the edu-ID Mobile Apps user token to the edu-ID Federation Service has been otherwise invalidated by the edu-ID Mobile App. The edu-ID Federation service can revoke access for a specific edu-ID Mobile App instance by revoking its client grant token. This is typically done if the user wishes to disconnect a device remotely or if the edu-ID Federation Service restricts access to specific versions of the App. Finally, the edu-ID Federation Service can revoke access to all edu-ID Mobile App instances and the related apps via the service's user token.
+
+The token validation component can validate a client grant token with the edu-ID Federation Service. It can also validate the user identity of the user token and get access to more details of the user profile.
 
 #### App Assertion
 
+The app assertion allows authorized edu-ID Mobile Apps to request app access tokens for third party apps. The academic service SHOULD enforce scoping of the third party app's access to the requested services. If an authorized edu-ID Mobile App instance requests tokens for third-party apps, then the app assertion of the Academic Service MUST link the client tokens with its requested app tokens.
+
 #### Access Authorization
 
+All authorized apps should have access to all services within the scope of their access token. A third party apps need to authorize their access by adding an MAC Authorization header to all service reuqests.
 
 ### Third-party mobile app components
 
+Third party app can request access to selected protocols. These apps need to be able to handle multiple protocol endpoints per protocol.
+
 #### Access Management
+
+The access management provides the interfaces to the app's business logic for requesting access to the requiered protocols. This component issued the inter-app communication on the device.
 
 #### Authorization Management
 
+The authorization management chooses the
 
 ### edu-ID Mobile App components
 
