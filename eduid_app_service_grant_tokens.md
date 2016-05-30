@@ -66,7 +66,7 @@ The edu-ID Service MUST set an expiration time. The expiration time is provided 
 
 The token ID is a unique identifier for the token. The edu-ID Service MAY use the token ID to revoke all related tokens for a given device.
 
-**Note** The JTI is part of the JWT specification but __not__ mentioned in the OpenID Connect specifications
+**Note** The jti claim is part of the JWT specification but __not__ mentioned in the OpenID Connect specifications
 
 ### Additional Claims
 
