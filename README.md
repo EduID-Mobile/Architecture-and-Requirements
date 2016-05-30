@@ -6,11 +6,10 @@ This part of the project documents the architectural concepts underpinning the S
 
 The documentation has the following parts.
 
-* [edu-ID App Terminology](eduid-app-terminology.md)
+* [edu-ID App Terminology](eduid_app_terminology.md)
 * [edu-ID Mobile App integration Overview](eduid-mobileapp-integration-overview.md)
 * [edu-ID Client Request Token](eduid_app_request_tokens.md)
 * [edu-ID Service Grant Token](eduid_app_service_grant_tokens.md)
-
 * [edu-ID Service Extensions](eduid-service-extensions.md)
 * [Mobile App Architecture for the Android platform](app-architecture-android.md)
 * [Mobile App Architecture for the iOS platform](app-architecture-ios.md)
