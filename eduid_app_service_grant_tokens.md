@@ -22,7 +22,7 @@ The edu-ID Service MAY use any algorithm defined for [JWS](https://tools.ietf.or
 
 ## Grant Token
 
-The grant token follows the [JSON Web Token specificaiton](https://tools.ietf.org/html/rfc7519).
+The grant token follows the [JSON Web Token specification](https://tools.ietf.org/html/rfc7519).
 
 The grant token MUST contain the following claims.
 
