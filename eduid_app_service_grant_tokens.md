@@ -29,7 +29,7 @@ The grant token MUST contain the following claims.
 * issuer (iss)
 * subject (sub)
 * audience (aud)
-* device id (azp)
+* app id (azp)
 * the issue time (iat)
 * expires after (exp)
 * JSON Token ID (jti)
@@ -50,9 +50,9 @@ The subject MUST contain the unique identifier for the user within the edu-ID Fe
 
 The audience MUST match the Federation Service's homepage link as specified in the RSD discovery.
 
-### device id (azp)
+### app id (azp)
 
-The authorized party MUST refer to the edu-ID Mobile App Identifier (not client specific).
+The authorized party MUST refer to the edu-ID Mobile App Identifier (not client specific). A Federation Service MUST NOT accept tokens that are issued for unofficial clients. The edu-ID Service MUST set this claim based on the client authorization and MUST NOT rely on external information.
 
 ### issued at time (iat)
 
