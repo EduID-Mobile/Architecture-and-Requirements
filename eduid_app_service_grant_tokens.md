@@ -52,11 +52,11 @@ The audience MUST match the Federation Service's homepage link as specified in t
 
 ### device id (azp)
 
-The authorized party is always the edu-ID Mobile App instance.
+The authorized party MUST refer to the edu-ID Mobile App Identifier (not client specific).
 
 ### issued at time (iat)
 
-The edu-ID Service MUST set the issue at time. The issue time is provided as a timestamp representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.
+The edu-ID Service MUST set the issue at time. The issue time is provided as a timestamp representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time. A Federation Service MUST NOT accept service grant tokens that are provided before the issued at time. 
 
 ### expires at (exp)
 
