@@ -43,4 +43,123 @@ As OAuth is designed as a service-oriented and distributed architecture, an addi
 
 In order to enable end-users to select which of their services they want to expose to external parties, such as other apps, it is necessary to track, which services are used by the users. Such __usage management__ extends the affiliation index of the EduID Architecture.
 
+## edu-ID Authentication and Authorization and OAuth2 
+
+OAuth2 defines 2 service endpoints for authorization tasks. 
+
+* Authorization endpoint
+* Token endpoint
+
+The authorzation endpoint focuses on user-agent-based (Web-browser-based) authorization schemes and is not intended for client authorization. This is beyond the scope of the present architecture. 
+
+The token endpoint is the client endpoint for authenticating and authorizing clients as well as asserting access to resource services. 
+
+While federation services have their own token endpoint, from the view point of the edu-ID service federation services as well as other endpoints of the edu-ID service are "Resource Services". 
+
+### Token endpoint
+
+The edu-ID Token endpoint has three main tasks:
+
+1. Authorizing edu-ID Mobile App Instances, 
+2. Authenticating device owners as federation users, and 
+3. Asserting service grant tokens for federation services.
+
+The token endpoint responds to the service calls as defined in section 4 of the OAuth2 specification.
+
+The token endpoint responds only to HTTP POST requests. Any request using another HTTP method will receive a "400 Bad Request" error.
+
+The token endpoint issues access tokens. The access tokens contain the field ```mac_algorithm```. Clients MUST use the specified algorithm for signing or encrypting tokens. Possible algorithms are defined in the [JSON Web Algorithms (JWA) specification](https://tools.ietf.org/html/rfc7518).
+
+#### Authorizing edu-ID Mobile App Instances
+
+The edu-ID Mobile App versions are clients for the edu-ID Service. Each client instance needs to receive individual authorization before it can call any other service. For this purpose every client instance MUST authorize itself using its client credentials. 
+
+Each client authorizes itself using a unique device id as provided by the platform operating system as well as the global client credentials.
+
+The global client client credentials bind an edu-ID Mobile App version to the edu-ID Trust Domain. The global client credentials are issued for each client version separately and MUST NOT be used with other clients. The client credentials are part of the edu-ID Mobile App packages that are distributed through the vendors App Stores.
+
+The client MUST present the client credentials as a [JWT Request Token](eduid_app_request_token.md) in the request's Authorization header using the Bearer scheme. 
+
+The request payload MUST contain the parameter ```grant_type```. The payload SHOULD NOT contain other parameters. Any other parameter presented to the service during app authorization will be ignored. 
+
+Example Request:
+
+```
+POST /service/eduid.php/token HTTP/1.1
+www.eduid.ch
+Authorization: Bearer eyJhbGc[...]NCJ9.eyJq[...]J9.232d[...]cb34b
+Content-type: application/json
+
+{"grant_type":"client_credentials"}
+```
+
+If the edu-ID Service accepts the credentials, then the token endpoint responds the __client access token__ in form of a JSON structure containing 5 items. 
+
+* access_token 
+* token_type
+* kid
+* mac_key
+* mac_algorithm
+
+This client registration is unique for every edu-ID Mobile App instance. The client MUST store this information persistently. 
+
+#### Authenticating users
+
+Device owners can authenticate themselves as federation users through their edu-ID Mobile App instance as a client as specified in [OAuth2 section 4.3.2](https://tools.ietf.org/html/rfc6749). 
+
+The client MUST authenticate itself through an Authorization header using the __client access token__. The Authorization header MUST use MAC tokens. MAC Tokens are generated as described in [MAC Token RFC draft](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05). The MAC tokens MUST get signed using the client access token's mac_key using the algorithm provided in the token's mac_algorithm field.
+
+NOTE FOR FUTURE DEVELOPMENT: Alternative to MAC Tokens, the client MAY present a secured JWT using the values of the client access token.
+
+The payload of the request MUST contain the following fields:
+
+* grant_type
+* username
+* password 
+
+The grant_type MUST contain the value ```password```
+
+The password must be presented as provided on the user interface of the edu-ID Mobile App. 
+
+NOTE FOR FUTURE DEVELOPMENT: The payload might be RSA or DSA encrypted using the public key of the edu-ID Service. The payload must then be presented as JWE Tokens.
+
+Example Request:
+
+```
+POST /service/eduid.php/token HTTP/1.1
+www.eduid.ch
+Authorization: MAC kid=as3.321qas,ts=1465473771,mac=af4[...]d64
+Content-type: application/json
+
+{"grant_type":"password","username":"foo@switch.ch","password":"h3llow0rld"}
+```
+
+If the password authentication is accepted by the edu-ID Service, the token endpoint responds the __user access token__ in form of a JSON structure containing 5 items. 
+
+* access_token 
+* token_type
+* kid
+* mac_key
+* mac_algorithm
+
+This user access token is unique for every edu-ID Mobile App instance and authenticated user. The client MUST store this information persistently. If a client issues a new user authentication request, the edu-ID Service MUST revoke any active user access token issued to the same client.
+
+#### Service assertion
+
+In order to grant access for Federation Services to third party apps the edu-ID Mobile App MUST authorize itself to the individual Federation Service through the edu-ID Service. This process is called assertion and provides all information that enables the Federation service to accept the authorization. 
+
+The edu-ID Mobile App must obtain a __service grant token__ from the token endpoint through a "access_code" request. 
+
+The client must authorize itself through an Authorization header using the __user access token__. The Authorization header MUST use MAC tokens. MAC Tokens are generated as described in [MAC Token RFC draft](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05). The MAC tokens MUST get signed using the client access token's mac_key using the algorithm provided in the token's mac_algorithm field.
+
+NOTE FOR FUTURE DEVELOPMENT: Alternative to MAC Tokens, the client MAY present a secured JWT using the values of the __user access token__.
+
+
+
 ## References
+
+* [RFC-6749: The OAuth 2.0 Autorization Framework](https://tools.ietf.org/html/rfc6749)
+* [RFC-7521: Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants](https://tools.ietf.org/html/rfc7521)
+* [RFC-7523: JSON Web-Tokens (JWT)](https://tools.ietf.org/html/rfc7523)
+* [RFC-7797: JSON Web Signature](https://tools.ietf.org/html/rfc7797)
+* [OAuth 2.0 Message Authentication Code (MAC) Tokens (IETF RFC Draft)](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05)
