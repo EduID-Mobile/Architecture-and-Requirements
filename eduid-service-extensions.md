@@ -58,6 +58,8 @@ While federation services have their own token endpoint, from the view point of 
 
 ### Token endpoint
 
+The token endpoint is specified in [OAuth2 Section 4](https://tools.ietf.org/html/rfc6749).
+
 The edu-ID Token endpoint has three main tasks:
 
 1. Authorizing edu-ID Mobile App Instances,
@@ -71,6 +73,8 @@ The token endpoint responds only to HTTP POST requests. Any request using anothe
 The token endpoint issues access tokens. The access tokens contain the field ```mac_algorithm```. Clients MUST use the specified algorithm for signing or encrypting tokens. Possible algorithms are defined in the [JSON Web Algorithms (JWA) specification](https://tools.ietf.org/html/rfc7518).
 
 #### Authorizing edu-ID Mobile App Instances
+
+This section is based on [OAuth 2 Section ]
 
 The edu-ID Mobile App versions are clients for the edu-ID Service. Each client instance needs to receive individual authorization before it can call any other service. For this purpose every client instance MUST authorize itself using its client credentials.
 
@@ -146,6 +150,8 @@ This user access token is unique for every edu-ID Mobile App instance and authen
 
 #### Service assertion
 
+This section is bassed on [OAuth2 Section 4.1.3 and Section 4.1.4](https://tools.ietf.org/html/rfc6749)
+
 In order to grant access for Federation Services to third party apps the edu-ID Mobile App MUST authorize itself to the individual Federation Service through the edu-ID Service. This process is called assertion and provides all information that enables the Federation service to accept the authorization.
 
 The edu-ID Mobile App must obtain a __service grant token__ from the token endpoint through a "access_code" request.
@@ -175,6 +181,8 @@ The client MUST NOT alter the provided access token.
 
 The client MUST use the provided access token for sending a client_credentials request to the Federation service's token end point. The Federation token endpoint is provided in the redirect_uri field of the response. The client MUST use the redirect URI provided by the edu-ID Service.
 
+__Note__: The additional ```redirect_uri``` diverts from [OAuth2 Section 4.1.4](https://tools.ietf.org/html/rfc6749) in order to allow more flexible service assertion. For OAuth2 compliant clients the ```redirect_uri``` in the response is equal to the requested ```redirect_uri```.
+
 Example request:
 
 ```
@@ -192,9 +200,66 @@ Example response:
 HTTP/1.1 200 OK
 Content-type: application/json
 
-{"access_token":"","token_type":"urn:ietf:oauth:param:jwt-bearer", "redirect_uri":"https://moodle.htwchur.ch/local/powertla/rest.php/identity/auth/token"}
+{"access_token":"eyJhbGc[...]NCJ9.eyJq[...]J9.22ac[...]a445","token_type":"urn:ietf:oauth:param:jwt-bearer", "redirect_uri":"https://moodle.htwchur.ch/local/powertla/rest.php/identity/auth/token"}
 ```
 
+### Non-standard extension to the token endpoint
+
+#### Token Validation
+
+Endpoint: ```token/validate```
+
+Federation Services MAY validate a service grant token by its token index as provided in the ```jti``` claim of the JWT presentd by the client.
+
+The Federation Service MUST authorize using a MAC token based on a private service token.
+
+The response will include the following claims as presented in the JWT.
+
+* sub
+* azp
+* iat
+* email
+
+The claims MUST match the claims presented in the token.
+
+The edu-ID Service MUST NOT verify token ids that were not issued to the authorized Federation Service.
+
+Example request:
+
+```
+POST /service/eduid.php/token/validate HTTP/1.1
+www.eduid.ch
+Authorization: MAC kid=B_sk.5Sxas,ts=1465474674,mac=c4a[...]3eb
+Content-type: application/json
+
+{"jti":"ks-4.eXq56"}
+```
+
+Example response:
+
+```
+HTTP/1.1 200 OK
+Content-type: application/json
+
+{"sub":"cad1232141a234214141defb134","azp":"ch.eduid.app.android.20160609","iat":"1465473874","email":"foo@switch.ch"}
+```
+
+If the token id can not be validated for the requesting service the token endpoint will respond a "404 Not Found" error.
+
+## Service Discovery
+
+The service-discovery endpoint will return the service URLs for the requesting user.
+
+## Protocol Discovery
+
+The protocol-discovery endpoint has two modes.
+
+* Service Mode (endpoint ```protocol-discovery/service```)
+* Protocol Mode (endpoint ```protocol-discovery/protocol```)
+
+In service mode the protocol discovery expects a list of service URLs. These URLs MUST match the main urls of the services provided by the service discovery. If these services expose any protocols using RSD, then the full RSD document is included into the result set.
+
+In protocol mode the client passes a list of protocols that are intended to be used for the same service. The result set will include only those services that match ALL protocol APIs that were presented in the requested list.
 
 
 ## References
