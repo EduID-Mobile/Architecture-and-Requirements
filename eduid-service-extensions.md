@@ -248,7 +248,72 @@ If the token id can not be validated for the requesting service the token endpoi
 
 ## Service Discovery
 
-The service-discovery endpoint will return the service URLs for the requesting user.
+The service discovery provide the means to identify services within the federation.
+
+It is available only to authorized users at the edu-ID Service.
+The service-discovery endpoint has 3 modes:
+
+* search mode (endpoint ```service-discovery```)
+* user mode (endpoint ```service-discovery/user```)
+* federation mode (endpoint ```service-discovery/federation```)
+
+### Search mode
+
+Endpoint: ```service-discovery```
+
+In search mode the service accepts an URL parameter. This URL MUST point to the homePageLink that is presented in the Federation Service's URL. In search mode the service discovery will return service information about a service matching the search URL regardless whether the authorized user used the service already.
+
+In order to search the federation services a client must POST a request containing 1 URL. The request MUST be authorized with a MAC token using the user access token.
+
+The service responds only to authorized users. The response contains four entries:
+
+* name - the display name of the service
+* link - the homePageLink of the service (the same as the requested URL)
+* token_endpoint - the target link for service authorization.
+* info - additional service needed by clients
+
+### User mode
+
+Endpoint: ```service-discovery/user```
+
+In user mode the service returns service information for the requesting user. The service information presented in the response can be used by a client for determinatiting the protocols provided by a service using the protocol discovery.
+
+In order to obtain the user services a client MUST send a GET request. This request MUST be authorized with a MAC token using the user access token.
+
+The service responds only to authorized users. The response contains four entries:
+
+* name - the display name of the service
+* link - the homePageLink of the service (the same as the requested URL)
+* token_endpoint - the target link for service authorization.
+* info - additional service needed by clients
+
+### Federation mode
+
+Endpoint: ```service-discovery/federation```
+
+In federation mode the service-discovery allows adding services to the federation. The federation mode is only available for authorized users.
+
+In federation mode the client MUST use a PUT request to insert the service information into the federation. The service information MUST contain the following attributes.
+
+* service_uuid - a [UUID]() for the service instance.
+* name - display name for the service
+* mainurl - homepage link of the service
+* token_endpoint - authorization endpoint for the edu-ID Mobile App
+* rsdurl - the uri to the rsd file that used by the protocol discover)
+* info - OPTIONAL client information
+
+On successful integration the service will return a service token with the following attributes.
+
+* access_token
+* token_type
+* kid
+* mac_key
+* mac_algorithm
+
+The service token MUST be stored for access by the federation service. This token MUST be used to 2 purposes.
+
+1. Verifying service grant tokens issued to clients for authorization at the Federation service.
+2. Access federation services such as for verifying a service grant token that has been presented by a client.
 
 ## Protocol Discovery
 
@@ -257,9 +322,39 @@ The protocol-discovery endpoint has two modes.
 * Service Mode (endpoint ```protocol-discovery/service```)
 * Protocol Mode (endpoint ```protocol-discovery/protocol```)
 
+### Service Mode
+
+Endpoint: ```protocol-discovery/service```
+
 In service mode the protocol discovery expects a list of service URLs. These URLs MUST match the main urls of the services provided by the service discovery. If these services expose any protocols using RSD, then the full RSD document is included into the result set.
 
+Example Request
+
+```
+POST /service/eduid.php/protocol-discovery/service HTTP/1.1
+www.eduid.ch
+Authorization: MAC kid=B_sk.5Sxas,ts=1465474674,mac=c4a[...]3eb
+Content-type: application/json
+
+["https://moodle.htwchur.ch","https://toolbox.switch.ch"]
+```
+
 In protocol mode the client passes a list of protocols that are intended to be used for the same service. The result set will include only those services that match ALL protocol APIs that were presented in the requested list.
+
+Example Request
+
+```
+POST /service/eduid.php/protocol-discovery/protocol HTTP/1.1
+www.eduid.ch
+Authorization: MAC kid=B_sk.5Sxas,ts=1465474674,mac=c4a[...]3eb
+Content-type: application/json
+
+["org.moodle.mobile","gov.adlnet.xapi"]
+```
+
+NOTE: clients MUST NOT rely that the service RSD exposes the org.ietf.oath protocol. If no oauth protocol is exposed, then the client MUST use the service discovery search for identifying the token_endpoint for authorization.
+
+NOTE: If no RSD is presented for a given URL, then the Federation Service does not expose any public services.
 
 
 ## References
