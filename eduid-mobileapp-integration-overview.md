@@ -8,47 +8,13 @@ The edu-ID Mobile App integrates interactions between the edu-ID infrastructure,
 
 This document describes the overarching system architecture and service interaction protocols.
 
-## Terms of Reference
-
-The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in this document are to be interpreted as described in [RFC-2119](https://tools.ietf.org/html/rfc2119).
-
-## Terminology
-
-* __edu-ID Service__: The edu-ID Service is the authorisation endpoint for the federation of academic services. There is one edu-ID Service for the entire federation.
-
-* __edu-ID App__: The edu-ID App provides a trusted environment on the users' mobile device. The edu-ID App is a navtive mobile app that is installed on a user's mobile device.
-
-* __Third Party App__: A thrid party app refers to mobile apps on the users' devices that are not tightly integrated with a service infrastructure and/or is provided by a potentially untrusted party outside of the truested federation domain.
-
-* __Academic Service__: An academic service is system that offers a set of functions to authorised users within the federation of academic institutions.
-
-* __Service Endpoint__: A service endpoint refers to a URI that exposes a specific service function.
-
-* __Protocol Endpoint__: A protocol endpoint combines several service endpoints that are used to achieve the functionality of a certain protocol.
-
-* __Federation__: The federation are all academic services that are connected to the edu-ID Service.
-
-* __User Credentials__: The user credentials are used to identify a user against the edu-ID Service. Typically they include username and password, but can also include other types of information.
-
-* __Token__: A token is a string of alpha-numeric characters that is used to authorise a request to a service endpoint.
-
-  * __request token__: A request token is a single use token that is used during the authorisation process.
-
-  * __access token__: An access token is a token that identifies a series of requests to service endpoints.
-
-* __Trust Domain__: A trust domain defines an environment of shared trust between applications and/or services, in which data can reliably exchanged.
+## Introduction
 
 ## The Problem of Integrating Mobile Apps into Service Federations
 
 
 ## The Solution as Defined by the edu-ID Mobile App Architecture
 
-
-## Key References
-
-This document relies on the OAuth 2.0 Authorization Framework as specified in [RFC-6749](https://tools.ietf.org/html/rfc6749) and on the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants as specified in [RFC-7521](https://tools.ietf.org/html/rfc7521).
-
-This document does not spefify any Identity Provider (IDP) Functions. IDP functions are already part of the edu-ID system functions as speficied in the [Swiss edu-ID Architecture](https://projects.switch.ch/export/sites/projects/edu-ID/.galleries/documents/SwissEduIDArchitecture_Rev1.pdf).
 
 ## Academic Service - edu-ID App Architecture Overview
 
@@ -130,7 +96,9 @@ The four components of the edu-ID Mobile App ecosystem rely on the interplay of 
 
 ### 1. User Authorization
 
-The user authorization process refers to the sequence of steps to tie an user identity to an edu-ID Mobile App instance on a mobile device. This process consists of connecting an edu-ID Mobile App instannce to the edu-ID Federation Service via the device assertion protocol (1), the OAuth user authentication (2) and exchange of user attributes (2a), and the service usage (3) and protocol discovery (3a and 3b). Including service usage resources and protocol discovery into this process is for user convenience in large federations, in which users access only a minor subset of available services. This enables the edu-ID Mobile App to filter the services to which a user has connected one or more identities instead of giving access to all possible services. The protocol discovery (3b) supports the edu-ID Mobile App to identify suitable services that match protocol requests of third party apps.
+The user authorization process refers to the sequence of steps to tie an user identity to an edu-ID Mobile App instance on a mobile device. This process consists of connecting an edu-ID Mobile App instannce to the edu-ID Federation Service via the device assertion protocol (1), the OAuth user authentication (2) and exchange of user attributes (2a), and the service usage (3) and protocol discovery (3a and 3b).
+
+Including service usage resources and protocol discovery into this process is for user convenience in large federations, in which users access only a minor subset of available services. This enables the edu-ID Mobile App to filter the services to which a user has connected one or more identities instead of giving access to all possible services. The protocol discovery (3b) supports the edu-ID Mobile App to identify suitable services that match protocol requests of third party apps.
 
 ![edu-ID App Authorization Process](images/eduid_app_architecture_authorization.png)
 
@@ -138,7 +106,13 @@ In the above figure the blue box refers to the steps as specified for OAuth 2.0.
 
 ### 2. Service Assertion
 
-The service assertion process refers to the steps that authorise an edu-ID Mobile App instance to an academic service. Only if the edu-ID Mobile App has granted access to an academic service, it will relay access authorization to third-party apps for that service. This process consists of requesting an authorization grant from the edu-ID Federation Service (4), which results in a unique service grant token for the given service. The edu-ID Mobile App requests authorization to the selected service by forwarding the service grant token to it (5). The service grant token authenticates a user to exactly one service. The service grant token can be automatically validated by the academic services. OPTIONALLY, the selected academic service can validate a client token included with the service grant token with the edu-ID Federation Service (6) and/or request profile information from it (6*). The academic services MUST only grant or reject access  and issue a service access token on the grounds of the results of validating the service grant token with the edu-ID Federation Service for completing the authorization of the edu-ID Mobile App. At any point the edu-ID Federation Service or the edu-ID Mobile App MAY invalidate some or all tokens for an edu-ID Mobile App instance with an academic service. In both cases, the academic service MUST invalidate the requested token and all tokens that are issued for that token in the app assertion process (10).
+The service assertion process refers to the steps that authorise an edu-ID Mobile App instance to an academic service. Only if the edu-ID Mobile App has granted access to an academic service, it will relay access authorization to third-party apps for that service. This process consists of requesting an authorization grant from the edu-ID Federation Service (4), which results in a unique service grant token for the given service.
+
+The edu-ID Mobile App requests authorization to the selected service by forwarding the service grant token to it (5). The service grant token authenticates a user to exactly one service.
+
+The service grant token can be automatically validated by the academic services. OPTIONALLY, the selected academic service can validate a client token included with the service grant token with the edu-ID Federation Service (6) and/or request profile information from it (6*).
+
+The academic services MUST only grant or reject access and issue a service access token on the grounds of the results of validating the service grant token with the edu-ID Federation Service for completing the authorization of the edu-ID Mobile App. At any point the edu-ID Federation Service or the edu-ID Mobile App MAY invalidate some or all tokens for an edu-ID Mobile App instance with an academic service. In both cases, the academic service MUST invalidate the requested token and all tokens that are issued for that token in the app assertion process (10).
 
 ![edu-ID Service Assertion Process](images/eduid_app_service_assertion.png)
 
@@ -146,7 +120,13 @@ In the above figure the blue box refers to the steps as specified for OAuth 2.0.
 
 ### 3. App Assertion
 
-The app assertion process refers to granting access to one or more protocol endpoints of an academic service to a third-party app. This process is initiated by the third-party app by requesting access to one or more protocols using the mobile device's operating system mechanics for inter-app communication as a result of a user interaction (7). This request is forwarded by the mobile operating system to the edu-ID Mobile App, which selects possible services on the grounds of the requested protocols. The edu-ID Mobile App informs the mobile device owner that an app requests access to the suitable services and provide the mobile device owner the opportunity to select none, one, some, or all suitable services to be accessed by the requesting app. For each selected service the edu-ID Mobile App asserts the third-party app's access using the edu-ID Mobile App's service access token (8). At this point academic services MAY grant or reject access for the requesting app. Academic services SHOULD only grant an app access token for the requested protocol endpoints. For each academic service that issues an app access token, the edu-ID Mobile App will send the protocol endpoints as well as the related app access token to the third-party app. The third-party app MUST authorize all requests to the protocol endpoints of an academic service using the issued app access token (9). If the third-party app receives an invalid token error from an service endpoint, it SHOULD re-initiate the app assertation process (7). Only if the academic service has issued a refresh token with the app access token, the third-party app MAY request a new app access token from the academic service.
+The app assertion process refers to granting access to one or more protocol endpoints of an academic service to a third-party app. This process is initiated by the third-party app by requesting access to one or more protocols using the mobile device's operating system mechanics for inter-app communication as a result of a user interaction (7). This request is forwarded by the mobile operating system to the edu-ID Mobile App, which selects possible services on the grounds of the requested protocols.
+
+The edu-ID Mobile App informs the mobile device owner that an app requests access to the suitable services and provide the mobile device owner the opportunity to select none, one, some, or all suitable services to be accessed by the requesting app. For each selected service the edu-ID Mobile App asserts the third-party app's access using the edu-ID Mobile App's service access token (8).
+
+At this point academic services MAY grant or reject access for the requesting app. Academic services SHOULD only grant an app access token for the requested protocol endpoints. For each academic service that issues an app access token, the edu-ID Mobile App will send the protocol endpoints as well as the related app access token to the third-party app. The third-party app MUST authorize all requests to the protocol endpoints of an academic service using the issued app access token (9).
+
+If the third-party app receives an invalid token error from an service endpoint, it SHOULD re-initiate the app assertation process (7). Only if the academic service has issued a refresh token with the app access token, the third-party app MAY request a new app access token from the academic service.
 
 ![edu-ID App Assertion Process](images/eduid_app_assertion.png)
 
@@ -154,456 +134,7 @@ The app assertion process refers to granting access to one or more protocol endp
 
 ### edu-ID Architecture Extensions
 
-#### Device Assertion
-
-The device assertion component provides the service endpoint for the client assertion process as specified in [RFC-7521](https://tools.ietf.org/html/rfc7521). This component allows identification of individual edu-ID Mobile App instances on different clients. Each version of the edu_ID Mobile App that is distributed to a plattform app store has a shared client identifier and client key. The __client identifier__ and __client key__ are unique to the edu-ID Mobile App version for each mobile plattform. The client identifier includes public app identier, platform, and version number. The client key is issued by the Federation Administrator to the edu-ID Mobile App Developers before release of a new edu-ID Mobile App client version for a platform. Any edu-ID Mobile App instance MUST NOT send the client key over an unsecured channel. Any edu-ID Mobile App instance MUST NOT send the client key to any other endpoints than those exposed by the device assertion component of the edu-ID Federation Service.
-
-##### Related Process
-
-* User Authorization
-
-##### Endpoints
-
-###### device-assertion
-
-The device-assertion endpoint issues a permanent device key that identifies a edu-ID Mobile App instance. To authorized requests the endpoint provides a unique client token consisting of a client_id, a client_secret, and a code.
-
-__Accepted methods__:
-
-* POST
-
-__Accepted Content-Types__:
-
-* application/json
-
-* application/x-www-form-urlencoded
-
-__Authorization__:
-
-The client must add a [Basic Authorization](https://tools.ietf.org/html/rfc7617) header including a client identifier and a client key.
-
-__Input Message__:
-
-* client_assertion_type: The client assertion type MUST be the url-encoded string ```urn:ietf:params:oauth:grant-type:authorization_code:device``` (as plain text: ```urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Aclient-authorization_code```)
-
-* grant_type: the grant type MUST be ```eduid_client```.
-
-* client_id: user readable name of the device on which the edu-ID Mobile App is running. This name is typically provided by the Device Owner in the system setup. The client_name is used for identifying individual clients.
-
-* client_assertion: must be set to the unique identifier of the device the edu-ID is running. Depending on the device plaform the device id is specific to the edu-ID Mobile App instance and may change between installations and mobile operating system upgrades.
-
-__Response Message__:
-
-The response message is of content-type ```application/json```.
-
-* client_id: unique identifier of the edu-ID Mobile App instance on a User Device. The identifier is used as authorization name during user authentication (2)
-
-* client_secret: challenge key used as authorization secret during user authentication (2)
-
-* code: sign key for authentification challenges during user authentication (2). The code is a shared secret between the edu-ID Federation Service and the the edu-ID Mobile App instance on the User Device. The code MUST NOT be sent by the client to any service endpoint.
-
-__Example__:
-
-client identifier: ```ch.eduid.mobile.ios.20160526```
-client key: ```helloWorld```
-
-Request:
-
-```
-POST /eduid/service/device-assertion HTTP/1.1
-HOST www.eduid.ch
-Auhorization: Basic Y2guZWR1aWQubW9iaWxlLmlvcy4yMDE2MDUyNjpoZWxsb1dvcmxk
-Content-type: application/json
-
-{"client_assertion_type": "urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Aclient-authorization_code","client_id":"example device","client_assertion":"41AFFE15-7666-426B-8DD6-AED1BBAF70CC","grant_type":"eduid_client"}
-```
-
-Response:
-
-```
-HTTP/1.1 200 OK
-Content-type: application/json
-
-{"client_id":"BE74E66B-67DE-429A-B8D5-202BFB6298D4","client_secret":"9DEE73EF5696","code":"A069A6FC.B164BDD9EBE-451CBB22167F5BAD2912C7054609_A6E.7985A3064338D"}
-```
-
-#### User Authentication
-
-The user authentication component is part of the edu-ID Core Architecture. Different to web-based environments where the source of the user interface can be enforced by the service, this is not possible for native mobile applications. Therefore, edu-ID Mobile App instances need to authorize themselves for the authentication process.
-
-##### Related Process
-
-* User Authorization
-
-* App Assertion
-
-##### Endpoints
-
-###### authorization
-
-The authorization endpoint has two modes. If called without a password, then it works in challenge mode. It it is called with a password parameter, then it works in authorization mode.
-
-In challenge mode the authorization returns a challenge to be used as salt for password hashing. The endpoint will __always__ return a challenge, regardless of the existance of the requested user identity. As soon the user entered an identity identifier (e.g. an e-mail adderess or a telephone number), edu-ID Mobile App needs to request the authorization challenge for the user.
-
-The password is calculated by creating the salted password hash, as it is available to the edu-ID Authentication Service. This hash is the hashed with the code of the device assertion, and the presented user id. The following javascript code illustrates the algorithm.
-
-```javascript
-var pwHash = sha1(pwSaltChallenge+ uiPassword);
-var psAuth = sha1(deviceToken.code + "\n" +
-                  uiUserId + "\n" +
-                  pwHash + "\n");
-```
-
-__Accepted methods__:
-
-* POST
-
-__Accepted Content-Types__:
-
-* application/json
-
-* application/x-www-form-urlencoded
-
-__Authorization__:
-
-The client must add a [Basic Authorization](https://tools.ietf.org/html/rfc7617) header including a client_id and a client_secret provided by the device-assertion endpoint.
-
-__Input Message__ (challenge mode):
-
-* challenge: The challenge is a sha1 hash of the direct concatenation of the client_secret and the code.
-
-* user_id: identity identifier, such as an e-mail address or a telephone number.
-
-__Response Message__ (challenge mode):
-
-The response message is of content-type ```application/json```.
-
-* challenge: string that used for password hashing.
-
-__Input Message__ (authentication mode):
-
-* response_type: the response type must have the value ```code``` because no grant redirection is possible.
-
-* challenge: The challenge is a sha1 hash of the direct concatenation of the client_secret and the code.
-
-* user_id: identity identifier, such as an e-mail address or a telephone number.
-
-* password challenge: sha1 encrypted password.
-
-__Example__ (challenge mode):
-
-The example uses the response data from the device-assertion example
-
-Request:
-
-```
-POST /eduid/service/authorization HTTP/1.1
-HOST www.eduid.ch
-Auhorization: Basic QkU3NEU2NkItNjdERS00MjlBLUI4RDUtMjAyQkZCNjI5OEQ0OjlERUU3M0VGNTY5Ng==
-Content-type: application/json
-
-{"challenge":"ed3b21c754ba77151f6572ee65dc48374d216bea","username":"hello@example.com"}
-```
-
-Response:
-
-```
-HTTP/1.1 200 OK
-Content-type: application/json
-
-{"challenge":"lGuC5-Iun1GyXI"}
-```
-
-__Example__ (authentication mode):
-
-* The example uses the response data from the device-assertion example
-
-* The password is ```helloWorld```
-
-Request:
-
-```
-POST /eduid/service/authorization HTTP/1.1
-HOST www.eduid.ch
-Auhorization: Basic QkU3NEU2NkItNjdERS00MjlBLUI4RDUtMjAyQkZCNjI5OEQ0OjlERUU3M0VGNTY5Ng==
-Content-type: application/json
-
-{"challenge":"ed3b21c754ba77151f6572ee65dc48374d216bea",
- "username":"hello@example.com",
- "password":"2006a7cf9722f26e22c426f5f2490d7d093b6c2d"}
-```
-
-Response:
-
-```
-HTTP/1.1 200 OK
-Content-type: application/json
-
-{"token_type":"mac",
- "access_token":"Ia.J663iTFhL0bBAfmAX.qdBJ81k7lNFlcgh80qRExuEzW7C9z",
- "kid":"qzOu1prSzo",
- "mac-key":"3cUee1lc-_TwXc1mZYPYm6m1pcfEUDTNFCRKu2NksxEfzxrol7bx3no",
- "mac_algorithm":"hmac-sha-1"}
-```
-
-#### Service Discovery
-
-The service discovery is a convenience component that preselects the services a user has used in the past, because it is more likely that the Device owner wants to use these services with their apps. This component provides a list of services a user has accessed in the past, regardless of the mode used to access an academic service.
-
-This component MUST respond only to authorized requests.
-
-This component MAY exclude services that refused access to the authorised user in the past.
-
-This component SHOULD exclude services that do not expose services.
-
-##### Related Process
-
-* User Authorization
-
-##### Endpoints
-
-###### service-discovery
-
-__Accepted methods__:
-
-* GET
-
-__Accepted Content-Types__:
-
-* Not Applicable
-
-__Authorization__:
-
-The edu-ID Mobile App instance MUST send an Autorization header using the authorization method of its edu-ID access token. Both service endpoints MUST refuse access to unauthorized edu-ID Mobile App instances.
-
-Request:
-
-```
-GET /eduid/service/service-discovery HTTP/1.1
-HOST www.eduid.ch
-Auhorization: MAC kid=DfSc3K2OWH,ts=1463244822,mac=98b4b91feccc97604c5559d94f39c92b9168b178
-
-```
-
-Response:
-
-```
-HTTP/1.1 200 OK
-Content-type: application/json
-
-["https://moodle.htwchur.ch","https://ilias.unibe.ch","https://www2.icorsi.ch/"]
-```
-
-#### Service Assertion
-
-The service assertion component is part of asserting authorization for academic sercies to the edu-ID Mobile App. This component is used by the edu-ID Mobile App to get access an academic service. The academic service can automatically verify the assertation token bassed on shared secrets between the academic service and the edu-ID Federation Server. The academic service may use the the assertion token to request user profile information if necessary.
-
-This component tracks, which academic services have been accessed and provides this information to the service discovery. The component can use accepted authorization grants to inform the accepting academic service that the requesting edu-ID Mobile App access token has been invalidated. If the service assertion revokes an accepted grant, the accepting accademic service MUST invalidate all active tokens that originate to that grant token.
-
-The asserted JWT uses a unique user token that identifies the authorised user to the academic service as subject of the assertion. This user token can be used by the academic service to verify the user identity. This claim is identified by the key ```https://www.eduid.ch/usertoken```.
-
-Additionally, the assertion includes a claim is a unique bearer token that identifies the client to the academic service as a client token. This claim is identified by the key ```https://www.eduid.ch/client```. The edu-ID Federation Service MAY use this client token in order to revoke access to the service.
-
-The assertion is secured by a JWS signature that uses a shared secret between the academic service and the edu-ID Federation Service as key for the signature algorithm. This enables the targeted service to verify the validity of the assertation without accessing the edu-ID Federation Service.
-
-If configured, the assertion may include additional claims requested by the academic service from the edu-ID Federation Server.
-
-##### Related Process
-
-* Service Assertion
-
-##### Endpoints
-
-All endpoints are only available to OAuth authorized requests.
-
-###### service-assertion
-
-__GET method__
-
-The get method expects a client grant token as search string to authorized services.
-
-__Response message__
-
-If the provided client grant token has been issued to the requesting service, then the response will return the user token as provided in the subject of the client assertion. Otherwise the response will be a 403 Forbidden error.
-
-__Example__
-
-Request:
-
-```
-GET /eduid/service/service-protocols?sfsoq94kal.d0-94914sF HTTP/1.1
-HOST www.eduid.ch
-Auhorization: MAC kid=DfS0K2OWH,ts=1463244822,mac=98b4b91... ...78
-Content-type: application/json
-
-```
-
-Response:
-
-```
-HTTP/1.1 200 OK
-Content-type: application/json
-
-{"sub":"asdiqw4-0sadoerip"}
-```
-
-__POSTS method__
-
-__Accepted Content-Types__:
-
-* application/json
-
-* application/x-www-form-urlencoded
-
-__Input Message__
-
-* service_uri: URI to the academic service the authorized client seeks to access.
-
-__Response Message__
-
-As response the endpoint returns an client assertion token using a [JWS signed](https://tools.ietf.org/html/rfc7797) [JSON Web-Tokens (JWT)](https://tools.ietf.org/html/rfc7523) as assertion. The edu-ID Mobile App instance MUST present the unaltered assertation to the academic service it whishes to access.
-
-__Example__
-
-Request:
-
-```
-POST /eduid/service/service-protocols HTTP/1.1
-HOST www.eduid.ch
-Auhorization: MAC kid=DfSc3K2OWH,ts=1463244822,mac=98b4b91feccc97604c5559d94f39c92b9168b178
-Content-type: application/json
-
-{"service_uri":"https://moodle.htwchur.ch"}
-```
-
-Response:
-
-```
-HTTP/1.1 200 OK
-Content-type: application/json
-
-{"grant_type":"urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer",
- "assertion":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2VkdWlkLmNoIiwiYXVkIjoiaHR0cHM6Ly9tb29kbGUuaHR3Y2h1ci5jaCIsInN1YiI6ImFzZGlxdzQtMHNhZG9lcmlwIiwiZXhwIjoiMTQ2MzI0NDUyMiIsImh0dHBzOi8vZWR1aWQuY2gvY2xpZW50IjogInNmc29xOTRrYWwuZDAtOTQ5MTRzRiJ9.c610b3e69d5c9a833a63da16338c8eeac0c7a2e6709df8dae299b3a3ceb3646e"}
-```
-
-
-#### Protocol Discovery
-
-The protocol discovery is based on the publicly available protocol endpoints that for an academic service. Protocol endpoints combine one or more service endpoints following a well defined **protocol** of accessing the endpoints. Therefore, a protocol endpoint is a root path for the service endpoints of the related protocol. The protocol discovery component's prime function is to support the edu-ID Mobile App during the app assertion process to select suitable services for a thir-party app's protocol request (7).
-
-An instance may directly forward the requested protocol list, upon which the protocol discovery component MUST respond a list of protocol endpoints that contains all academic services that expose the exact protocols as requested. The protocol discovery will return the unprocessed service discovery information as provided by the academic services.
-
-The edu-ID Mobile App MAY prefetch protocol endpoints for a authorized user's services during the user authorization process.
-
-The protocol discovery is tightly coupled to the edu-ID Federation Service's protocol detection. The protocol detection verifies the services that are exposed by the academic services. The protocol detection uses the [RSD2 service discovery](https://github.com/BLC-HTWChur/rsd2-specification/blob/master/rsd2-specification.md).
-
-##### Related Processes
-
-* User Authorization
-
-* App Assertion
-
-##### Endpoints
-
-All endpoints are only available to OAuth authorized requests from edu-ID Mobile Apps.
-
-All service endpoints respond a list (JSON Array) of unprocessed RSD2 data as provided by the academic service.
-
-__Accepted methods__:
-
-* POST
-
-__Accepted Content-Types__:
-
-* application/json
-
-__Authorization__:
-
-The edu-ID Mobile App instance MUST send an Autorization header using the authorization method of its edu-ID access token. Both service endpoints MUST refuse access to unauthorized edu-ID Mobile App instances.
-
-###### service-protocols
-
-This service-protocols endpoint accepts a list of requested protocol names and returns the academic services' discovery information to an edu-ID Mobile App instance. This service endpoint MUST expose all services that expose the exact list of requested protocols.
-
-
-__Input Message__:
-
-* unnamed list of academic service links exposed by the academic services in their RSD2 data.
-
-__Response Message__:
-
-The response message is of content-type ```application/json```.
-
-* unnamed list of RSD2 definitions of matching academic services.
-
-__Example__:
-
-Request:
-
-```
-POST /eduid/service/service-protocols HTTP/1.1
-HOST www.eduid.ch
-Auhorization: MAC kid=DfSc3K2OWH,ts=1463244822,mac=98b4b91feccc97604c5559d94f39c92b9168b178
-Content-type: application/json
-
-["https://moodle.htwchur.ch","https://ilias.unibe.ch","https://www2.icorsi.ch/"]
-```
-
-Response:
-
-```
-HTTP/1.1 200 OK
-Content-type: application/json
-
-[{"engineName": "moodle@ HTW Chur",
-  "engineLink": "",
-  "homePageLink": "https://moodle.htwchur.ch",
-  "homePageIcon": "/favico.png","apis": {...}}, ...]
-```
-
-The response has been shortened for readability purposes.
-
-###### protocols
-
-This protocols endpoint accepts a list of academic services and returns the academic services' discovery information to an edu-ID Mobile App instance. If an requested service does not expose any services via RSD2, no information will be included for that service.
-
-__Input Message__:
-
-* unnamed list of protocol names as exposed by the academic services in their RSD2 data.
-
-__Response Message__:
-
-The response message is of content-type ```application/json```.
-
-* unnamed list of RSD2 definitions of matching academic services
-
-__Example__:
-
-Request:
-
-```
-POST /eduid/service/service-protocols HTTP/1.1
-HOST www.eduid.ch
-Auhorization: MAC kid=DfSc3K2OWH,ts=1463244822,mac=98b4b91feccc97604c5559d94f39c92b9168b178
-Content-type: application/json
-
-["org.moodle.mobile","gov.adlnet.xapi","org.imsglobal.qti"]
-```
-
-Response:
-
-```
-HTTP/1.1 200 OK
-Content-type: application/json
-
-[{
-  "engineName": "moodle@ HTW Chur",
-  "engineLink": "",
-  "homePageLink": "https://moodle.htwchur.ch",
-  "homePageIcon": "/favico.png","apis": {...}}, ...]
-```
-
-The response has been shortened for readability purposes.
+The edu-ID architecture does not specify the integration of the system beyond the level of access authorization. This architecture is extended in
 
 ### Academic Protocol Endpoints and components
 
