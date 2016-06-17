@@ -67,7 +67,7 @@ The name refers to the client name. This name refers to the device name chosen b
 
 ## Signature
 
-The signature MUST verify agains the stored key for the provided key id.
+The signature MUST verify against the stored key for the provided key id.
 
 ## References
 
