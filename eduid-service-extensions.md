@@ -111,9 +111,11 @@ This client registration is unique for every edu-ID Mobile App instance. The cli
 
 Device owners can authenticate themselves as federation users through their edu-ID Mobile App instance as a client as specified in [OAuth2 section 4.3.2](https://tools.ietf.org/html/rfc6749).
 
-The client MUST authenticate itself through an Authorization header using the __client access token__. The Authorization header MUST use MAC tokens. MAC Tokens are generated as described in [MAC Token RFC draft](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05). The MAC tokens MUST get signed using the client access token's mac_key using the algorithm provided in the token's mac_algorithm field.
+The client MUST authenticate itself through an Authorization header using the __client access token__. The Authorization header MUST use JWT tokens or MAC tokens.
 
-__NOTE FOR FUTURE DEVELOPMENT__: Alternative to MAC Tokens, the client MAY present a secured JWT using the values of the client access token.
+JWT Tokens are the same format as the request grant token, but clients MAY omit the name claim. For signing the clients MUST use the provided key_id and specify the signing algorithm as provided by the client access token.
+
+MAC Tokens are generated as described in [MAC Token RFC draft](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05). The MAC tokens MUST get signed using the client access token's mac_key using the algorithm provided in the token's mac_algorithm field.
 
 The payload of the request MUST contain the following fields:
 
@@ -156,9 +158,11 @@ In order to grant access for Federation Services to third party apps the edu-ID 
 
 The edu-ID Mobile App must obtain a __service grant token__ from the token endpoint through a "access_code" request.
 
-The client must authorize itself through an Authorization header using the __user access token__. The Authorization header MUST use MAC tokens. MAC Tokens are generated as described in [MAC Token RFC draft](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05). The MAC tokens MUST get signed using the client access token's mac_key using the algorithm provided in the token's mac_algorithm field.
+The client must authorize itself through an Authorization header using the __user access token__. The Authorization header MUST either use JWT tokens or MAC tokens.
 
-__NOTE FOR FUTURE DEVELOPMENT__: Alternative to MAC Tokens, the client MAY present a secured JWT using the values of the __user access token__.
+JWT Tokens are the same format as the request grant token, but clients MAY omit the name claim. For signing the clients MUST use the provided key_id and specify the signing algorithm as provided by the client access token.
+
+MAC Tokens are generated as described in [MAC Token RFC draft](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05). The MAC tokens MUST get signed using the client access token's mac_key using the algorithm provided in the token's mac_algorithm field.
 
 The payload MUST contain the following parameters:
 
@@ -211,7 +215,7 @@ Endpoint: ```token/validate```
 
 Federation Services MAY validate a service grant token by its token index as provided in the ```jti``` claim of the JWT presentd by the client.
 
-The Federation Service MUST authorize using a MAC token based on a private service token.
+The Federation Service MUST authorize using a JWT or MAC token based on a private service token.
 
 The response will include the following claims as presented in the JWT.
 
@@ -263,7 +267,7 @@ Endpoint: ```service-discovery```
 
 In search mode the service accepts an URL parameter. This URL MUST point to the homePageLink that is presented in the Federation Service's URL. In search mode the service discovery will return service information about a service matching the search URL regardless whether the authorized user used the service already.
 
-In order to search the federation services a client must POST a request containing 1 URL. The request MUST be authorized with a MAC token using the user access token.
+In order to search the federation services a client must POST a request containing 1 URL. The request MUST be authorized using either JWT or MAC tokens based on the user access token.
 
 The service responds only to authorized users. The response contains four entries:
 
@@ -278,7 +282,7 @@ Endpoint: ```service-discovery/user```
 
 In user mode the service returns service information for the requesting user. The service information presented in the response can be used by a client for determinatiting the protocols provided by a service using the protocol discovery.
 
-In order to obtain the user services a client MUST send a GET request. This request MUST be authorized with a MAC token using the user access token.
+In order to obtain the user services a client MUST send a GET request. This request MUST be authorized using either a JWT or a MAC token using the user access token.
 
 The service responds only to authorized users. The response contains four entries:
 
@@ -338,6 +342,10 @@ Content-type: application/json
 
 ["https://moodle.htwchur.ch","https://toolbox.switch.ch"]
 ```
+
+### Protocol Mode
+
+Endpoint ```protocol-discovery/protocol```
 
 In protocol mode the client passes a list of protocols that are intended to be used for the same service. The result set will include only those services that match ALL protocol APIs that were presented in the requested list.
 
