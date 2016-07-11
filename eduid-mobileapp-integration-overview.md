@@ -40,9 +40,25 @@ The edu-ID Mobile App ecosystem primarily focuses on client authorization and do
 
 ### Enhanced OAuth 2.0 Framework
 
-The edu-ID Mobile App architecture is build on top of the [OAuth 2.0 Framework](https://tools.ietf.org/html/rfc6749). The OAuth 2.0 Framework defines a process flow for authorized access to resource services from a wide range of clients. This framework is extended by [OAuth 2.0 Assertions](https://tools.ietf.org/html/rfc7521). OAuth 2.0 Assertions provide means to relay authorization across protocols and services.
+The edu-ID Mobile App architecture builds on top of the [OAuth 2.0 Framework](https://tools.ietf.org/html/rfc6749). The OAuth 2.0 Framework defines a process flow for authorized access to resource services from a wide range of clients. This framework is extended by [OAuth 2.0 Assertions](https://tools.ietf.org/html/rfc7521). OAuth 2.0 Assertions provide means to relay authorization across protocols and services.
 
-The edu-ID Mobile App architecture __enhances__ the OAuth 2.0 Framework by cascading the specified OAuth 2.0 workflow and assertions. By doing so, the architecture does not add any new concepts to the OAuth 2.0 Framework but aligns the specifications' concepts into a coherent business logic for machine-to-machine trust negociation. This logic is not part of the OAuth 2.0 specifications and is therefore left to actual OAuth 2.0 service implementations.
+The edu-ID Mobile App architecture __enhances__ the OAuth 2.0 Framework by cascading the specified OAuth 2.0 workflow and assertions. By doing so, the architecture does not add  new concepts to the OAuth 2.0 Framework but aligns the specifications' concepts into a coherent business logic for machine-to-machine trust negociation. This logic is not part of the OAuth 2.0 specifications and is therefore left to actual OAuth 2.0 service implementations.
+
+Recent implementation of OAuth2 build on JSON Web-Tokens (JWT). JWT provides a more flexible and more secure authentication and authorization approach than the original (plain) Bearer scheme for OAuth2 [https://tools.ietf.org/html/rfc6750]. Different to OAuth1 MAC authorization, JWT is fully compatible to the Bearer scheme.
+
+#### Implementation Issues
+
+The OAuth2 specification defines a framework for authentication and authorization. It does not specify identity provisioning. Identity provisioning is fully encapsulated in the authorization code of a JWT. The organisation of provided identity information is partially covered by the OpenID Connect specification [OPENID CONNECT 1.0]. Actual implementations of OAuth2/OpenID Connect Identity Providers (IDP) may allow additional/federation-specific identity information.
+
+The EduID Mobile App is agnostic to the IDP implementation as it uses and passes JWT tokens without manipulating identity related information.
+
+#### Dymanic JWT
+
+Different to some commercial implementations that uses JWT as static codes, the EduID Mobile App uses __dynamic__ JWT that are regenerated for each request, based on a shared secret between the authorizing service and the authorized client. Static JWT can be verified by the authorizing service as self orginated. Clients can verify the authorizing instance of a static JWT based on a public or shared keys. The dynmaic JWT replaces the OAuth1 MAC Authorization by having request-specific JWT. This means that clients MUST regenerate a JWT for every request to the authorizing service or to the resource service. This JWT is secured by a shared key between the client and the authorizing service/resource service.
+
+Compared to static JWT the authorizing service can verify not only the origin of the authorization, but also the client. While with static JWT potential attackers may hijack the JWT for making requests, with dynamic JWT they need to possess a shared secret in order to generate auhorizing JWT. Depending on the used cryprographic mechanism, the shared secret might never cross the network. With dynmaic JWTs it is possible to reduce potential security risks of static Bearer tokens and allows longer time-to-live (TTL) intervals.
+
+Implementing IDPs need to support dynamic JWTs in order to work with the EduID Mobile App.
 
 ### edu-ID Mobile App Ecosystem Stakeholders
 
@@ -60,11 +76,11 @@ Human stakeholders play a key role in the process of machine-to-machine communic
 
 * [ ] User names and passwords are NEVER exposed to third party apps.
 
-* [ ] Third party apps NEVER interact directly with the authorization services of the edu-ID infrastructure.
+* [x] Third party apps NEVER interact directly with the authorization services of the edu-ID infrastructure.
 
 * [ ] Third party apps NEVER receive service endpoints locations without explicit authorization of the users and services.
 
-* [ ] Third party apps gain access ONLY to explicitly requested protocol endpoints or combinations of protocol endpoints.
+* [x] Third party apps gain access ONLY to explicitly requested protocol endpoints or combinations of protocol endpoints.
 
 ### Advanced Security Requirements
 
