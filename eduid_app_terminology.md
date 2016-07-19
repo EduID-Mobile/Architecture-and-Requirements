@@ -43,6 +43,7 @@ The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'S
 * [RFC-2617: The Basic HTTP Authorization Scheme](https://tools.ietf.org/html/rfc7617)
 * [RFC-7523: JSON Web-Tokens (JWT)](https://tools.ietf.org/html/rfc7523)
 * [RFC-7797: JSON Web Signature](https://tools.ietf.org/html/rfc7797)
+* [RFC-7800: Proof-of-Possession Key for JWT](https://tools.ietf.org/html/rfc7800)
 * [OAuth 2.0 Message Authentication Code (MAC) Tokens (IETF RFC Draft)](https://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-05)
 * [Swiss edu-ID Architecture](https://projects.switch.ch/export/sites/projects/edu-ID/.galleries/documents/SwissEduIDArchitecture_Rev1.pdf)
 * [RSD2 service discovery](https://github.com/BLC-HTWChur/rsd2-specification/blob/master/rsd2-specification.md)
