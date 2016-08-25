@@ -40,18 +40,18 @@ The EduID App follows the core color scheme of EduID.
 
 ## Icons
 
-| Color | Monochrome |
-|![29px Settings](images/03-artwork-icons/color/29_settings.png) | ![29px Settings](images/03-artwork-icons/grey/29_settings.png) |
-|![40px Spotlight](images/03-artwork-icons/color/40_spotlight.png) | ![40px Spotlight](images/03-artwork-icons/grey/40_spotlight.png) |
-|![57px Home Screen](images/03-artwork-icons/color/57_homescreen.png) | ![57px Home Screen](images/03-artwork-icons/grey/57_homescreen.png) |
-|![58px Settings](images/03-artwork-icons/color/58_retina_settings.png) | ![58px Settings ](images/03-artwork-icons/grey/58_retina_settings.png) |
-|![60px Home Screen](images/03-artwork-icons/color/60_homescreen.png) | ![60px Home Screen](images/03-artwork-icons/grey/60_homescreen.png) |
-|![80px Spotlight](images/03-artwork-icons/color/80_retina_spotlight.png) | ![80px Spotlight](images/03-artwork-icons/grey/80_retina_spotlight.png) |
-|![87px Settings](images/03-artwork-icons/color/87_retina_settings.png) | ![87px Settings](images/03-artwork-icons/grey/87_retina_settings.png) |
-|![114px Homescreen](images/03-artwork-icons/color/114_retina_homescreen.png) | ![114px Homescreen](images/03-artwork-icons/grey/114_retina_homescreen.png) |
-|![120px Homescreen](images/03-artwork-icons/color/120_retina_homescreen.png) | ![120px Homescreen](images/03-artwork-icons/grey/120_retina_homescreen.png) |
-|![180px Homescreen](images/03-artwork-icons/color/180_retina_homescreen.png) | ![180px Homescreen](images/03-artwork-icons/grey/180_retina_homescreen.png) |
-|![1024px App Store](images/03-artwork-icons/color/1024_retina_appstore.png) | ![1024px App Store](images/03-artwork-icons/grey/1024_retina_appstore.png) |
+Color | Monochrome
+![29px Settings](images/03-artwork-icons/color/29_settings.png) | ![29px Settings](images/03-artwork-icons/grey/29_settings.png)
+![40px Spotlight](images/03-artwork-icons/color/40_spotlight.png) | ![40px Spotlight](images/03-artwork-icons/grey/40_spotlight.png)
+![57px Home Screen](images/03-artwork-icons/color/57_homescreen.png) | ![57px Home Screen](images/03-artwork-icons/grey/57_homescreen.png)
+![58px Settings](images/03-artwork-icons/color/58_retina_settings.png) | ![58px Settings ](images/03-artwork-icons/grey/58_retina_settings.png)
+![60px Home Screen](images/03-artwork-icons/color/60_homescreen.png) | ![60px Home Screen](images/03-artwork-icons/grey/60_homescreen.png)
+![80px Spotlight](images/03-artwork-icons/color/80_retina_spotlight.png) | ![80px Spotlight](images/03-artwork-icons/grey/80_retina_spotlight.png)
+![87px Settings](images/03-artwork-icons/color/87_retina_settings.png) | ![87px Settings](images/03-artwork-icons/grey/87_retina_settings.png)
+![114px Homescreen](images/03-artwork-icons/color/114_retina_homescreen.png) | ![114px Homescreen](images/03-artwork-icons/grey/114_retina_homescreen.png)
+![120px Homescreen](images/03-artwork-icons/color/120_retina_homescreen.png) | ![120px Homescreen](images/03-artwork-icons/grey/120_retina_homescreen.png)
+![180px Homescreen](images/03-artwork-icons/color/180_retina_homescreen.png) | ![180px Homescreen](images/03-artwork-icons/grey/180_retina_homescreen.png)
+![1024px App Store](images/03-artwork-icons/color/1024_appicon_appstore.png) | ![1024px App Store](images/03-artwork-icons/grey/1024_appicon_appstore.png)
 
 ## Launch Screens
 
