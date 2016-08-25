@@ -113,8 +113,6 @@ Human stakeholders play a key role in the process of machine-to-machine communic
 
 ### Minimal Security Requirements
 
-* [ ] User names and passwords are NEVER exposed to third party apps.
-
 * [x] Third party apps NEVER interact directly with the authorization services of the edu-ID infrastructure.
 
 * [ ] Third party apps NEVER receive service endpoints locations without explicit authorization of the users and services.

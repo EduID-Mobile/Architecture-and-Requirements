@@ -1,0 +1,4 @@
+# Core App Architecture
+
+## Introduction
+
