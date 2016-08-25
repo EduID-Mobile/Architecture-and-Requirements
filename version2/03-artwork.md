@@ -41,6 +41,7 @@ The EduID App follows the core color scheme of EduID.
 ## Icons
 
 Color | Monochrome
+----- | ----------
 ![29px Settings](images/03-artwork-icons/color/29_settings.png) | ![29px Settings](images/03-artwork-icons/grey/29_settings.png)
 ![40px Spotlight](images/03-artwork-icons/color/40_spotlight.png) | ![40px Spotlight](images/03-artwork-icons/grey/40_spotlight.png)
 ![57px Home Screen](images/03-artwork-icons/color/57_homescreen.png) | ![57px Home Screen](images/03-artwork-icons/grey/57_homescreen.png)
