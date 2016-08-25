@@ -11,7 +11,9 @@ This document outlines a distributied operation model for connecting native mobi
 This initial version of the operation model outlines the relation of
 
 * The core EduID Infrastructure
+
 * Client management
+
 * Dictionary services
 
 ## Centralised vs. Distributed Federation Management
@@ -24,6 +26,8 @@ A distributed approach to integrate mobile capabilities to academic federation s
 
 Within a distributed infrastructure the Swiss EduID services would act solitarily as authentication service. This infrastructure would be hosted and maintained by SWITCH and related parties.
 
+Ideally all web-service endpoints that directly link to the Swiss eduID main service components should be hosted and operated by SWITCH. This includes all OAuth2 service endpoints.
+
 ## App-related Infrastructure
 
 Clients for the EduID Mobile App can be managed by a separate service for authorizing Swiss Mobile App Clients. This service is responsible for maintaining app releases and controlling app availability for the different mobile platforms. As institutions who are active in mobile app development already have distribution processes in place this can be performed by the participating institutions.
@@ -35,17 +39,29 @@ The client authorization is part of the OAuth2 protocol and commercially availab
 Dictionary services are used by the eduID Mobile App to enhance the user experience. Two dictionary services are part of the eduID Mobile App architecture.
 
 * The Service Dictionary
+
 * The Personal Service Dictionary
 
 The service dictionary is part of the service discovery, that allows the EduID Mobile App to determine the services in the federation that provide requested service endpoints.
 
-The personal serivce dictionary provides support for enhancing the user experience for granting app access. Technically, this information is already available to the EduID service. A distributed API for this service would only allow
-
-
-
-
-In the case of a distributed dictionary services, Federation Members may inject effective dictionary services as a institutional attribute to an EduID entry. This would allow the EduID Mobile App to preselect the effective dictionary services for the effective EduID user.
+The personal serivce dictionary provides support for enhancing the user experience for granting app access. The personal service dictionary keeps track of the relation of users and the services they use (have successdully authenticated in the past). This allows the app filtering services that users have not used before and omit those services which were not previously accessed by a user.
 
 ## Institutional Infrastructure
 
-Service Integration
+Individual Services need to integrate two basic services:
+
+* Token-based authorization as specified in OAuth2 and the related specifications.
+
+* an RSD provider that exposes the supported web-service protocols.
+
+A number of services already support OAuth2, including MS Active Directory. Many modern services already support OAuth2 as an authentication scheme.
+
+The majority of services uses some form of token-based authorization. For open source products existing token authorization can be expanded with relative ease to match the OAuth2 specification requirements.
+
+The RSD provider is only necessary for service instances that wish to expose their web-services to mobile applications. RSD is designed for providing simple interfaces as easy as static text files. Static RSD files are suitable for services with web-service endpoints that do not change and are not configurable. For configurable services, dynamic RSD generation is simple in the context of modern web-service architectures.
+
+Both components add not more overhead to system administration as the existing AAI integration.
+
+Maintaining these components is typically performed by the institutions that run the services. For services with shared instances, the maintance of service extensions can be shared across institutions.
+
+The Service integration for both components has been demonstrated for the Moodle LMS plattform.
