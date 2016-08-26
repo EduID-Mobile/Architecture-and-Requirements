@@ -68,7 +68,7 @@ After authentication the EduID App is only loosely coupled to user management. F
 
 The EduID App depends on the existance of service components. This architecture include primary service components that provide the key functions for authentication and authorization, and secondary service components that for improving the user experience in the diverse and distributed academic federation.
 
-![EduID Detailed Architecture](images/eduid_app_architecture_details.png)
+![EduID Detailed Architecture](images/eduid_app_architecture-details.png)
 
 ### Federation-level Service Endpoints
 
