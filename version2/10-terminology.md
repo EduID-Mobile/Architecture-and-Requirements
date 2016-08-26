@@ -37,10 +37,12 @@ All documents that are part of the present architecture silently assume that ide
 
 The Swiss EduID Mobile App architecture builds on top of the following specifications.
 
-* [RFC-6749: The OAuth 2.0 Autorization Framework](https://tools.ietf.org/html/rfc6749)
-* [RFC-7521: Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants](https://tools.ietf.org/html/rfc7521)
 * [RFC-2617: The Basic HTTP Authorization Scheme](https://tools.ietf.org/html/rfc7617)
-* [RFC-7523: JSON Web-Tokens (JWT)](https://tools.ietf.org/html/rfc7523)
+* [RFC-6749: The OAuth 2.0 Autorization Framework](https://tools.ietf.org/html/rfc6749)
+* [RFC-7516: JSON Web Encryption (JWE)](https://tools.ietf.org/html/rfc7516)
+* [RFC-7518: JSON Web Algorithms (JWA)](https://tools.ietf.org/html/rfc7518)
+* [RFC-7521: Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants](https://tools.ietf.org/html/rfc7521)
+* [RFC-7523: JSON Web-Tokens (JWT) for OAuth 2.0 Client Authentication and Authorization Grants](https://tools.ietf.org/html/rfc7523)
 * [RFC-7797: JSON Web Signature](https://tools.ietf.org/html/rfc7797)
 * [RFC-7800: Proof-of-Possession Key for JWT](https://tools.ietf.org/html/rfc7800)
 
@@ -80,3 +82,6 @@ Conflicts between the present archtecture document and the related specification
 
 * __Trust Domain__: A trust domain defines an environment of shared trust between applications and/or services, in which data can reliably exchanged.
 
+## Security related notes
+
+This architecture refers to keys as cryptographic tools. This architecture is agnostic with respect to the cryptographic method. Whenever, this architecture document refers to cryptographic keys it assumes conformance to the [JWA specification](https://tools.ietf.org/html/rfc7518).

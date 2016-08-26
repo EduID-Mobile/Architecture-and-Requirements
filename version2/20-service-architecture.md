@@ -72,13 +72,57 @@ The EduID App depends on the existance of service components. This architecture 
 
 ### Federation-level Service Endpoints
 
+The eduID Mobile relies on the OAuth2 protocol endpoint for authenticating users and clients.
+
+* The token endpoint.
+* The authorization endpoint.
+
+Both service endpoints are specified in [OAuth2 section 3](https://tools.ietf.org/html/rfc6749#section-3).
+
 ### Institution-level Service Endpoints
+
+Federation Services need to provide at least an token service endpoint as a target the eduID Mobile App.
+
+The token endpoint MUST support at least the following grant-types:
+
+* urn:ietf:param:oauth:grant-type:jwt-bearer
+* authorization_code
+
+In addition the institution-level service endpoints MAY support scoped request. For services supporting scoped requests the scoping MUST ensure that:
+
+* The EduID Mobile App instances' token MUST be scoped to access the token endpoint.
+* Third party app instance tokens MUST get scoped to the authorized protocols.
+* Third party app instances MAY have several active authorization tokens for different protocol.
+
+For Federation Services that use token extension MUST scope the third party app for accessing the token endpoint.
 
 ## Process Flows
 
+The EduID Mobile App relies on the [Client Crendentials Grant flow](https://tools.ietf.org/html/rfc6749#section-4.4) and the [Authorization Code Grant flow](https://tools.ietf.org/html/rfc6749#section-4.1). The client credentials grant flow is only used for client registration. All flows rely on the [Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs) specification](https://tools.ietf.org/html/rfc7800).
+
+Federation services MAY additionally implement the [Extension Grant flow](https://tools.ietf.org/html/rfc6749#section-4.5). The extension grant flow is only relevant to the [native application integration layer](40-nail-api.md).
+
 ### eduID App Authorization
 
+The EduID Mobile App comes in variations for Android and iOS. Each variation has its independent versioning. Each version of the EduID Mobile App requires an unique version key.
+
+Before an EduID Mobile App instance can access the EduID Service endpoints, it MUST register itself using the client credentials Grant flow. Using a [self-assigned client assertion](https://tools.ietf.org/html/rfc7521#section-4.2) as credentials. The client assertion uses the version key for verifying its origin.
+
+A client assertion MUST include the instance's device ID, the device name, device type and OS Version.
+
+The EduID Service MUST provide an unique instance token to the EduID Mobile App instance.
+
+The EduID Service MAY reject individual version keys from authorizing with the service.
+
+The EduID Service MUST allow already confirmed EduID Mobile App instances to upgrade to a higher version if the instance can present the appropriate key.
+
+The EduID Service MUST allow already confirmed EduID Mobile App instances to alter the device information if the correct instance token has been presented.
+
+The EduID Service MAY revoke instance tokens in order to exclude specific clients from accessing the infrastructure. The EduID Service MUST refuse rejected clients from reobtaining a client token.
+
 ### User Authentification
+
+
 
 ### Service Discovery
 

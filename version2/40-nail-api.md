@@ -2,6 +2,8 @@
 
 ## Introduction
 
+The Native Application Integration Layer
+
 ## NAIL API Overview
 
 ### Protocol Discovery and Authorization
@@ -18,9 +20,6 @@ Simple Bearer Tokens Handling
 
 Refreshing Access Tokens
 
-## Android specific Aspects
-
-## iOS specific Aspects
 
 ## Javascript Integration for Apache Cordova
 
