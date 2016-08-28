@@ -38,13 +38,17 @@ The client authorization is part of the OAuth2 protocol and commercially availab
 
 Dictionary services are used by the eduID Mobile App to enhance the user experience. Two dictionary services are part of the eduID Mobile App architecture.
 
-* The Service Dictionary
+* The Protocol Discovery Dictionary
 
-* The Personal Service Dictionary
+* The Service Usage Management Dictionary
 
-The service dictionary is part of the service discovery, that allows the EduID Mobile App to determine the services in the federation that provide requested service endpoints.
+The protocol discovery dictionary allows the EduID Mobile App to determine the services in the federation that provide requested service endpoints. This service relies on links betwee the EduID Federation Index.
 
-The personal serivce dictionary provides support for enhancing the user experience for granting app access. The personal service dictionary keeps track of the relation of users and the services they use (have successdully authenticated in the past). This allows the app filtering services that users have not used before and omit those services which were not previously accessed by a user.
+If the protocol discovery component is operated outside the core EduID Service, a link to query the federation index MUST be provided.
+
+The personal service usage management dictionary provides support for enhancing the user experience for granting app access. The personal service dictionary keeps track of the relation of users and the services they use (have successdully authenticated in the past). This allows the app filtering services that users have not used before and omit those services which were not previously accessed by a user.
+
+The service usage management is tightly connected to service assertion, the affiliation index and the federation index. If this component is operated outside the core EduID Infrastructure, it MUST be ensured that personal information can be accessed between the related components. Most importantly, the service assersion MUST always report on user assertions to Federation services.
 
 ## Institutional Infrastructure
 
