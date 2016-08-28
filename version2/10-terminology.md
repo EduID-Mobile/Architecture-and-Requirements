@@ -35,11 +35,13 @@ All documents that are part of the present architecture silently assume that ide
 
 ## Underpinning Specifications
 
-The Swiss EduID Mobile App architecture builds on top of the following specifications.
+The Swiss EduID Mobile App architecture builds on top of the following specifications. Implementation-related requirements defined in the following specifications are not repeated in this document.
 
-* [RFC-2617: The Basic HTTP Authorization Scheme](https://tools.ietf.org/html/rfc7617)
+* [RFC-2617: The Basic HTTP Authorization Scheme](https://tools.ietf.org/html/rfc2617)
 * [RFC-6749: The OAuth 2.0 Autorization Framework](https://tools.ietf.org/html/rfc6749)
+* [RFC-7009: OAuth2 Token Revokation](https://tools.ietf.org/html/rfc7009)
 * [RFC-7516: JSON Web Encryption (JWE)](https://tools.ietf.org/html/rfc7516)
+* [RFC-7517: JSON Web Key (JWK)] (https://tools.ietf.org/html/rfc7517)
 * [RFC-7518: JSON Web Algorithms (JWA)](https://tools.ietf.org/html/rfc7518)
 * [RFC-7521: Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants](https://tools.ietf.org/html/rfc7521)
 * [RFC-7523: JSON Web-Tokens (JWT) for OAuth 2.0 Client Authentication and Authorization Grants](https://tools.ietf.org/html/rfc7523)
@@ -48,13 +50,17 @@ The Swiss EduID Mobile App architecture builds on top of the following specifica
 
 * [Swiss edu-ID Architecture](https://projects.switch.ch/export/sites/projects/edu-ID/.galleries/documents/SwissEduIDArchitecture_Rev1.pdf)
 
+* [RSD2 service discovery](https://github.com/BLC-HTWChur/rsd2-specification/blob/master/rsd2-specification.md)
+
+## Informative Sources
+
 * Swiss edu-ID Identity Entries
 
-* [RSD2 service discovery](https://github.com/BLC-HTWChur/rsd2-specification/blob/master/rsd2-specification.md)
+* [OpenId Connect 1.0](https://openid.net/specs/openid-connect-basic-1_0.html)
 
 This architecture does not specify any data formats or service endpoints that are already covered by these specifications. For all protocol flows documented throughout the Swiss EduID Mobile App architecture the underpinning specification is the point of reference.
 
-Conflicts between the present archtecture document and the related specifications MUST be considered as mistakes in the present architecture. In case of conflicts, identifying parties SHOULD report this conflict in order to correct it.
+Conflicts between the present architecture document and the related specifications MUST be considered as mistakes in the present architecture. In case of conflicts, identifying parties SHOULD report this conflict in order to correct it.
 
 ## Terms used
 
