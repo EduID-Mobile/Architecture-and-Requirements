@@ -2,15 +2,15 @@
 
 The Swiss edu-ID mobile app aims for improving the integration of mobiles apps with IT services provided by Swiss Universities.
 
-This document covers the artwork of the EduID App.
+This document covers the artwork of the edu-ID App.
 
 ## Introduction
 
-The EduID artwork provides a visual metaphors to the functions of the eduID App.
+The edu-ID artwork provides a visual metaphors to the functions of the eduID App.
 
-The EduID core artwork uses a lot of thin lines, typography and complex visuals. This artwork follows the metaphors of an ID. The mobile app project tried to reuse the main eduID artwork. However, the original artwork is too complex for icons that are required for mobile apps. Therefore, the Swiss EduID Mobile App was seeking for an alternative visual metaphors for the app.
+The edu-ID core artwork uses a lot of thin lines, typography and complex visuals. This artwork follows the metaphors of an ID. The mobile app project tried to reuse the main eduID artwork. However, the original artwork is too complex for icons that are required for mobile apps. Therefore, the Swiss edu-ID Mobile App was seeking for an alternative visual metaphors for the app.
 
-The visual metaphors for the Swiss EduID Mobile App needed to meet the following requirements.
+The visual metaphors for the Swiss edu-ID Mobile App needed to meet the following requirements.
 
 * being constrained to a squared bounding box.
 
@@ -22,7 +22,7 @@ The visual metaphors for the Swiss EduID Mobile App needed to meet the following
 
 The visual metaphors is to "secure cloud services". The visual representation resembles a key chain tag that is attached to a lock.
 
-Alternatives following the ID card metaphors of the EduID project have been abandoned, because they would too closely resemble contact/address book apps.
+Alternatives following the ID card metaphors of the edu-ID project have been abandoned, because they would too closely resemble contact/address book apps.
 
 ## Banners
 
@@ -30,7 +30,7 @@ Alternatives following the ID card metaphors of the EduID project have been aban
 
 ## Colors
 
-The EduID App follows the core color scheme of EduID.
+The edu-ID App follows the core color scheme of edu-ID.
 
 * White: #FFFFFF
 * Black: #000000

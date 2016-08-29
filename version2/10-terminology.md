@@ -1,4 +1,4 @@
-# Swiss Edu-ID Mobile App Terminology
+# Swiss edu-ID Mobile App Terminology
 
 The edu-ID Mobile App provides an authorization and authentication interface for securely connecting third party apps with services in the trust domain of Swiss academic services. The edu-ID Mobile App ensures that commercial and non-commercial third party apps can provide added value services based on the existing service infrastructure in Swiss higher education institutions. The edu-ID App's key function is to authorise third party apps on a user's device with academic services within the edu-ID federation. It helps to bridge the user/app store trust domain on the user devices and the trust domain within the Swiss Academic Service Federation.
 
@@ -8,11 +8,11 @@ This document defines the core terminology that is used throughout the architect
 
 ## Terms of Reference
 
-The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in the entire Swiss EduID Mobile App architecture, including this document are to be interpreted as described in [RFC-2119](https://tools.ietf.org/html/rfc2119).
+The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in the entire Swiss edu-ID Mobile App architecture, including this document are to be interpreted as described in [RFC-2119](https://tools.ietf.org/html/rfc2119).
 
 ## Introduction
 
-The Swiss EduID Mobile App interfaces with the Swiss Academic Cloud Services. Academic services are organised in a service federation. This federation forms a trust domain in which academic user are managed by their host institution but can access institutional and shared services using their institutional user credentials.
+The Swiss edu-ID Mobile App interfaces with the Swiss Academic Cloud Services. Academic services are organised in a service federation. This federation forms a trust domain in which academic user are managed by their host institution but can access institutional and shared services using their institutional user credentials.
 
 The Swiss academic federation presently includes over 800 service instances. Therefore, mobile authorization services have depend on open standards that can be easily integrated into the underlying products.
 
@@ -27,15 +27,15 @@ The main difference of OAuth2 over SAML is that OAuth2 specification only specie
 
 OpenID Connect builds on top of OAuth2 and extends the framework towards identity management. OpenID Connect is designed to pass identity information between authorization services or identify providers (IDP) and resource services transparently.
 
-The Swiss EduID Mobile App builds entirely on top of OAuth2. Like OAuth2 the app's core functions are agnostic to identity information. Therefore, this architecture documentation does not consider identity information as specified for OpenID Connect. Furthermore, SWITCH proposed a number of non-standard identity information and handling procedures.
+The Swiss edu-ID Mobile App builds entirely on top of OAuth2. Like OAuth2 the app's core functions are agnostic to identity information. Therefore, this architecture documentation does not consider identity information as specified for OpenID Connect. Furthermore, SWITCH proposed a number of non-standard identity information and handling procedures.
 
 ## DISCLAIMER
 
-All documents that are part of the present architecture silently assume that identity information conforms to OpenID Connect and/or SWITCH EduID Identity requirements whenever parties depend on such information.
+All documents that are part of the present architecture silently assume that identity information conforms to OpenID Connect and/or SWITCH edu-ID Identity requirements whenever parties depend on such information.
 
 ## Underpinning Specifications
 
-The Swiss EduID Mobile App architecture builds on top of the following specifications. Implementation-related requirements defined in the following specifications are not repeated in this document.
+The Swiss edu-ID Mobile App architecture builds on top of the following specifications. Implementation-related requirements defined in the following specifications are not repeated in this document.
 
 * [RFC-2617: The Basic HTTP Authorization Scheme](https://tools.ietf.org/html/rfc2617)
 * [RFC-6749: The OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749)
@@ -48,7 +48,7 @@ The Swiss EduID Mobile App architecture builds on top of the following specifica
 * [RFC-7797: JSON Web Signature](https://tools.ietf.org/html/rfc7797)
 * [RFC-7800: Proof-of-Possession Key for JWT](https://tools.ietf.org/html/rfc7800)
 
-* [Swiss edu-ID Architecture](https://projects.switch.ch/export/sites/projects/edu-ID/.galleries/documents/SwissEduIDArchitecture_Rev1.pdf)
+* [Swiss edu-ID Architecture](https://projects.switch.ch/export/sites/projects/edu-ID/.galleries/documents/Swissedu-IDArchitecture_Rev1.pdf)
 
 * [RSD2 service discovery](https://github.com/BLC-HTWChur/rsd2-specification/blob/master/rsd2-specification.md)
 
@@ -58,7 +58,7 @@ The Swiss EduID Mobile App architecture builds on top of the following specifica
 
 * [OpenId Connect 1.0](https://openid.net/specs/openid-connect-basic-1_0.html)
 
-This architecture does not specify any data formats or service endpoints that are already covered by these specifications. For all protocol flows documented throughout the Swiss EduID Mobile App architecture the underpinning specification is the point of reference.
+This architecture does not specify any data formats or service endpoints that are already covered by these specifications. For all protocol flows documented throughout the Swiss edu-ID Mobile App architecture the underpinning specification is the point of reference.
 
 Conflicts between the present architecture document and the related specifications MUST be considered as mistakes in the present architecture. In case of conflicts, identifying parties SHOULD report this conflict in order to correct it.
 

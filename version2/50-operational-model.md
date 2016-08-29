@@ -2,15 +2,15 @@
 
 ## Introduction
 
-The Core Swiss EduID infrastructure is designed as centralised authentication and identity management within a highly distributed authorization federation. The Swiss EduID Mobile App relies on the central authentication and partly on the IDP capabilities of the Swiss EduID environment.
+The Core Swiss edu-ID infrastructure is designed as centralised authentication and identity management within a highly distributed authorization federation. The Swiss edu-ID Mobile App relies on the central authentication and partly on the IDP capabilities of the Swiss edu-ID environment.
 
-Early in the project it became clear that mobile use cases are of no particular interest within the scope for the centralised infrastructure of the overarching EduID activities and are unlikely to be integrated as a single service.
+Early in the project it became clear that mobile use cases are of no particular interest within the scope for the centralised infrastructure of the overarching edu-ID activities and are unlikely to be integrated as a single service.
 
 This document outlines a distributed operation model for connecting native mobile apps to academic services within the swiss academic federation.
 
 This initial version of the operation model outlines the relation of
 
-* The core EduID Infrastructure
+* The core edu-ID Infrastructure
 
 * Client management
 
@@ -18,21 +18,21 @@ This initial version of the operation model outlines the relation of
 
 ## Centralised vs. Distributed Federation Management
 
-The original operation model for the Swiss EduID Mobile App considered that supportive dictionary services are integrated with the central EduID Infrastructure. The central integration of Swiss EduID services allows the deep integration of the services into the Swiss EduID infrastructure. This allows to keep consistent information across all aspects of the authentication and authorization infrastructure.
+The original operation model for the Swiss edu-ID Mobile App considered that supportive dictionary services are integrated with the central edu-ID Infrastructure. The central integration of Swiss edu-ID services allows the deep integration of the services into the Swiss edu-ID infrastructure. This allows to keep consistent information across all aspects of the authentication and authorization infrastructure.
 
-A distributed approach to integrate mobile capabilities to academic federation services allows removes the need for central coordination and support by relying on shared standards but distributed infrastructures. This allows the EduID Infrastructure as well as the mobile authentication and authorization services independently. Participating institutions may adopt the service together or separately from the Swiss EduID infrastructure. Furthermore, dictionary services could be decoupled from central infrastructure and thus limits the need for exchanging personal data between parties within the academic federation.
+A distributed approach to integrate mobile capabilities to academic federation services allows removes the need for central coordination and support by relying on shared standards but distributed infrastructures. This allows the edu-ID Infrastructure as well as the mobile authentication and authorization services independently. Participating institutions may adopt the service together or separately from the Swiss edu-ID infrastructure. Furthermore, dictionary services could be decoupled from central infrastructure and thus limits the need for exchanging personal data between parties within the academic federation.
 
-## Core EduID Infrastructure
+## Core edu-ID Infrastructure
 
-Within a distributed infrastructure the Swiss EduID services would act solely as authentication service. This infrastructure would be hosted and maintained by SWITCH and related parties.
+Within a distributed infrastructure the Swiss edu-ID services would act solely as authentication service. This infrastructure would be hosted and maintained by SWITCH and related parties.
 
 Ideally all web-service endpoints that directly link to the Swiss eduID main service components should be hosted and operated by SWITCH. This includes all OAuth2 service endpoints.
 
 ## App-related Infrastructure
 
-Clients for the EduID Mobile App can be managed by a separate service for authorizing Swiss Mobile App Clients. This service is responsible for maintaining app releases and controlling app availability for the different mobile platforms. As institutions who are active in mobile app development already have distribution processes in place this can be performed by the participating institutions.
+Clients for the edu-ID Mobile App can be managed by a separate service for authorizing Swiss Mobile App Clients. This service is responsible for maintaining app releases and controlling app availability for the different mobile platforms. As institutions who are active in mobile app development already have distribution processes in place this can be performed by the participating institutions.
 
-The client authorization is part of the OAuth2 protocol and commercially available OAuth2 solutions already integrate client authorization, this could be easily integrated into the central Swiss EduID infrastructure. Alternatively, the clients could authorize separately against a client authorization service and use the Swiss EduID authentication services as resource services within the OAuth2 protocol. In this case the client authorization would be easily hosted at one or more institutions within the Swiss academic federation. As such service would extend existing authorization services, this could be performed at the institutions with very limited overhead as part of the already existing activities.
+The client authorization is part of the OAuth2 protocol and commercially available OAuth2 solutions already integrate client authorization, this could be easily integrated into the central Swiss edu-ID infrastructure. Alternatively, the clients could authorize separately against a client authorization service and use the Swiss edu-ID authentication services as resource services within the OAuth2 protocol. In this case the client authorization would be easily hosted at one or more institutions within the Swiss academic federation. As such service would extend existing authorization services, this could be performed at the institutions with very limited overhead as part of the already existing activities.
 
 ## Dictionary services
 
@@ -42,13 +42,13 @@ Dictionary services are used by the eduID Mobile App to enhance the user experie
 
 * The Service Usage Management Dictionary
 
-The protocol discovery dictionary allows the EduID Mobile App to determine the services in the federation that provide requested service endpoints. This service relies on links between the EduID Federation Index.
+The protocol discovery dictionary allows the edu-ID Mobile App to determine the services in the federation that provide requested service endpoints. This service relies on links between the edu-ID Federation Index.
 
-If the protocol discovery component is operated outside the core EduID Service, a link to query the federation index MUST be provided.
+If the protocol discovery component is operated outside the core edu-ID Service, a link to query the federation index MUST be provided.
 
 The personal service usage management dictionary provides support for enhancing the user experience for granting app access. The personal service dictionary keeps track of the relation of users and the services they use (have Successfully authenticated in the past). This allows the app filtering services that users have not used before and omit those services which were not previously accessed by a user.
 
-The service usage management is tightly connected to service assertion, the affiliation index and the federation index. If this component is operated outside the core EduID Infrastructure, it MUST be ensured that personal information can be accessed between the related components. Most importantly, the service assertion MUST always report on user assertions to Federation services.
+The service usage management is tightly connected to service assertion, the affiliation index and the federation index. If this component is operated outside the core edu-ID Infrastructure, it MUST be ensured that personal information can be accessed between the related components. Most importantly, the service assertion MUST always report on user assertions to Federation services.
 
 ## Institutional Infrastructure
 

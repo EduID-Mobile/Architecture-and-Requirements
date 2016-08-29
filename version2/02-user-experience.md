@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This part of the architecture describes the core user experience of the Swiss EduID Mobile App.
+This part of the architecture describes the core user experience of the Swiss edu-ID Mobile App.
 
 The Swiss eduID Mobile App has two core interaction modes:
 
-* EduID Mode
+* edu-ID Mode
 * Authorization Mode
 
 ## Core User Experience
@@ -29,11 +29,11 @@ The common workflow from the user experience is:
 
 ![Example Screen For Authentication Request](images/third_party_app_start_authorization.png)
 
-2. The mobile operating system selects an appropriate app (on Android the edu-ID app is selected automatically so, for now, this step is valid only for iOS). Operating system uses it standard inter-app communication interfaces to allow the users to channel the request into the Swiss EduID Mobile App. On iOS the operating system launches an "App Selector"/"Sharing Menu" that allow users to select the appropriate authentication app. These pop-up menus are commonly used user interface elements.
+2. The mobile operating system selects an appropriate app (on Android the edu-ID app is selected automatically so, for now, this step is valid only for iOS). Operating system uses it standard inter-app communication interfaces to allow the users to channel the request into the Swiss edu-ID Mobile App. On iOS the operating system launches an "App Selector"/"Sharing Menu" that allow users to select the appropriate authentication app. These pop-up menus are commonly used user interface elements.
 
-![Example iOS Sharing Screen with the EduID Option](images/iOS_AppSelectionScreen.jpg)
+![Example iOS Sharing Screen with the edu-ID Option](images/iOS_AppSelectionScreen.jpg)
 
-3. The EduID Mobile App indicates to the user, what information has been requested and which services within the federation are capable of serving the requested data. This is done my presenting a list of services to the users.
+3. The edu-ID Mobile App indicates to the user, what information has been requested and which services within the federation are capable of serving the requested data. This is done my presenting a list of services to the users.
 
 4. The users can select one or more services to be authorized for the third party app. In case the app can handle only 1 authorization the users must select exactly 1 service. If no services were selected, all services are granted.
 
@@ -45,7 +45,7 @@ It is important to recall that the eduID Mobile App can only control the steps 3
 
 ## Utility Experiences
 
-In EduID Mode the app provides access to utility functions. These include:
+In edu-ID Mode the app provides access to utility functions. These include:
 
 * Authentication with the eduID Service
 * Profile View
@@ -53,15 +53,15 @@ In EduID Mode the app provides access to utility functions. These include:
 
 ### Authentication with the eduID Service
 
-The eduID Mobile App is persistently authorized with the eduID Service once the users authenticate. As long the eduID Mobile App is not authenticated for a user the EduID Mobile App will display a login screen.
+The eduID Mobile App is persistently authorized with the eduID Service once the users authenticate. As long the eduID Mobile App is not authenticated for a user the edu-ID Mobile App will display a login screen.
 
 ![Authentication Screen](images/eduid_loginview_layout.jpg)
 
-If a user selected the app authorization from a third party app without being authorized in the EduID Mobile App, step 3 of the core user experience will be preceded by EduID Authorization (by displaying the Login Screen).
+If a user selected the app authorization from a third party app without being authorized in the edu-ID Mobile App, step 3 of the core user experience will be preceded by edu-ID Authorization (by displaying the Login Screen).
 
 ### Profile View
 
-If users start the EduID Mobile App in EduID Mode and the app is authorized for a user, then the app will start into the profile view. This is the primary interface for reviewing the personal data.
+If users start the edu-ID Mobile App in edu-ID Mode and the app is authorized for a user, then the app will start into the profile view. This is the primary interface for reviewing the personal data.
 
 ![Profile View](images/eduid_profileview_layout.jpg)
 
@@ -75,4 +75,4 @@ If users decide to unlink the eduID Mobile they can do so by using the "logout" 
 
 If the users confirm to logout, the all will return to the Login screen.
 
-After logging out in the EduID Mobile App, the third party apps that were previously authorized will receive an error if they try to access the academic services. In this case third party apps should inform the users that a previous authorization has been invalidated and allow the users to reestablish the connection.
+After logging out in the edu-ID Mobile App, the third party apps that were previously authorized will receive an error if they try to access the academic services. In this case third party apps should inform the users that a previous authorization has been invalidated and allow the users to reestablish the connection.
