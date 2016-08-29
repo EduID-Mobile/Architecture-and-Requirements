@@ -6,9 +6,9 @@ This document covers the artwork of the edu-ID App.
 
 ## Introduction
 
-The edu-ID artwork provides a visual metaphors to the functions of the eduID App.
+The edu-ID artwork provides a visual metaphors to the functions of the edu-ID App.
 
-The edu-ID core artwork uses a lot of thin lines, typography and complex visuals. This artwork follows the metaphors of an ID. The mobile app project tried to reuse the main eduID artwork. However, the original artwork is too complex for icons that are required for mobile apps. Therefore, the Swiss edu-ID Mobile App was seeking for an alternative visual metaphors for the app.
+The edu-ID core artwork uses a lot of thin lines, typography and complex visuals. This artwork follows the metaphors of an ID. The mobile app project tried to reuse the main edu-ID artwork. However, the original artwork is too complex for icons that are required for mobile apps. Therefore, the Swiss edu-ID Mobile App was seeking for an alternative visual metaphors for the app.
 
 The visual metaphors for the Swiss edu-ID Mobile App needed to meet the following requirements.
 

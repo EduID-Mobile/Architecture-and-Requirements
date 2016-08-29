@@ -26,7 +26,7 @@ A distributed approach to integrate mobile capabilities to academic federation s
 
 Within a distributed infrastructure the Swiss edu-ID services would act solely as authentication service. This infrastructure would be hosted and maintained by SWITCH and related parties.
 
-Ideally all web-service endpoints that directly link to the Swiss eduID main service components should be hosted and operated by SWITCH. This includes all OAuth2 service endpoints.
+Ideally all web-service endpoints that directly link to the Swiss edu-ID main service components should be hosted and operated by SWITCH. This includes all OAuth2 service endpoints.
 
 ## App-related Infrastructure
 
@@ -36,7 +36,7 @@ The client authorization is part of the OAuth2 protocol and commercially availab
 
 ## Dictionary services
 
-Dictionary services are used by the eduID Mobile App to enhance the user experience. Two dictionary services are part of the eduID Mobile App architecture.
+Dictionary services are used by the edu-ID Mobile App to enhance the user experience. Two dictionary services are part of the edu-ID Mobile App architecture.
 
 * The Protocol Discovery Dictionary
 

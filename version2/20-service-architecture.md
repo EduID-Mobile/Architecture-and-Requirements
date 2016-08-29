@@ -81,7 +81,7 @@ Both service endpoints are specified in [OAuth2 section 3](https://tools.ietf.or
 
 ### Institution-level Service Endpoints
 
-Federation Services need to provide at least an token service endpoint as a target the eduID Mobile App.
+Federation Services need to provide at least an token service endpoint as a target the edu-ID Mobile App.
 
 The token endpoint MUST support at least the following grant-types:
 
@@ -104,7 +104,7 @@ Federation services MAY additionally implement the [Extension Grant flow](https:
 
 The process flows are related to endpoint interfaces. The detailed architecture
 
-### eduID Mobile App Client Assertion
+### edu-ID Mobile App Client Assertion
 
 The edu-ID Mobile App comes in variations for Android and iOS. Each variation has its independent versioning. Each version of the edu-ID Mobile App requires an unique version key.
 
@@ -356,7 +356,7 @@ The Federation Service MUST link app access tokens to the service access token t
 
 OAuth2 Tokens MAY have limited time to live.
 
-If a token has a predeterminated livespan, the token MUST be acompanioned by a [refresh token](https://tools.ietf.org/html/rfc6749#section-6). Both, eduID Mobile App clients and third party apps MUST be able to recover a new valid access token from the issuing authority after the old access token has expired.
+If a token has a predeterminated livespan, the token MUST be acompanioned by a [refresh token](https://tools.ietf.org/html/rfc6749#section-6). Both, edu-ID Mobile App clients and third party apps MUST be able to recover a new valid access token from the issuing authority after the old access token has expired.
 
 Besides expired tokens, users, the edu-ID Mobile App, the edu-ID Service, and Federation Services may [revoke access tokens](https://tools.ietf.org/html/rfc7009). This is typically referred to as session termination or logout.
 
@@ -364,7 +364,7 @@ The tokens related to the edu-ID Mobile App are organised as a token tree. This 
 
 ![edu-ID Token Tree](images/eduid_app_token_revokation_tree.png)
 
-System administrators and users can revoke tokens via the eduID Service as well as through an edu-ID Mobile App client (10).
+System administrators and users can revoke tokens via the edu-ID Service as well as through an edu-ID Mobile App client (10).
 
 If an edu-ID Mobile App client or the edu-ID Service request to [revoke a client's service access token](https://tools.ietf.org/html/rfc7009), then the Federation Service MUST revoke all related app access tokens.
 
