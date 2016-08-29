@@ -14,7 +14,7 @@ While NAIL supports the protocol of the Swiss EduID Mobile App, it is agnostic t
 
 The NAIL API supports two interactions with the EduID trust domains.
 
-1. Access requets to authorizing apps (7)
+1. Access request to authorizing apps (7)
 2. Authorized access to service endpoints (9)
 
 ### Protocol Discovery and Authorization

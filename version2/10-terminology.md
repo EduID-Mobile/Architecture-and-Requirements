@@ -16,14 +16,14 @@ The Swiss EduID Mobile App interfaces with the Swiss Academic Cloud Services. Ac
 
 The Swiss academic federation presently includes over 800 service instances. Therefore, mobile authorization services have depend on open standards that can be easily integrated into the underlying products.
 
-The present Swiss academic cloud services form a federation on top of the SAML specification. This specifications has serveral known limitations. Recent activities in the context of the Internet Engineering Task Force (IETF) have tackled these limitations for greater flexibility and security for identification and authorization services. The result are two specifications that are driven and supported by major industrial actors including, but not limited to Google, Microsoft and Facebook:
+The present Swiss academic cloud services form a federation on top of the SAML specification. This specifications has several known limitations. Recent activities in the context of the Internet Engineering Task Force (IETF) have tackled these limitations for greater flexibility and security for identification and authorization services. The result are two specifications that are driven and supported by major industrial actors including, but not limited to Google, Microsoft and Facebook:
 
 * OAuth2
 * OpenID Connect.
 
-OAuth2 provides a framework for authorized access to resouces and services on the Internet. OAuth2 handles only use cases related to authentication and authorization. Similarly to SAML, OAuth2 is designed to support authorized access to services over the Internet. While the SAML has been designed on top of HTTP and requires an HTTP user agent, OAuth2 allows authorization over HTTP, but is not limited to HTTP but can be used across different protocols and types of user agents. This allows OAuth2 to be used in scenarios, in which user interactions with a web-based resource are not possible or desirable.
+OAuth2 provides a framework for authorized access to resources and services on the Internet. OAuth2 handles only use cases related to authentication and authorization. Similarly to SAML, OAuth2 is designed to support authorized access to services over the Internet. While the SAML has been designed on top of HTTP and requires an HTTP user agent, OAuth2 allows authorization over HTTP, it is not limited to HTTP so it can be used across different protocols and types of user agents. This allows OAuth2 to be used in scenarios, in which user interactions with a web-based resource are not possible or desirable.
 
-The main difference of OAuth2 over SAML is that OAuth2 specification only spefies a protocol framework. Many aspects for implementing OAuth2 build on top of other specifcations that are partly independent from OAuth2. This includes identity management as OAuth2 is agnostic to any form of identity management.
+The main difference of OAuth2 over SAML is that OAuth2 specification only species a protocol framework. Many aspects for implementing OAuth2 build on top of other specifications that are partly independent from OAuth2. This includes identity management as OAuth2 is agnostic to any form of identity management.
 
 OpenID Connect builds on top of OAuth2 and extends the framework towards identity management. OpenID Connect is designed to pass identity information between authorization services or identify providers (IDP) and resource services transparently.
 
@@ -38,8 +38,8 @@ All documents that are part of the present architecture silently assume that ide
 The Swiss EduID Mobile App architecture builds on top of the following specifications. Implementation-related requirements defined in the following specifications are not repeated in this document.
 
 * [RFC-2617: The Basic HTTP Authorization Scheme](https://tools.ietf.org/html/rfc2617)
-* [RFC-6749: The OAuth 2.0 Autorization Framework](https://tools.ietf.org/html/rfc6749)
-* [RFC-7009: OAuth2 Token Revokation](https://tools.ietf.org/html/rfc7009)
+* [RFC-6749: The OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749)
+* [RFC-7009: OAuth2 Token Revocation](https://tools.ietf.org/html/rfc7009)
 * [RFC-7516: JSON Web Encryption (JWE)](https://tools.ietf.org/html/rfc7516)
 * [RFC-7517: JSON Web Key (JWK)] (https://tools.ietf.org/html/rfc7517)
 * [RFC-7518: JSON Web Algorithms (JWA)](https://tools.ietf.org/html/rfc7518)
@@ -68,9 +68,9 @@ Conflicts between the present architecture document and the related specificatio
 
 * __edu-ID Service__: The edu-ID Service is the authorisation endpoint for the federation of academic services. There is one edu-ID Service for the entire federation.
 
-* __edu-ID Mobile App__: The edu-ID Mobile App provides a trusted environment on the users' mobile device. The edu-ID App is a navtive mobile app that is installed on a user's mobile device.
+* __edu-ID Mobile App__: The edu-ID Mobile App provides a trusted environment on the users' mobile device. The edu-ID App is a native mobile app that is installed on a user's mobile device.
 
-* __Third Party App__: A thrid party app refers to mobile apps on the users' devices that are not tightly integrated with a service infrastructure and/or is provided by a potentially untrusted party outside of the truested federation domain.
+* __Third Party App__: A third party app refers to mobile apps on the users' devices that are not tightly integrated with a service infrastructure and/or is provided by a potentially untrusted party outside of the trusted federation domain.
 
 * __Federation Service__: A federation service is system that offers a set of functions to authorised users within the federation of academic institutions.
 

@@ -15,7 +15,7 @@ The core user experience is the Authorization Mode. The Authorization Mode is ac
 
 The Authorization Mode is split into three parts.
 
-1. The Thrid Party User Experiences
+1. The Third Party User Experiences
 1. The Operating System Experiences
 1. The eduID Mobile App Experiences
 
@@ -29,7 +29,7 @@ The common workflow from the user experience is:
 
 ![Example Screen For Authentication Request](images/third_party_app_start_authorization.png)
 
-2. The mobile operating system selects an appropriate app (on Android the edu-ID app is selected automatically so, for now, this step is valid only for iOS). Operating system uses it standard inter-app communication interfaces to allow the users to channel the request into the Swiss EduID Mobile App. On iOS the operating system launches an "App Selector"/"Sharing Menu" that allow users to select the appropriate authentication app. These pop-up menues are commonly used user interface elements.
+2. The mobile operating system selects an appropriate app (on Android the edu-ID app is selected automatically so, for now, this step is valid only for iOS). Operating system uses it standard inter-app communication interfaces to allow the users to channel the request into the Swiss EduID Mobile App. On iOS the operating system launches an "App Selector"/"Sharing Menu" that allow users to select the appropriate authentication app. These pop-up menus are commonly used user interface elements.
 
 ![Example iOS Sharing Screen with the EduID Option](images/iOS_AppSelectionScreen.jpg)
 
@@ -41,7 +41,7 @@ The common workflow from the user experience is:
 
 6. The third party app continues with its authorized interaction experiences.
 
-It is important to recall that the eduID Mobile App can only control the steps 3-5 of the user experiences. The other elements of the user experience are integrated into the third party app's user experience or embedded into the operating system. In both cases the falimiarity of the users can be safely assumed.
+It is important to recall that the eduID Mobile App can only control the steps 3-5 of the user experiences. The other elements of the user experience are integrated into the third party app's user experience or embedded into the operating system. In both cases the familiarity of the users can be safely assumed.
 
 ## Utility Experiences
 
@@ -57,15 +57,15 @@ The eduID Mobile App is persistently authorized with the eduID Service once the 
 
 ![Authentication Screen](images/eduid_loginview_layout.jpg)
 
-If a user selected the app authorization from a third party app without being authorized in the EduID Mobile App, step 3 of the core user experience will be preceeded by EduID Authorization (by displaying the Login Screen).
+If a user selected the app authorization from a third party app without being authorized in the EduID Mobile App, step 3 of the core user experience will be preceded by EduID Authorization (by displaying the Login Screen).
 
 ### Profile View
 
-If users start the EduID Mobile App in EduID Mode and the app is authorized for a user, then the app will start into the the profile view. This is the primary interface for reviewing the personal data.
+If users start the EduID Mobile App in EduID Mode and the app is authorized for a user, then the app will start into the profile view. This is the primary interface for reviewing the personal data.
 
 ![Profile View](images/eduid_profileview_layout.jpg)
 
-In a future iteration the profile view may provide interfaces to other persistent information such as account management functions, the list of authorized apps, or the list of used services. Presently, the only auxilary function is the logout.
+In a future iteration the profile view may provide interfaces to other persistent information such as account management functions, the list of authorized apps, or the list of used services. Presently, the only auxiliary function is the logout.
 
 ### Unlinking the App from an Account
 
@@ -75,4 +75,4 @@ If users decide to unlink the eduID Mobile they can do so by using the "logout" 
 
 If the users confirm to logout, the all will return to the Login screen.
 
-After logging out in the EduID Mobile App, the thrid party apps that were previously authorized will receive an error if they try to access the academic services. In this case third party apps should inform the users that a previous authorization has been invalidated and allow the users to reestablish the connection.
+After logging out in the EduID Mobile App, the third party apps that were previously authorized will receive an error if they try to access the academic services. In this case third party apps should inform the users that a previous authorization has been invalidated and allow the users to reestablish the connection.

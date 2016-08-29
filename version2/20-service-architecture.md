@@ -10,15 +10,15 @@ This document describes the overarching system architecture and service interact
 
 Authorization is a key element for offering personalised experiences. In higher education, authorization is a key for accreditation processes. With the increase of digital information processes in and around education of universities and universities of applied sciences there is also an increased need to connect mobile application and application-based service into administrative and educational processes.
 
-The eduID Mobile App provides authorization services to third party apps on the mobile devices of federation users.
+The edu-ID Mobile App provides authorization services to third party apps on the mobile devices of federation users.
 
 The edu-ID mobile app is not a stand alone mobile application but mediates processes and data of services within the academic domain and third-party apps. Therefore, the edu-ID Mobile App is part of an IT ecosystem that spawn across two trust domains:
 
 Firstly, the edu-ID links to the Swiss academic trust domain, which is managed via a central edu-ID service as federation manager that connects distributed services at academic institutions participating in the federation. These distributed services include for example data storage, web-conferencing, online collaboration, or learning management systems. In the context of this document this trust domain is called the Academic Trust Domain.
 
-Secondly, it is part of the user-and-app-store trust domain on the users' devices. This trust domain is courated by the end-users by installing apps on their devices and controlled by the app store host. The app store hosts manage access to application developers by setting and enforcing quality and security guidelines. Within the context of this document this trust domain is called User Device.
+Secondly, it is part of the user-and-app-store trust domain on the users' devices. This trust domain is curated by the end-users by installing apps on their devices and controlled by the app store host. The app store hosts manage access to application developers by setting and enforcing quality and security guidelines. Within the context of this document this trust domain is called User Device.
 
-Within these trust domains there is exaclty one edu-ID service in the Academic Trust Domain and exactly one edu-ID mobile app on the User Device. The edu-ID service and the edu-ID Mobile App are tightly connected. This connection is controlled by the host of the edu-ID service, which creates a separate edu-ID trust domain that bridges the Academic Trust Domain to the User Device.
+Within these trust domains there is exactly one edu-ID service in the Academic Trust Domain and exactly one edu-ID mobile app on the User Device. The edu-ID service and the edu-ID Mobile App are tightly connected. This connection is controlled by the host of the edu-ID service, which creates a separate edu-ID trust domain that bridges the Academic Trust Domain to the User Device.
 
 The Academic Trust Domain connects many distributed "academic services". These services are typically hosted by the institutions that are participating in the federation.
 
@@ -26,9 +26,9 @@ On the User Devices there can be many apps that are related to the users' produc
 
 ![Illustration of the edu-ID Mobile App ecosystem and trust domains](images/eduid_app_architecture.png)
 
-Some of the services in the Academic Trust Doamin services expose service APIs for loosely-coupled machine-to-machine communication. Whereas tightly-coupled machine-to-machine communication requires explicit connections of two services typically initiated system wide by the system administrators, losely-coupled machine-to-machine communication allows unmanaged ad-hoc communications between services, tools and components. Tightly-coupled machine-to-machine communication can only be performed if all commuicators are known at the time of service coupling and controlable. Such connections create a pre-defined trust domain. In highly dynamic environments that spawn trust domains and involve many stakeholders, tight-coupling is resource intensive and does not easily scale. Loosely-coupled machine-to-machine communication overcomes the overhead of tight coupling by distributing coupling responsibility across the different stakeholders in the ecosystem.
+Some of the services in the Academic Trust Domain services expose service APIs for loosely-coupled machine-to-machine communication. Whereas tightly-coupled machine-to-machine communication requires explicit connections of two services typically initiated system wide by the system administrators, loosely-coupled machine-to-machine communication allows unmanaged ad-hoc communications between services, tools and components. Tightly-coupled machine-to-machine communication can only be performed if all communicators are known at the time of service coupling and controllable. Such connections create a pre-defined trust domain. In highly dynamic environments that spawn trust domains and involve many stakeholders, tight-coupling is resource intensive and does not easily scale. Loosely-coupled machine-to-machine communication overcomes the overhead of tight coupling by distributing coupling responsibility across the different stakeholders in the ecosystem.
 
-Conventional [SAML]() Authentication and Authorization provides reliable identification and single-signon solutions within web-based trust domains. SAML-based approaches have been used to connect native mobile apps and distributed services. These approaches vary on the different platforms and require that native mobile apps are part of the same trust domain as the accessed services. SAML-based approaches are known to be prone to identity theft and viotation of intellectual property rights (IPR) if trust domains are naively assumed for native applications [REFERENCE MISSING](). This limits the applicability of SAML for loosely-coupled machine-to-machine communications, for which ad-hoc trust domains are established.
+Conventional [SAML]() Authentication and Authorization provides reliable identification and single-sign-on solutions within web-based trust domains. SAML-based approaches have been used to connect native mobile apps and distributed services. These approaches vary on the different platforms and require that native mobile apps are part of the same trust domain as the accessed services. SAML-based approaches are known to be prone to identity theft and violation of intellectual property rights (IPR) if trust domains are naively assumed for native applications [REFERENCE MISSING](). This limits the applicability of SAML for loosely-coupled machine-to-machine communications, for which ad-hoc trust domains are established.
 
 The edu-ID Mobile App ecosystem primarily focuses on client authorization and does not include an identity layer. Such layer might be provided by dedicated identity services based on LDIF, OpenID or Web-finger. Security aspects related to the identity profile layer are not addressed by the edu-ID Mobile App architecture.
 
@@ -44,7 +44,7 @@ At the federation level it is possible to exclude certain versions of the EduID 
 
 ### Relation to User Management
 
-Registered EduID App instances pass user credentials to the EduID Service for authentcating users. One EduID App instance can authenticate one user. On systems that support multiple user identities, each identity MAY be linked to a separate EduID member.
+Registered EduID App instances pass user credentials to the EduID Service for authenticating users. One EduID App instance can authenticate one user. On systems that support multiple user identities, each identity MAY be linked to a separate EduID member.
 
 The EduID is connected to user management for authentication only.
 
@@ -66,13 +66,13 @@ After authentication the EduID App is only loosely coupled to user management. F
 
 ## Service Interaction Overview
 
-The EduID App depends on the existance of service components. This architecture include primary service components that provide the key functions for authentication and authorization, and secondary service components that for improving the user experience in the diverse and distributed academic federation.
+The EduID App depends on the existence of service components. This architecture include primary service components that provide the key functions for authentication and authorization, and secondary service components that for improving the user experience in the diverse and distributed academic federation.
 
 ![EduID Detailed Architecture](images/eduid_app_architecture-details.png)
 
 ### Federation-level Service Endpoints
 
-The eduID Mobile relies on the OAuth2 protocol endpoint for authenticating users and clients.
+The EduID Mobile relies on the OAuth2 protocol endpoint for authenticating users and clients.
 
 * The token endpoint.
 * The authorization endpoint.
@@ -172,7 +172,7 @@ For example, a user that uses only the Moodle instances at HTW Chur and USI will
 ```
 (Line-breaks are for illustration pruposes)
 
-The Service Usage Manager provides a convinience function for preselecting and proritising services during the authorizing thrid party app access. If the service is present then the EduID Mobile App will use this service for improving the user experience.
+The Service Usage Manager provides a convinience function for preselecting and proritising services during the authorizing third party app access. If the service is present then the EduID Mobile App will use this service for improving the user experience.
 
 The EduID Mobile App requests usage information from the Service Usage Manager in two occasions (3):
 
@@ -318,7 +318,7 @@ The EduID Service MAY revoke access for an EduID Mobile App client via its asser
 
 When a third party app requests access to protocols, the EduID Mobile App allows the users to decide which Federation Services should be granted for access (7).
 
-If a user refuses access to any service, then that thrid will receive no authorization and no information about the user or potential services.
+If a user refuses access to any service, then that third will receive no authorization and no information about the user or potential services.
 
 App authorization is only possible if the user's EduID Mobile App client has been authorized by the Federation Service (5).
 
@@ -372,6 +372,6 @@ For revoked tokens it MUST NOT be possible to recover via refresh tokens.
 
 ### The special case of revoking assertion tokens
 
-The EduID Service can only revoke previous assertions, because the service access tokens are private to the EduID Mobile App client. However, an asstion can be used only once and is then invalidated for further authorization.
+The EduID Service can only revoke previous assertions, because the service access tokens are private to the EduID Mobile App client. However, an action can be used only once and is then invalidated for further authorization.
 
 In order to allow the EduID Service to revoke previous assertions at the federation services, a Federation Service MUST keep the originating assertion with the granted service access token. If the EduID Service revokes the assertion this is equivalent if a EduID Mobile App client revokes its service access token.

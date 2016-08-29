@@ -6,23 +6,23 @@ This document covers the artwork of the EduID App.
 
 ## Introduction
 
-The EduID artwork provides a visual metaphore to the functions of the eduID App.
+The EduID artwork provides a visual metaphors to the functions of the eduID App.
 
-The EduID core artwork uses a lot of thin lines, typography and complex visuals. This artwork follows the metaphore of an ID. The mobile app project tried to reuse the main eduID artwork. However, the original artwork is too complex for icons that are required for mobile apps. Therefore, the Swiss EduID Mobile App was seeking for an alternative visual metaphore for the app.
+The EduID core artwork uses a lot of thin lines, typography and complex visuals. This artwork follows the metaphors of an ID. The mobile app project tried to reuse the main eduID artwork. However, the original artwork is too complex for icons that are required for mobile apps. Therefore, the Swiss EduID Mobile App was seeking for an alternative visual metaphors for the app.
 
-The visual metaphore for the Swiss EduID Mobile App needed to meet the following requirements.
+The visual metaphors for the Swiss EduID Mobile App needed to meet the following requirements.
 
 * being constrained to a squared bounding box.
 
 * being recognisable at small sizes as small as 29x29 pixel.
 
-* being easily identifyable in monochrome visualisations.
+* being easily identifiable in monochrome visualisations.
 
 * avoid conflicts with other icons.
 
-The visual metaphore is to "secure cloud services". The visual representation resembles a keychain tag that is attached to a lock.
+The visual metaphors is to "secure cloud services". The visual representation resembles a key chain tag that is attached to a lock.
 
-Alternatives following the ID card metaphore of the EduID project have been abandoned, because they would too closely resemble contact/addressbook apps.
+Alternatives following the ID card metaphors of the EduID project have been abandoned, because they would too closely resemble contact/address book apps.
 
 ## Banners
 
@@ -56,4 +56,4 @@ Color | Monochrome
 
 ## Launch Screens
 
-The launch screen uses a large app icon on a white background. This allows to add the typeface logos of swissuniversities and SWITCH.
+The launch screen uses a large app icon on a white background. This allows to add the typeface logos of Swiss universities and SWITCH.
