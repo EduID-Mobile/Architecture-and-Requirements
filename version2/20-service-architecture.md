@@ -132,11 +132,11 @@ The edu-ID Service MUST allow already confirmed edu-ID Mobile App instances to u
 
 The edu-ID Service MUST allow already confirmed edu-ID Mobile App instances to alter the device information if the correct instance token has been presented.
 
-The edu-ID Service MAY revoke instance tokens in order to exclude specific clients from accessing the infrastructure. The edu-ID Service MUST refuse rejected clients from reobtaining a client token.
+The edu-ID Service MAY revoke instance tokens in order to exclude specific clients from accessing the infrastructure. The edu-ID Service MUST refuse rejected clients from re-obtaining a client token.
 
-### User Authentification
+### User Authentication
 
-The edu-ID Mobile App's primary purpose is to authenticate mobile users with the edu-ID Service. The user authentication connectes directly to the edu-ID user authentication component by sending the app user's credentials to its service-endpoint (2).
+The edu-ID Mobile App's primary purpose is to authenticate mobile users with the edu-ID Service. The user authentication connects directly to the edu-ID user authentication component by sending the app user's credentials to its service-endpoint (2).
 
 The edu-ID User Authentication MUST reject authentication from unregistered clients in Authorization Code Grant mode.
 
@@ -156,7 +156,7 @@ Immediately after authentication the client will access the edu-ID User Profile 
 
 ### Service Usage Manager
 
-The service usage manager provides a list of services that have been used previously by a user via edu-ID authentication. This information is already collected by the edu-ID infrastructure (e.g. for facilitating logout), but within the architecture there is no identifyable service end-point or component that allows users to access this information.
+The service usage manager provides a list of services that have been used previously by a user via edu-ID authentication. This information is already collected by the edu-ID infrastructure (e.g. for facilitating logout), but within the architecture there is no identifiable service end-point or component that allows users to access this information.
 
 The service usage manager is a personalised web-service that MUST provide only information for an authenticated user.
 
@@ -170,9 +170,9 @@ For example, a user that uses only the Moodle instances at HTW Chur and USI will
 "https://www2.icorsi.ch/"
 ]
 ```
-(Line-breaks are for illustration pruposes)
+(Line-breaks are for illustration purposes)
 
-The Service Usage Manager provides a convinience function for preselecting and proritising services during the authorizing third party app access. If the service is present then the edu-ID Mobile App will use this service for improving the user experience.
+The Service Usage Manager provides a convenience function for preselecting and prioritising services during the authorizing third party app access. If the service is present then the edu-ID Mobile App will use this service for improving the user experience.
 
 The edu-ID Mobile App requests usage information from the Service Usage Manager in two occasions (3):
 
@@ -185,7 +185,7 @@ The edu-ID Mobile App MAY cache successful service authorizations to mimic the f
 
 ### Protocol Discovery
 
-The protocol discovery is required to determinating, which Federation Service can provide the protocol endpoints that are requested by an app. The protocol discovery has two components.
+The protocol discovery is a process by whose the Federation Service can provide the protocol endpoints requested by an app. The protocol discovery has two components.
 
 * A service level component for exposing the available protocols and
 * A Federation-wide protocol discovery for querying suitable federation services.
@@ -206,7 +206,7 @@ The query interface accepts a list of protocol names conforming to the following
 "protocol-nameN"
 ]
 ```
-(Line-breaks are for illustration pruposes)
+(Line-breaks are for illustration purposes)
 
 The protocol discovery returns only those services that fully match the requested protocol list. For example, the following statement will return only services that expose Moodle Mobile web-services.
 
@@ -215,7 +215,7 @@ The protocol discovery returns only those services that fully match the requeste
 "org.moodle.mobile"
 ]
 ```
-(Line-breaks are for illustration pruposes)
+(Line-breaks are for illustration purposes)
 
 If an app requires access to the mobile protocol __and__ the XAPI protocol, then the request SHOULD include both protocols such as:
 
@@ -225,7 +225,7 @@ If an app requires access to the mobile protocol __and__ the XAPI protocol, then
 "gov.adlnet.xapi"
 ]
 ```
-(Line-breaks are for illustration pruposes)
+(Line-breaks are for illustration purposes)
 
 Which protocols are available for a service are completely under control of the service providers. All services in the federation that wish to support mobile access through the edu-ID Mobile App MUST support the __org.ietf.oauth2__ protocol.
 
@@ -243,7 +243,7 @@ The protocol discovery also allows to query for a list of specific services acco
 "service-urlN"
 ]
 ```
-(Line-breaks are for illustration pruposes)
+(Line-breaks are for illustration purposes)
 
 For example, if a user has accessed the Moodle Systems at HTW Chur or at USI then the request would be as following:
 
@@ -253,7 +253,7 @@ For example, if a user has accessed the Moodle Systems at HTW Chur or at USI the
 "https://www2.icorsi.ch/"
 ]
 ```
-(Line-breaks are for illustration pruposes)
+(Line-breaks are for illustration purposes)
 
 The protocol discovery will query RSD2 information for any for the requested services. The result will include a list of RSD2 documents that matches the available services.
 
@@ -263,27 +263,27 @@ If none of the requested services are supported, then the protocol discovery wil
 
 The returned list MAY NOT be in the same order as the requested protocols. Clients MUST NOT assume that the response is in the same order as the request.
 
-If the cient is not requesting for an authenticated user, then the protocol discovery MUST reject the query.
+If the client is not requesting for an authenticated user, then the protocol discovery MUST reject the query.
 
 The protocol discovery MAY be implemented as an independent federation service. In this case the client MUST authorize access using a service assertion.
 
 #### RSD Discovery
 
-The RSD Discovey processes the RSD exposure components of Federation services. If a Federation Service exposes their protocols using RSD2, then the RSD discovery will include the provided information into the protocol discovery.
+The RSD Discovery processes the RSD exposure components of Federation services. If a Federation Service exposes their protocols using RSD2, then the RSD discovery will include the provided information into the protocol discovery.
 
-The RSD discvoery relies on service URLs provided by the edu-ID Federation Index.
+The RSD Discovery relies on service URLs provided by the edu-ID Federation Index.
 
 The RSD Discovery runs as a web-crawler with the protocol discovery. It periodically updates information from the federation index and tests if the provided RSD information at the federation services has changed (0).
 
 #### edu-ID Mobile App Access To The Protocol Discovery
 
-The edu-ID Mobile App access to the protocol discovery during two processses (3b).
+The edu-ID Mobile App access to the protocol discovery during two processes (3b).
 
 1. If a Service Usage Manager is present, after successful authentication and whenever the edu-ID Mobile App is launched.
 
 2. During a protocol request by a third party app.
 
-If a Service Usage Manager is present, then the edu-ID Mobile App MAY prefetch a user's services for improving the user experience. In this case the edu-ID Mobile App can preselect relevant services that match a third-party app's protocol request without accessing the edu-ID Infrastructure.
+If a Service Usage Manager is present, then the edu-ID Mobile App MAY pre-fetch a user's services for improving the user experience. In this case the edu-ID Mobile App can preselect relevant services that match a third-party app's protocol request without accessing the edu-ID Infrastructure.
 
 During protocol requests by third party apps, the edu-ID Mobile App uses the protocol discovery to find all matching services for the request. These services MAY include services that a user might not be able to access.
 
@@ -344,19 +344,19 @@ If the federation service permits the requested app access it MUST provide an ap
 
 The app access token MUST grant the bearer access to the Federation Service's endpoints (9).
 
-The format of the app access token is specific to the Federation Service implementation. It is recommended to provide crypographically protected JWT-Bearer tokens.
+The format of the app access token is specific to the Federation Service implementation. It is recommended to provide cryptographically protected JWT-Bearer tokens.
 
-If crypographically protected JWT-Bearer tokens are used, then the issuer of the JWT token MUST match the subject during the app authorization (typically a bundle id).
+If cryptographically protected JWT-Bearer tokens are used, then the issuer of the JWT token MUST match the subject during the app authorization (typically a bundle id).
 
 If the Federation Service supports scoping, then the app access token MUST be scoped to the requested protocol endpoints. In this case the Federation Service MUST allow multiple authorizations for the same app instance for different scopes.
 
 The Federation Service MUST link app access tokens to the service access token that has been used by the edu-ID Mobile App.
 
-## Session Termination and Token Revokation
+## Session Termination and Token Revocation
 
 OAuth2 Tokens MAY have limited time to live.
 
-If a token has a predeterminated livespan, the token MUST be acompanioned by a [refresh token](https://tools.ietf.org/html/rfc6749#section-6). Both, edu-ID Mobile App clients and third party apps MUST be able to recover a new valid access token from the issuing authority after the old access token has expired.
+If a token has a pre-determinated lifespan, the token MUST be accompanied by a [refresh token](https://tools.ietf.org/html/rfc6749#section-6). Both, edu-ID Mobile App clients and third party apps MUST be able to recover a new valid access token from the issuing authority after the old access token has expired.
 
 Besides expired tokens, users, the edu-ID Mobile App, the edu-ID Service, and Federation Services may [revoke access tokens](https://tools.ietf.org/html/rfc7009). This is typically referred to as session termination or logout.
 
