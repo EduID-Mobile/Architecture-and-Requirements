@@ -1,4 +1,4 @@
-	# Swiss edu-ID Mobile App Use Cases
+# Swiss edu-ID Mobile App Use Cases
 
 ## The Problem of Integrating Mobile Apps into Service Federations
 
