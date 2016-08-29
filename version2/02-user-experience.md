@@ -29,7 +29,7 @@ The common workflow from the user experience is:
 
 ![Example Screen For Authentication Request](images/third_party_app_start_authorization.png)
 
-2. The mobile operating system selects an appropriate app (on Android the edu-ID app is selected automatically so, for now, this step is valid only for iOS). Operating system uses it standard inter-app communication interfaces to allow the users to channel the request into the Swiss edu-ID Mobile App. On iOS the operating system launches an "App Selector"/"Sharing Menu" that allow users to select the appropriate authentication app. These pop-up menus are commonly used user interface elements.
+2. The mobile operating system selects an appropriate app (on Android the edu-ID app is selected automatically so, for now, this step is valid only for iOS). Operating system uses its standard inter-app communication interfaces to allow the users to channel the request into the Swiss edu-ID Mobile App. On iOS the operating system launches an "App Selector"/"Sharing Menu" that allow users to select the appropriate authentication app. These pop-up menus are commonly used user interface elements.
 
 ![Example iOS Sharing Screen with the edu-ID Option](images/iOS_AppSelectionScreen.jpg)
 
@@ -69,7 +69,7 @@ In a future iteration the profile view may provide interfaces to other persisten
 
 ### Unlinking the App from an Account
 
-If users decide to unlink the edu-ID Mobile they can do so by using the "logout" button in the profile view. Before a user actually unlinks the app, a warning is presented in order to inform the users that logging out means also that all app authorizations will be rejected. At this point the users can stop unlinking the edu-ID Mobile App and return to the profile view.
+If users decide to unlink the edu-ID Mobile App they can do so by using the "logout" button in the profile view. Before a user actually unlinks the app, a warning is presented in order to inform the users that logging out means also that all app authorizations will be rejected. At this point the users can stop unlinking the edu-ID Mobile App and return to the profile view.
 
 ![Logout Warning Screen](images/eduid_LogoutScreen_layout.jpg)
 
