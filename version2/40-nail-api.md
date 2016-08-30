@@ -116,7 +116,9 @@ The completion handler receives a boolean value that indicates if the NAIL API w
 
 This method revokes the app access token for a given service. After calling this method the service token cannot be used with the service. This is equivalent to an app-level logout.
 
-This method will authomatically remove the service from the NAIL API.
+This method authomatically removes the service from the NAIL API.
+
+The completion handler receives a boolean value that indicates if the NAIL API was able to revoke the token.
 
 ``` removeService(serviceName) ```
 
