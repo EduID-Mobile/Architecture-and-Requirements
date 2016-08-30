@@ -93,7 +93,7 @@ This method refreshes a service's access token.
 
 The completion handler receives a boolean value that indicates if the NAIL API was able to refresh the token. On failure the app's business logic MAY remove the service from the NAIL API.
 
-```removeService(serviceName)```
+``` removeService(serviceName) ```
 
 This method removes an authorized service from the NAIL API.
 
