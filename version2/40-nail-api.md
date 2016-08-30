@@ -112,7 +112,7 @@ This method refreshes a service's access token.
 
 The completion handler receives a boolean value that indicates if the NAIL API was able to refresh the token. On failure the app's business logic MAY remove the service from the NAIL API.
 
-``` revokeToken(serviceName) -> competionPromise```
+``` revokeToken(serviceName) -> completionPromise```
 
 This method revokes the app access token for a given service. After calling this method the service token cannot be used with the service. This is equivalent to an app-level logout.
 
