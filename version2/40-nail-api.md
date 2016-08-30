@@ -49,6 +49,7 @@ The NAIL Framework API provides a singleton class interface.
 The protocol authorization and endpoint discovery is supported by the API call.
 
 ```authorizeProtocols(protocolList) -> completionPromise```
+
 ```authorizeProtocols(protocolList, singleton) -> completionPromise```
 
 This method implements the protocol authorization. It abstracts the OS-level data exchange with an authorizing mobile app, such as the edu-ID Mobile App. The completion of the request is asynchroneous. Therefore, this method requires a completion handler to return the result to the app's business logic.
@@ -83,19 +84,21 @@ This method returns the display name of an authorized Federation Service.
 
 This method returns the absolute URL for a token endpoint following the RSD2 URL building rules.
 
+An app is ensured that all requested protocols are authorized by the service endpoints.
+
 ```getServiceToken(serviceName, protocolName) -> string```
 
 ```getServiceToken(serviceName, protocolName, endpointPath) -> string```
 
-```getServiceToken(serviceName, protocolName, claims) -> token```
+```getServiceToken(serviceName, protocolName, claims) -> string```
 
-```getServiceToken(serviceName, protocolName, endpointPath, claims) -> token```
+```getServiceToken(serviceName, protocolName, endpointPath, claims) -> string```
 
-This method builds an authorization token for the requested service endpoint.
+This method builds an authorization token for the requested service endpoint. This function initializes the a basic or a JWT Bearer token depending on the authorization provided for the service.
 
-The claims parameter holds a dictionary object with additional claims to be added to a JWT token. Additional claims can be used to increase the security of the token. Protocols MAY require clients to set specific claims. If the service uses basic bearer tokens, this parameter will be ignored.
+If present, the claims parameter holds a dictionary object with additional claims to be added to a JWT token. Additional claims can be used to increase the security of the token. Protocols MAY require clients to set specific claims. If the service provided a basic bearer token, this parameter will be ignored.
 
-If the requested service return an empty string, the token has been expired. In this case the app's business logig MUST refresh the token for this service using the ```refreshToken()``` method.
+If the requested service return an empty string, the token has been expired. In this case the app's business logic SHOULD refresh the token for this service using the ```refreshToken()``` method. Alternatively, the service can be removed or a new authorization request can be triggered to the user interface.
 
 ```refreshToken(serviceName) -> completionPromise```
 
@@ -105,7 +108,7 @@ The completion handler receives a boolean value that indicates if the NAIL API w
 
 ``` removeService(serviceName) ```
 
-This method removes an authorized service from the NAIL API.
+This method removes an authorized service from the NAIL API. After a service has been removed from the NAIL API and the app's business logic requires data persistency, the business logic SHOULD serialize and store the data of the NAIL API using the ```serialize()``` method.
 
 ## NAIL Interface API
 
