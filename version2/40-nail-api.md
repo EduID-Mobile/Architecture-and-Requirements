@@ -78,10 +78,20 @@ This method parses the serialised data. This function is typically used during i
 This method returns the display name of an authorized Federation Service.
 
 ```getEndpointUrl(serviceName,protocolName) -> uristring```
+
 ```getEndpointUrl(serviceName,protocolName,endpointPath) -> uristring```
 
+This method returns the absolute URL for a token endpoint following the RSD2 URL building rules.
+
 ```getServiceToken(serviceName, protocolName) -> string```
+
+```getServiceToken(serviceName, protocolName, endpointPath) -> string```
+
 ```getServiceToken(serviceName, protocolName, claims) -> token```
+
+```getServiceToken(serviceName, protocolName, endpointPath, claims) -> token```
+
+This method builds an authorization token for the requested service endpoint.
 
 The claims parameter holds a dictionary object with additional claims to be added to a JWT token. Additional claims can be used to increase the security of the token. Protocols MAY require clients to set specific claims. If the service uses basic bearer tokens, this parameter will be ignored.
 
