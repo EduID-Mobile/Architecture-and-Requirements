@@ -69,7 +69,7 @@ If the NAIL did not receive any service authorizations, it will return an empty 
 
 This method serializes the internal data structures. The NAIL API does not ensure persistency. Therefore, the business logic MUST ensure that any persistent data is stored approrpiately. The ```serialize()``` method returns a UTF8 character string that can get used for initialising the NAIL API.
 
-```deserialize(nailSerialization)```
+``` deserialize(nailSerialization) ```
 
 This method parses the serialised data. This function is typically used during initialization.
 
