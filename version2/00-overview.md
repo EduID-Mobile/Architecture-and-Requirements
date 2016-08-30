@@ -1,4 +1,4 @@
-# Swiss EduID Mobile App
+# Swiss edu-ID Mobile App
 
 The Swiss edu-ID mobile app aims for improving the integration of mobiles apps with IT services provided by Swiss Universities.
 

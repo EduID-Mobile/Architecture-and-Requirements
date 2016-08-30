@@ -1,4 +1,4 @@
-# Swiss EduID Mobile App Use Cases
+# Swiss edu-ID Mobile App Use Cases
 
 ## The Problem of Integrating Mobile Apps into Service Federations
 
@@ -6,9 +6,9 @@ The OAuth2 specification defines a protocol framework for providing access to pr
 
 The OAuth2 specification defines 2 types of clients:
 
-* Confidential clients, which can maintain confiditiallity of crdentials towards thrid parties.
+* Confidential clients, which can maintain confidentiality of credentials towards third parties.
 
-* Public clients, which cannot not reliably maintain confiditiality of crendentials towards third parties.
+* Public clients, which cannot not reliably maintain confidentiality of credentials towards third parties.
 
 The specification differentiates between three types of applications:
 
@@ -29,11 +29,11 @@ This problem does not exist for user-agent-based applications as they cannot man
 
 This problem is relatively small in centralised federations with very few (e.g. one) authorization services that connect to many resource services. In such environments the authorizing party plays a central role for managing access of native applications to resource services. This is not the case in distributed federations with many resource and many authorization services because there is a central control instance missing.
 
-The examples of the OAuth2 specification implicitly assume that all parties are known to each other prior to the actual authorization process. In the examples of OAuth2 a client "knows" the authorization endpoint either through configuration or by asking users for their authorization endpoint. In distributed federations configuring authoriztation services with each app is highly inefficient and not flexible. The remaining alternative that balances flexibility within the envisioned OAuth2 protocol would be to request authorization endpoints. However, this exposes security-relevant infrastrcuture to thrid parties.
+The examples of the OAuth2 specification implicitly assume that all parties are known to each other prior to the actual authorization process. In the examples of OAuth2 a client "knows" the authorization endpoint either through configuration or by asking users for their authorization endpoint. In distributed federations configuring authorization services with each app is highly inefficient and not flexible. The remaining alternative that balances flexibility within the envisioned OAuth2 protocol would be to request authorization endpoints. However, this exposes security-relevant infrastructure to third parties.
 
 In combination of the user agent problem with the prior exposure of authorization infrastructure allows rouge parties to gather full user credentials before the authorizing party is contacted. Within a distributed federation this means that this third party does not only have access to the requested resource service but to all resource services of a federation. In order to reduce this problem, system administrators and developers of native applications have to put increased effort into building and maintaining trust relations. Typically outside of the formal trust relations for the federation.
 
-While this is not specific to mobile apps, mobile app are more affected than desktop applications as mobile devices have a broader device capabilities that many desktop systems that are unavailable to web-based applications. Additionally, the usage of mobile devices and the apps installed on them have a wider application scenario, including location-based activities, augmented reality, sensor-based data collection, and offline use. Again, many of these functions are also available on specialised desktop hardware, but the user experience and the ubiquity of mobile devices made broader applications practical.
+While this is not specific to mobile apps, mobile app are more affected than desktop applications as mobile devices have a broader device capabilities that many desktop systems that are unavailable to web-based applications. Additionally, the usage of mobile devices and the apps installed on them have a wider application scenario, including location-based activities, augmented reality, sensor-based data collection, and off-line use. Again, many of these functions are also available on specialised desktop hardware, but the user experience and the ubiquity of mobile devices made broader applications practical.
 
 ## edu-ID Mobile App Ecosystem Stakeholders
 

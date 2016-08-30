@@ -8,13 +8,13 @@ Apps are expected to rely on public protocols
 
 The NAIL is designed to facilitate simultaneous connections to several service endpoints. Apps that can handle only one simultaneous authorization MAY limit this support. Otherwise it is always safe to assume that average users in the Swiss academic domain have access to more than one Federation Service that meets an app's protocol requirements.
 
-While NAIL supports the protocol of the Swiss EduID Mobile App, it is agnostic to the authorizing app. The only requirement is that the authorizing app uses the same data formats.
+While NAIL supports the protocol of the Swiss edu-ID Mobile App, it is agnostic to the authorizing app. The only requirement is that the authorizing app uses the same data formats.
 
 ## NAIL API Overview
 
-The NAIL API supports two interactions with the EduID trust domains.
+The NAIL API supports two interactions with the edu-ID trust domains.
 
-1. Access requets to authorizing apps (7)
+1. Access request to authorizing apps (7)
 2. Authorized access to service endpoints (9)
 
 ### Protocol Discovery and Authorization
