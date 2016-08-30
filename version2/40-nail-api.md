@@ -56,13 +56,13 @@ This method implements the protocol authorization. It abstracts the OS-level dat
 
 The method expects a list of protocol names as the first parameter.
 
-The two parameter variant expects a boolean value to indicate if the business logic can handle only one (1) service authorization.
+The two parameter variant expects a boolean value to indicate if the business logic can handle only one service authorization. In this case the authorizing app will be requested to ask the users for only one authorization. A business logic MUST NOT rely on that the authorizing app returns exactly one authorization.
 
 The completion handler has no parameter.
 
 ```serviceNames() -> listOfServiceNames```
 
-This method returns the list of authorized service names obtained by all requests to ```authorizeProtocols()```.
+This method implements the service discovery. It returns the list of authorized service names obtained by all requests to ```authorizeProtocols()```.
 
 If the NAIL did not receive any service authorizations, it will return an empty list.
 
@@ -78,13 +78,15 @@ This method parses the serialised data. This function is typically used during i
 
 This method returns the display name of an authorized Federation Service.
 
-```getEndpointUrl(serviceName,protocolName) -> uristring```
+```getEndpointUrl(serviceName, protocolName) -> uristring```
 
-```getEndpointUrl(serviceName,protocolName,endpointPath) -> uristring```
+```getEndpointUrl(serviceName, protocolName, endpointPath) -> uristring```
 
 This method returns the absolute URL for a token endpoint following the RSD2 URL building rules.
 
 An app is ensured that all requested protocols are authorized by the service endpoints.
+
+If a protocol has multiple endpoints, the relative service endpoint path for the request SHOULD be added here.
 
 ```getServiceToken(serviceName, protocolName) -> string```
 
@@ -96,7 +98,11 @@ An app is ensured that all requested protocols are authorized by the service end
 
 This method builds an authorization token for the requested service endpoint. This function initializes the a basic or a JWT Bearer token depending on the authorization provided for the service.
 
+If a protocol has multiple endpoints, the relative service endpoint path for this token MUST be included.
+
 If present, the claims parameter holds a dictionary object with additional claims to be added to a JWT token. Additional claims can be used to increase the security of the token. Protocols MAY require clients to set specific claims. If the service provided a basic bearer token, this parameter will be ignored.
+
+JWT tokens MUST be regenerated for every request. Basic bearer tokens are persistent across requests, but it is RECOMMENDED to always request a new token from the NAIL API, because services MAY implement different authorization schemes. A business logic MUST NOT rely on a relation between the requested protocols and an authorziation scheme.
 
 If the requested service return an empty string, the token has been expired. In this case the app's business logic SHOULD refresh the token for this service using the ```refreshToken()``` method. Alternatively, the service can be removed or a new authorization request can be triggered to the user interface.
 
@@ -106,9 +112,19 @@ This method refreshes a service's access token.
 
 The completion handler receives a boolean value that indicates if the NAIL API was able to refresh the token. On failure the app's business logic MAY remove the service from the NAIL API.
 
+``` revokeToken(serviceName) -> competionPromise```
+
+This method revokes the app access token for a given service. After calling this method the service token cannot be used with the service. This is equivalent to an app-level logout.
+
+This method will authomatically remove the service from the NAIL API.
+
 ``` removeService(serviceName) ```
 
 This method removes an authorized service from the NAIL API. After a service has been removed from the NAIL API and the app's business logic requires data persistency, the business logic SHOULD serialize and store the data of the NAIL API using the ```serialize()``` method.
+
+``` clearAllServices() ```
+
+This method resets the NAIL API by removing all authorized services.
 
 ## NAIL Interface API
 
