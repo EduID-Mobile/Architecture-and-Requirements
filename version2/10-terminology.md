@@ -43,6 +43,7 @@ The Swiss edu-ID Mobile App architecture builds on top of the following specific
 * [RFC-7516: JSON Web Encryption (JWE)](https://tools.ietf.org/html/rfc7516)
 * [RFC-7517: JSON Web Key (JWK)] (https://tools.ietf.org/html/rfc7517)
 * [RFC-7518: JSON Web Algorithms (JWA)](https://tools.ietf.org/html/rfc7518)
+* [RFC-7519: JSON Web Tokens (JWT)](https://tools.ietf.org/html/rfc7519)
 * [RFC-7521: Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants](https://tools.ietf.org/html/rfc7521)
 * [RFC-7523: JSON Web-Tokens (JWT) for OAuth 2.0 Client Authentication and Authorization Grants](https://tools.ietf.org/html/rfc7523)
 * [RFC-7797: JSON Web Signature](https://tools.ietf.org/html/rfc7797)
@@ -57,6 +58,8 @@ The Swiss edu-ID Mobile App architecture builds on top of the following specific
 * Swiss edu-ID Identity Entries
 
 * [OpenId Connect 1.0](https://openid.net/specs/openid-connect-basic-1_0.html)
+
+* [RFC-7520: Examples of protecting content using JSON Object Signing and Encryption](https://tools.ietf.org/html/rfc7520)
 
 This architecture does not specify any data formats or service endpoints that are already covered by these specifications. For all protocol flows documented throughout the Swiss edu-ID Mobile App architecture the underpinning specification is the point of reference.
 

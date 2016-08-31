@@ -76,12 +76,13 @@ The edu-ID Mobile relies on the OAuth2 protocol endpoint for authenticating user
 
 * The token endpoint.
 * The authorization endpoint.
+* The revoke endpoint as specified in [RFC 7009](https://tools.ietf.org/html/rfc7009)
 
-Both service endpoints are specified in [OAuth2 section 3](https://tools.ietf.org/html/rfc6749#section-3).
+The token and the authorization endpoints are specified in [OAuth2 section 3](https://tools.ietf.org/html/rfc6749#section-3).
 
 ### Institution-level Service Endpoints
 
-Federation Services need to provide at least an token service endpoint as a target the edu-ID Mobile App.
+Federation Services need to provide at least an token and a revoke service endpoint as a target the edu-ID Mobile App.
 
 The token endpoint MUST support at least the following grant-types:
 
@@ -93,6 +94,8 @@ In addition the institution-level service endpoints MAY support scoped request. 
 * The edu-ID Mobile App instances' token MUST be scoped to access the token endpoint.
 * Third party app instance tokens MUST get scoped to the authorized protocols.
 * Third party app instances MAY have several active authorization tokens for different protocol.
+
+The revoke endpoint MUST support [OAuth2 token revocation](https://tools.ietf.org/html/rfc7009). Token revocation MAY be performed by the edu-ID Service, the edu-ID Mobile App, or the authorized third party app.
 
 For Federation Services that use token extension MUST scope the third party app for accessing the token endpoint.
 

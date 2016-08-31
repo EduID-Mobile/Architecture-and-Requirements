@@ -134,20 +134,88 @@ This method resets the NAIL API by removing all authorized services.
 
 The NAIL protocol requires an app to present a set of information, including but not limited to its bundle id and name.
 
-This parameter will always be a list of authorized protocol endpoints (array). An authorized protocol endpoint contains a parsed access token and the Federation Service RSD. The business logic MUST NOT assume a complete RSD document but only to find the requested  protocol endpoints.
+The core concept of the edu-ID Mobile App is that mobile apps can request authorization through standard mechnisms of the mobile OS.
 
-### Protocol handling.
+On Android apps use the concept of [__intents__]().
+
+On iOS apps use the concept of [__app extensions__]().
+
+Intents and app extensions share the common principle of named communication. This means that  the authorizing app expects incoming requests on a named data types.
+
+Both, intents and app extensions allow only one request and response. Therefore, complex data exchange or data flows are not possible and all relevant information for the protocol request MUST be included into the payload data for the data exchange at the OS-level.
+
+#### Data type name
+
+The edu-ID Mobile App expects incoming requests for the data type ```urn:ietf:params:oauth:assertion```. Other data types MAY be supported, but are beyond the scope of this architecture.
+
+#### Request data structure
+
+The edu-ID Mobile App supports a identified protocol requests. This means an app instance needs to identify itself.
+
+The request data structure MUST include the following data fields.
+
+| Name | Type | Required |  Description |
+| :--- | :--- | :--- | :--- |
+| client_id | ```String``` | Yes | Unique identitifier of an app instance. This identifier SHOULD be obtained from the appropriate OS API. |
+| app_id | ```String``` | Yes | The app's bundle-ID as registered in the repsective Application Store. |
+| app_name | ```String``` | Yes | The apps display name as registered in the respective Application store. |
+| protocols | ```Array``` | Yes | A list of protocol names. |
+| token | ```JWT-String``` | No | signed JWT |
+| single | ```Boolean``` | No | Indicates the preferance of only one authorization. |
+
+Apps MAY add a __signed__ JWT with the following claims.
+
+* aud: containing the string ```urn:ietf:params:oauth:assertion```.
+* sub: Unique identitifier of an app instance. MUST be identical to ```client_id```.
+* iss: The app's bundle-ID. MUST be identical to ```app_id```.
+* name: the apps display name. MUST be identical to ```app_name```.
+
+The JWT MUST be signed with an app's private key.
+
+If the ```token```-attribute is present in a protocol request, then an authorizing app MUST NOT respond to requests if they cannot validate the token.
+
+Apps MAY use the single flag to indicate to an authorizing app a preference to receive only on authorization. Authorizing apps SHOULD limit the user choice to exactly one authorziation for the request.
+
+#### Response data structure
+
+Authorizing Apps MUST respond a list (array) containing filtered RSD2 objects. Filtered RSD2 objects contain reduced API information.
+
+If no authorization has been granted, authorizing apps MUST return an empty list.
+
+The response data MUST include only protocol endpoints for the requested protocols and for the oauth2 protocol.
+
+Each RSD2 object MUST contain ```authorization``` information.
+
+An app MUST be able to handle all authorizations included in the response.
+
+An app MUST handle each authorization of the RSD2 objects independently.
+
+Apps SHOULD assume that access is scoped to those protocols included in the RSD2 objects.
+
+### Protocol handling
+
+It is the app developer's responsibility to identify all relevant service endpoints of the requested protocols.
+
+Apps that operate directly on the response data structure MUST  implement the endpoint URL generation algorithm as specified for the RSD2. Apps that use the NAIL Framework API can request endpoint URLs via the related API Methods.
+
+If the service RSD authorization section provides an plain access token, then all endpoint requests MUST use this authorization token for all requests to service endpoints hosted on that service.
+
+If the service RSD authorization section provides a JWT access token, then the app MUST generate request level authorization tokens for each request to a service endpoint.
+
+Apps MUST NOT assume plain or JWT tokens for authorization.
+
+Apps that use the NAIL Framework API will receive the appropriate authorization token via the token generation method.
 
 ### Access Restrictions
 
-Scoped requests
+Apps SHOULD assume that all protocol authorizations are scoped to the requested protocols. Federation Services MAY revoke authorizations if a token is used outside of its scope.
 
-- Apps may not access endpoints outside their scope
+If protocol requests return authorization errors, then an app MUST assume that the granted access token has expired. An app MUST NOT assume that the access tokens for other protocols have expired.
 
-Simple Bearer Tokens Handling
+If a refresh token is present, then the app SHOULD try to obtain a new access token via the service's OAuth2 protocol's token endpoint. If the refresh token is also rejected an app MUST NOT try to connect to the service's protocol endpoints using the provided authorizations.
 
-Refreshing Access Tokens
+Apps SHOULD present appropriate user interfaces to inform users that an authorization has expired and has to be renewed via the authorization.
 
+Apps MUST pay attention that services MAY provide per endpoint authorizations. These authorizations are independent from each other. If protocol endpoint specific authorization tokens are present the app MUST use the protocol authorization even if a service-wide authorization is present at the same time.
 
-## Javascript Integration for Apache Cordova
-
+Apps MAY revoke an access token by using the [revoke endpoint](https://tools.ietf.org/html/rfc7009) of the OAuth protocol.
