@@ -19,51 +19,76 @@ The app can be launched through two processes.
 
 ## Components
 
-The edu-ID Mobile APP has 6 core components.
+The edu-ID Mobile APP has 6 functional components.
 
 * Profile manager
 * Protocol discovery
-* Service authorization manager
+* Service authorization
 * App authorization manager
 * App access provider
 
 ### Profile Manager
 
+#### Device Assertion Interface
+
+#### User Authentication Interface
+
+#### User Profile Filter Interface
+
 ### Protocol Discovery
 
-### Service Authorization Manager
+#### RSD2 Discovery Interface
 
-### App Authorization Manager
-
-### Service Management Manager
+### Service Manager
 
 If a [Service Usage Component](20-service-architecture.md) is available in the federation, then this information will be included into the service management.
 
+#### Token Revocation Interface
+
+#### Service Usage Discovery Interface
+
+### Service Authorization
+
+The service authorization component handles the process of obtaining an assertion token from the edu-ID Service and pass it as an authorization code to a Federation Service.
+
+The service authorization extends the service manager to handle the data exchange between two service endpoints.
+
+#### Service Assertion Interface
+
+#### Service Code Authorization Interface
+
 ### App Access Provider
+
+#### OS Data Exchange Interface
+
+### App Authorization Manager
+
+#### App Authorization Interface
+
 
 ## User Interfaces
 
-### Login Interface
+### Login User Interface
 
-The login interface is displayed whenever the app is launched and no active authorization for an edu-ID user is present. This can be during stand-alone launches or during protocol authorization requests
+The login user interface is displayed whenever the app is launched and no active authorization for an edu-ID user is present. This can be during stand-alone launches or during protocol authorization requests
 
-The login interface consists of the same interface elements for entering user credentials as the web-based edu-ID Service interfaces.
+The login user interface consists of the same user interface elements for entering user credentials as the web-based edu-ID Service interfaces.
 
-### Logout Interface
+### Logout User Interface
 
-The logout interface provides an intermediate step before users can revoke their edu-ID authorization for the device.
+The logout user interface provides an intermediate step before users can revoke their edu-ID authorization for the device.
 
-The logout interface informs the users about the consequences and displays affected services and apps.
+The logout user interface informs the users about the consequences and displays affected services and apps.
 
-Users can decide via the logout interface if they want to continue logging out or if they want to keep the device authorization.
+Users can decide via the logout user interface if they want to continue logging out or if they want to keep the device authorization.
 
-### Profile Information Interface
+### Profile Information User Interface
 
-The profile information interface allows users to see the edu-ID identity that is connected to the present device.
+The profile information user interface allows users to see the edu-ID identity that is connected to the present device. If affiliation information is available in the user profile, then this information is displayed, too.
 
-### App Authorization Interface
+### App Authorization User Interface
 
-The service authorization interfaces is launched before app authorization during protocol authorization requests of third party apps. The service authorization interface allows users to select services they want to grant a requesting app access.
+The app authorization user interface is launched before app authorization during protocol authorization requests of third party apps. The service authorization interface allows users to select services they want to grant a requesting app access.
 
 Users can select all or some services for authorization. Alternatively, users can choose to completely reject an authorization request.
 
@@ -80,13 +105,13 @@ The institution filter relies on profile information and includes only services,
 
 In addition users can use a __search__ to narrow down the service list. The search targets the service's display names and host address.
 
-### Service Authorization Interface
+### Service Authorization User Interface
 
-The service authorization interface allows users to introspect  granted authorizations. Through this interface users can see which apps have active authorizations and which services they use.
+The service authorization user interface allows users to introspect  granted authorizations. Through this interface users can see which apps have active authorizations and which services they use.
 
-Users can actively revoke service and app authorizations through the service authorization interface.
+Users can actively revoke service and app authorizations through the service authorization user interface.
 
-The service authorization interface does not allow to request service authorizations.
+The service authorization user interface does not allow to request service authorizations.
 
 ## Security Considerations
 
