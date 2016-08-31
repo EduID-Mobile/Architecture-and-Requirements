@@ -22,11 +22,25 @@ The documentation has the following parts.
 * [Native Application Integration Layer (NAIL)](40-nail-api.md)
 * [Service Operation Model](50-operational-model.md)
 
+# Source code
+
+* [iOS Mobile App](https://github.com/BLC-HTWChur/eduid-app-ios)
+* [OAuth2 Demo Service](https://github.com/BLC-HTWChur/eduid-coreservice)
+
+Moodle Plugins for Federation Service Demonstration
+
+* [Moodle RSD2 Discovery Plugin](https://github.com/arael/moodle_rsd)
+* [Moodle edu-ID OAuth2 Plugin](https://github.com/BLC-HTWChur/moodle_eduid)
+
 # Contributors
 
 * Christian Glahn (HTW Chur)
+* Ulrich Hauser (HTW Chur)
 * Riccardo Mazza (USI)
 * Goran Jusic (USI)
+* Yann Cuttaz (USI)
+* Ioana Gatska (FHNW)
+* Michael Hausherr (FHNW)
 
 ## License
 
