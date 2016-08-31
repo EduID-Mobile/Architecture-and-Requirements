@@ -2,9 +2,9 @@
 
 ## Introduction
 
-The Native Application Integration Layer abstracts OAuth2-specific, authentication protocol specific and operating system specific interactions for third party applications that run natively on the users' devices.
+The Native Application Integration Layer abstracts the __access management__ for authorized data-exchange with Federation Services. This includes abstraction of OAuth2-specific, authentication protocol specific and OS-specific interactions for third party applications that run natively on the users' devices.
 
-Apps are expected to rely on public protocols
+Apps are expected to rely on public protocols to access services.
 
 The NAIL is designed to facilitate simultaneous connections to several service endpoints. Apps that can handle only one simultaneous authorization MAY limit this support. Otherwise it is always safe to assume that average users in the Swiss academic domain have access to more than one Federation Service that meets an app's protocol requirements.
 
