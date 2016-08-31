@@ -25,6 +25,7 @@ The documentation has the following parts.
 # Source code
 
 * [iOS Mobile App](https://github.com/BLC-HTWChur/eduid-app-ios)
+* Android Mobile App (Not Yet Released under an Open Source License)
 * [OAuth2 Demo Service](https://github.com/BLC-HTWChur/eduid-coreservice)
 
 Moodle Plugins for Federation Service Demonstration
