@@ -69,3 +69,19 @@ Both components add not more overhead to system administration as the existing A
 Maintaining these components is typically performed by the institutions that run the services. For services with shared instances, the maintenance of service extensions can be shared across institutions.
 
 The Service integration for both components has been demonstrated for the Moodle LMS platform.
+
+
+## Potentially interested institutions within the Swiss Academic Domain
+
+The following institutions have special apps available or are presently developing them. Some of these apps are of greater interest for the academic community or may benefit from authorized access to Federation Services.
+
+* HTW Chur
+* USI
+* FHNW
+* UZH
+* ETHZ
+* UNIGE
+
+First contacts to commercial app developers have been initiated and positive responses have been declared but actual committment depends on the actual integration into the edu-ID Service infrastructure or into a different but equally scalable operation model.
+
+__DISCLAIMER__: Concrete integration tests and collaboration committments are beyond the scope of this architecture document at the time of this writing.
