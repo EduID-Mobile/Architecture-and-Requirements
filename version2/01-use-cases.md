@@ -37,11 +37,15 @@ While this is not specific to mobile apps, mobile app are more affected than des
 
 ## Use Cases for the edu-ID Mobile App
 
+For the edu-ID Mobile App four initial use cases were identified. The use cases were collected in cooperation with the participants of the eduhub SIG Mobile Learning.
+
 ### Mobile Learning Use Case
 
 iCorsi
 
 Mobler App
+
+Location-based learning
 
 ### Mobile Video Conferencing
 
