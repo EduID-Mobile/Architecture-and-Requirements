@@ -42,6 +42,15 @@ The common workflow from the user experience is:
 
 It is important to recall that the edu-ID Mobile App can only control the steps 3-5 of the user experiences. The other elements of the user experience are integrated into the third party app's user experience or embedded into the operating system. In both cases the familiarity of the users can be safely assumed.
 
+## Third Party App Experience Guidelines
+
+![Third Party App Authentication View](images/third_party_app_start_authorization.png)
+
+## Operating System Experience
+
+![Authorization Selection on iOS](images/iOS_AppSelectionScreen.jpg)
+
+
 ## Utility Experiences
 
 In edu-ID Mode the app provides access to utility functions. These include:
