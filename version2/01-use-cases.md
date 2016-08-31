@@ -35,14 +35,68 @@ In combination of the user agent problem with the prior exposure of authorizatio
 
 While this is not specific to mobile apps, mobile app are more affected than desktop applications as mobile devices have a broader device capabilities that many desktop systems that are unavailable to web-based applications. Additionally, the usage of mobile devices and the apps installed on them have a wider application scenario, including location-based activities, augmented reality, sensor-based data collection, and off-line use. Again, many of these functions are also available on specialised desktop hardware, but the user experience and the ubiquity of mobile devices made broader applications practical.
 
+## Use Cases for the edu-ID Mobile App
+
+### Mobile Learning Use Case
+
+iCorsi
+
+Mobler App
+
+### Mobile Video Conferencing
+
+Adobe Connect (and alternatives)
+
+### Commercial Partner Use Case
+
+SBB Mobile Ticket Service
+
+### Campus Information Apps
+
+University Cooperations
+
+University Consortia
+
 ## edu-ID Mobile App Ecosystem Stakeholders
 
 Human stakeholders play a key role in the process of machine-to-machine communication across trust domains. Therefore, the experience of integrating and using the infrastructure must not add complexity to the app development, system maintenance, or device usage. Four key stakeholders are identified for the architecture.
 
 * Federation Management
 
+* Academic Institutions
+
 * Service Provider
 
 * Mobile Device Owner
 
 * Application Developer
+
+### Benefits for Federation Management
+
+- transparent trust domain transitions
+
+- multi factor authorization can benefit directly from device capabilities
+
+### Benefits for Academic Institutions
+
+- Easier coorperation with m-commerce partners
+
+### Benefits for Service Providers
+
+- narrow access profiles (protocol scope)
+
+- easier integration of third party apps into service infrastructure
+
+### Benefits for Mobile Device Owners
+
+- single sign in for native applications
+
+- control over which apps can access user data
+
+### Benefits for Application Developers
+
+- simple authorization scheme
+
+- faster time to market because of a simple and edu-ID App independent authorization scheme.
+
+- support of multiple endpoints from within a single app

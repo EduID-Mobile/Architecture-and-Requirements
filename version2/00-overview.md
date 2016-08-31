@@ -14,11 +14,8 @@ The documentation has the following parts.
 * [Artwork](03-artwork.md)
 * [Technical Terminology](10-terminology.md)
 * [Service Architecture](20-service-architecture.md)
-* [Authentication and Authorization](21-authentication-and-authorization.md)
-* [Protocol Discovery](22-protocol-discovery.md)
 * [App Architecture](30-app-architecture.md)
-* [Android specific Architecture](31-android-architecture.md)
-* [iOS specific Architecture](32-ios-architecture.md)
+* [iOS-specific Architecture](32-ios-architecture.md)
 * [Native Application Integration Layer (NAIL)](40-nail-api.md)
 * [Service Operation Model](50-operational-model.md)
 

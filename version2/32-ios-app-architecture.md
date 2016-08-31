@@ -50,7 +50,7 @@ The edu-ID app extension can exchange data with the edu-ID Mobile App through a 
 
 The iOS application group name is named as following.
 
-```group.ch.eduid.mobile```
+``` group.ch.eduid.mobile ```
 
 ## Data Stores
 
@@ -64,10 +64,10 @@ All data that is used during the app authorization (7) is stored in the edu-ID G
 
 The iOS Data Model consists of four relations.
 
-* ```EduidConfiguration``` for storing user configurations
-* ```Protocols``` for maintaining protocol requests.
-* ```Tokens``` for tracking the different tokens of the app
-* ```UserServices``` for caching the RSD2 objects for the discovered services.
+* ``` EduidConfiguration ``` for storing user configurations
+* ``` Protocols ``` for maintaining protocol requests.
+* ``` Tokens ``` for tracking the different tokens of the app
+* ``` UserServices ``` for caching the RSD2 objects for the discovered services.
 
 ### EduidConfiguration
 
