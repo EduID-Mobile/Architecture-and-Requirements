@@ -23,15 +23,14 @@ For the three phases of the user experience it is necessary to understand that t
 
 For illustration purposes the authentication scheme for the edu-ID is called "App OAuth". This indicates that other federations may use the same scheme (as opposed to the system internal schemes for large commercial IDPs).
 
+FIXME: Add Graphic
+![common user experience workflow](images/eduid_app_ux_overview.png)
+
 The common workflow from the user experience is:
 
 1. The active app indicates that it requires access to an external service. The related user interface displays the possible options for authorization. (e.g. Password, Google, Facebook, App OAuth). The user experience for the authorization request is completely under control of the third party app maintainer.
 
-![Example Screen For Authentication Request](images/third_party_app_start_authorization.png)
-
 2. The mobile operating system selects an appropriate app (on Android the edu-ID app is selected automatically so, for now, this step is valid only for iOS). Operating system uses its standard inter-app communication interfaces to allow the users to channel the request into the Swiss edu-ID Mobile App. On iOS the operating system launches an "App Selector"/"Sharing Menu" that allow users to select the appropriate authentication app. These pop-up menus are commonly used user interface elements.
-
-![Example iOS Sharing Screen with the edu-ID Option](images/iOS_AppSelectionScreen.jpg)
 
 3. The edu-ID Mobile App indicates to the user, what information has been requested and which services within the federation are capable of serving the requested data. This is done my presenting a list of services to the users.
 
