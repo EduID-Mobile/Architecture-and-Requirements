@@ -24,12 +24,13 @@ For the three phases of the user experience it is necessary to understand that t
 For illustration purposes the authentication scheme for the edu-ID is called "App OAuth". This indicates that other federations may use the same scheme (as opposed to the system internal schemes for large commercial IDPs).
 
 ![common user experience workflow](images/eduid_app_ux_authflow.png)
+The above workflow uses prototype user interfaces and does not replicated the final user experience.
 
 The common workflow from the user experience is:
 
 1. The active app indicates that it requires access to an external service. The related user interface displays the possible options for authorization. (e.g. Password, Google, Facebook, App OAuth). The user experience for the authorization request is completely under control of the third party app maintainer.
 
-2. The mobile operating system selects an appropriate app (on Android the edu-ID app is selected automatically so, for now, this step is valid only for iOS). Operating system uses its standard inter-app communication interfaces to allow the users to channel the request into the Swiss edu-ID Mobile App. On iOS the operating system launches an "App Selector"/"Sharing Menu" that allow users to select the appropriate authentication app. These pop-up menus are commonly used user interface elements.
+2. The mobile operating system selects an appropriate app. Operating system uses its standard inter-app communication interfaces to allow the users to channel the request into the Swiss edu-ID Mobile App. On iOS the operating system launches an "App Selector"/"Sharing Menu" that allow users to select the appropriate authentication app. These pop-up menus are commonly used user interface elements.
 
 3. The edu-ID Mobile App indicates to the user, what information has been requested and which services within the federation are capable of serving the requested data. This is done my presenting a list of services to the users.
 
@@ -43,12 +44,27 @@ It is important to recall that the edu-ID Mobile App can only control the steps 
 
 ## Third Party App Experience Guidelines
 
+Third party apps are under the solitary control of the app developer. The following guidelines give app developers an orientation how to integrate edu-ID Mobile App support.
+
+Third party apps that require authorized interactions, often have a login view. For large commercial IDPs this view may already contain buttons so users can chose their preferred method of authorizing the app.
+
+Because users can choose at the OS interaction level, which app they want to use for authorization, it is not guaranteed, which app is actually granting authorization. Therefore, it is RECOMMENDED to include a button for ```secure authorization``` or for ```app authorization```.
+
+If an app does not support any other authorization scheme, an authorization button can be integrated in the app's main user interface or as a configuration element in the app settings.
+
+Below an example authentication screen with multiple authentication schemes is displayed.
+
 ![Third Party App Authentication View](images/third_party_app_start_authorization.png)
 
 ## Operating System Experience
 
-![Authorization Selection on iOS](images/iOS_AppSelectionScreen.jpg)
+The OS interaction is fully controlled by the mobile OS. The only way of controlling this interaction is through an icon and the functional name.
 
+The Android app selector for intents uses always the [colored app icon](03-artwork.md).
+
+The iOS Share screen uses color icons for sharing apps (share extension), and a bitmask icon for bi-directional app communication (action extension). As the edu-ID Mobile App extension on iOS is implemented as an action extension, it uses a bitmask icon as displayed below.
+
+![Authorization Selection on iOS](images/iOS_AppSelectionScreen.jpg)
 
 ## Utility Experiences
 
