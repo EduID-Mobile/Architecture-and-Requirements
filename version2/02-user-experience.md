@@ -23,8 +23,7 @@ For the three phases of the user experience it is necessary to understand that t
 
 For illustration purposes the authentication scheme for the edu-ID is called "App OAuth". This indicates that other federations may use the same scheme (as opposed to the system internal schemes for large commercial IDPs).
 
-FIXME: Add Graphic
-![common user experience workflow](images/eduid_app_ux_overview.png)
+![common user experience workflow](images/eduid_app_ux_authflow.png)
 
 The common workflow from the user experience is:
 
