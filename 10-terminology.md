@@ -95,5 +95,5 @@ Conflicts between the present architecture document and the related specificatio
 
 This architecture refers to keys as cryptographic tools. This architecture is agnostic with respect to the cryptographic method. Whenever, this architecture document refers to cryptographic keys it assumes conformance to the [JWA specification](https://tools.ietf.org/html/rfc7518).
 
-| [Previous: User Experience](03-artwork.md) | [Return Architecture Overview](00-overview.md) | [Next: Service Architecture](20-service-architecture.md) |
+| [Previous: User Experience](03-artwork.md) | [Return to Architecture Overview](00-overview.md) | [Next: Service Architecture](20-service-architecture.md) |
 | :---- | :----: | ----: |
