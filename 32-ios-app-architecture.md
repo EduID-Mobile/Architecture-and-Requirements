@@ -119,4 +119,5 @@ The ```token_target``` field contains the OAuth2 endpoint.
 The ```rsd``` field contains the RSD2 object as it has been provided by the protocol discovery.
 
 
-[Previous: App Architecture](30-app-architecture.md) [Return Architecture Overview](00-overview.md) [Next: NAIL API](40-nail-api.md)
+| [Previous: App Architecture](30-app-architecture.md) | [Return Architecture Overview](00-overview.md) | [Next: NAIL API](40-nail-api.md) |
+| :---- | :----: | ----: |

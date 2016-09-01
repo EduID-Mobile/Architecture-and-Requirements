@@ -379,4 +379,5 @@ The edu-ID Service can only revoke previous assertions, because the service acce
 
 In order to allow the edu-ID Service to revoke previous assertions at the federation services, a Federation Service MUST keep the originating assertion with the granted service access token. If the edu-ID Service revokes the assertion this is equivalent if a edu-ID Mobile App client revokes its service access token.
 
-[Previous: Artwork](03-artwork.md) [Return Architecture Overview](00-overview.md) [Next: App Architecture](30-app-architecture.md)
+| [Previous: Terminolory](10-terminology.md) | [Return Architecture Overview](00-overview.md) | [Next: App Architecture](30-app-architecture.md) |
+| :---- | :----: | ----: |
