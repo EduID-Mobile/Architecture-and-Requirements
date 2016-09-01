@@ -35,7 +35,7 @@ Moodle Plugins for Federation Service Demonstration
 * Riccardo Mazza (USI)
 * Goran Jusic (USI)
 * Yann Cuttaz (USI)
-* Ioana Gatska (FHNW)
+* Ioana Gatzka (FHNW)
 * Michael Hausherr (FHNW)
 
 ## License
