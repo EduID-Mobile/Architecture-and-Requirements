@@ -154,6 +154,14 @@ Presently, this is done through customised solutions. These solutions work well 
 
 With the edu-ID Mobile App campus information apps can integrate also information for cooperation programms for personalising the user experience in the varying apps. If IT Systems support the same web-service protocols, even deeper integration of these apps for enriching the study experience of mobile students can get achieved. The different campus information apps could also rely on a unified user management that allows them to differentiate between students, staff, and visitors.
 
+### Mobile Web-applications
+
+Provided by HTW Chur (via Facebook).
+
+Recent versions of mobile operating systems allow apps to extend browser behavior. Facebook started in September 2016 to provide a browser extension on iOS that allows mobile users to authorize for browser apps via their Facebook app.
+
+With the edu-ID Mobile App users can handle OAuth2 authorizations to browser apps. Instead of being redirected to a login page, mobile users would simply authorize the browser app via the edu-ID Mobile App without having to enter their password.
+
 ## edu-ID Mobile App Ecosystem Stakeholders
 
 Human stakeholders play a key role in the process of machine-to-machine communication across trust domains. Therefore, the experience of integrating and using the infrastructure must not add complexity to the app development, system maintenance, or device usage. Four key stakeholders are identified for the architecture.
@@ -170,19 +178,32 @@ Human stakeholders play a key role in the process of machine-to-machine communic
 
 ### Benefits for Federation Management
 
-- transparent trust domain transitions
+#### Transparent transitions between trust domains
 
-- multi factor authorization can benefit directly from device capabilities
+The key benefit for federation management is that institutions do not need to implement alternative authorization schemes for integrating mobile apps. This reduces the risk for multiple use of passwords in different systems and in case that one of these system has an information breach, that this potentially affects the entire federation.
+
+The edu-ID Mobile App consists of a set of platform-specific apps. For each mobile platform there is only one app that authenticates with the federation. The edu-ID also eliminates the risk that native apps can undermine authorization levels of the web-protocol.
+
+#### Multi factor authorization can benefit directly from device capabilities
+
+The edu-ID Mobile app creates new opportunities for multi-factor authentication using device capabilities, including biometric authentication or token-based authentication for mobile devices.
 
 ### Benefits for Academic Institutions
 
-- Easier coorperation with m-commerce partners
+For academic institutions the edu-ID Mobile App makes it easier to cooperate with m-commerce partners.
+
+Adademic institutions also benefit from the edu-ID Mobile App as they can easier integrate mobile apps into their service portfolio.
 
 ### Benefits for Service Providers
 
-- narrow access profiles (protocol scope)
+Service providers benefit from the edu-ID Mobile App in two ways.
 
-- easier integration of third party apps into service infrastructure
+1. Narrow access profiles (protocol scope)
+2. Easier integration of third party apps into service infrastructure
+
+OAuth2 scoping allows application fencing at the level of service endpoints. Academic service providers gain better control of what functions of the systems mobile apps can access and which ones they cannot. If native apps violate this agreement, then the OAuth2 protocol provides anchor points for reporting and automatically restricting these violations.
+
+As the edu-ID Mobile App authorizes publicised protocols, it becomes easier for service providers to integrate third party apps into their service infrastructure. Third party apps may support proprietary protocols of specific web-service products such as video conferencing platforms, or rely on interoperability standards as they are published for examplee by ISO, IEEE, IETF, OASIS, or the IMS Global Consortium.
 
 ### Benefits for Mobile Device Owners
 
@@ -194,14 +215,11 @@ With the edu-ID Mobile App students and lecturers can just authorize the app for
 
 With persistent authorizations for the edu-ID Mobile App, students have to enter their password on their mobile device only in an interoductionary session and then the authorziation remains active as long they study or as long as they use a device.
 
-
-
 ### Benefits for Application Developers
 
-- simple authorization scheme
+Developers of native apps benefit from the edu-ID Mobile App as they can rely on a standards based and well documented authorization scheme.
+The edu-ID Mobile App eliminates the need for alternative authentication schemes or special platform extensions. This simplifies the app maintenance process and reduces resource requirements.
 
-- faster time to market because of a simple and edu-ID App independent authorization scheme.
+Furthermore, app developers can move faster to market by defining or building on data-exchange protocols. By using the NAIL API Framework, much of proprietary authentication logic can be replaced with a few lines of code. As the NAIL API can accept app specific authororization tokens, app developers can even offload OAuth2 related authorization logic into the NAIL API Framework without using an external authorization app.
 
-- support of multiple endpoints from within a single app
-
-The edu-ID Mobile App would also eliminate the need for alternative authentication schemes or special platform extensions. This simplifies the app maintenance process and reduces resource requirements. The now free resources can be used for other educational innovations.
+App developers can easier integrate multiple authorized services into a single app. This makes it easier for them to support the user experience in environments where users have to use the same protocols for connecting to different systems.
