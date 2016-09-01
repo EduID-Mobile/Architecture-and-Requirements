@@ -48,4 +48,5 @@ For more details please refer to the [LICENSE.md](LICENSE.md) document that came
 
 2016 CC BY-SA 4.0
 
-[Next: Use Cases](01-use-cases.md)
+| | | [Next: Use Cases](01-use-cases.md) |
+| :---- | :----: | ----: |

@@ -222,4 +222,5 @@ Furthermore, app developers can move faster to market by defining or building on
 
 App developers can easier integrate multiple authorized services into a single app. This makes it easier for them to support the user experience in environments where users have to use the same protocols for connecting to different systems.
 
-[Return Architecture Overview](00-overview.md) [Next: User Experience](02-user-experience.md)
+| | [Return Architecture Overview](00-overview.md) | [Next: User Experience](02-user-experience.md) |
+| :---- | :----: | ----: |

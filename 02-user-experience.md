@@ -100,4 +100,5 @@ If the users confirm to logout, the all will return to the Login screen.
 
 After logging out in the edu-ID Mobile App, the third party apps that were previously authorized will receive an error if they try to access the academic services. In this case third party apps should inform the users that a previous authorization has been invalidated and allow the users to reestablish the connection.
 
-[Previous: Use Cases](01-use-cases.md) [Return Architecture Overview](00-overview.md) [Next: Artwork](03-artwork.md)
+| [Previous: Use Cases](01-use-cases.md) | [Return Architecture Overview](00-overview.md) | [Next: Artwork](03-artwork.md) |
+| :---- | :----: | ----: |
