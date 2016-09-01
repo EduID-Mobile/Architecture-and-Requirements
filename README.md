@@ -31,7 +31,7 @@ Moodle Plugins for Federation Service Demonstration
 ## Contributors
 
 * Christian Glahn (HTW Chur)
-* Ulrich Hauser (HTW Chur)
+* Ulrich Hauser-Ehninger (HTW Chur)
 * Riccardo Mazza (USI)
 * Goran Jusic (USI)
 * Yann Cuttaz (USI)
