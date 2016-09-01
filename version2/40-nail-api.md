@@ -219,3 +219,5 @@ Apps SHOULD present appropriate user interfaces to inform users that an authoriz
 Apps MUST pay attention that services MAY provide per endpoint authorizations. These authorizations are independent from each other. If protocol endpoint specific authorization tokens are present the app MUST use the protocol authorization even if a service-wide authorization is present at the same time.
 
 Apps MAY revoke an access token by using the [revoke endpoint](https://tools.ietf.org/html/rfc7009) of the OAuth protocol.
+
+[Previous: iOS App Architecture](32-ios-apparchitecture.md) [Return Architecture Overview](00-overview.md) [Next: Operation Model](50-operation-model.md)

@@ -218,3 +218,5 @@ Additional authentication (e.g. biometric, beacon, network level, geo-location) 
 ## OS specific details
 
 [iOS specific app details](32-ios-app-architecture.md)
+
+[Previous: Service Architecture](20-service-architecture.md) [Return Architecture Overview](00-overview.md) [Next: iOS Architecture](32-ios-app-architecture.md)

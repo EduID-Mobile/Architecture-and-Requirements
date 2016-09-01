@@ -5,31 +5,44 @@ The Swiss edu-ID mobile app aims for improving the integration of mobiles apps w
 This part of the project documents the architectural concepts underpinning the Swiss edu-ID Mobile App and its surrounding ecosystem.
 
 The documentation has the following parts.
+* [Architecture Overview](00-overview.md)
+* [Use Cases](01-use-cases.md)
+* [User Experience](02-user-experience.md)
+* [Artwork](03-artwork.md)
+* [Technical Terminology](10-terminology.md)
+* [Service Architecture](20-service-architecture.md)
+* [App Architecture](30-app-architecture.md)
+* [iOS-specific Architecture](32-ios-architecture.md)
+* [Native Application Integration Layer (NAIL)](40-nail-api.md)
+* [Service Operation Model](50-operational-model.md)
 
-* [edu-ID App Terminology](eduid_app_terminology.md)
-* [edu-ID Mobile App integration Overview](eduid-mobileapp-integration-overview.md)
-* [edu-ID Client Request Token](eduid_app_request_tokens.md)
-* [edu-ID Service Grant Token](eduid_app_service_grant_tokens.md)
-* [edu-ID Service Extensions](eduid-service-extensions.md)
-* [Mobile App Architecture for the Android platform](app-architecture-android.md)
-* [Mobile App Architecture for the iOS platform](app-architecture-ios.md)
+# Source code
 
-The Swiss edu-ID mobile app builds on the following specifications.
+* [iOS Mobile App](https://github.com/BLC-HTWChur/eduid-app-ios)
+* Android Mobile App (Not Yet Released under an Open Source License)
+* [OAuth2 Demo Service](https://github.com/BLC-HTWChur/eduid-coreservice)
 
-* [Swiss edu-ID Architecture Version 2.0](https://projects.switch.ch/export/sites/projects/eduid/.galleries/documents/Architecture_Consolidated_Draft_v02.pdf)
-* [OAuth2](https://tools.ietf.org/html/rfc6749)
-* [RSD2](https://github.com/BLC-HTWChur/rsd2-specification)
+Moodle Plugins for Federation Service Demonstration
+
+* [Moodle RSD2 Discovery Plugin](https://github.com/arael/moodle_rsd)
+* [Moodle edu-ID OAuth2 Plugin](https://github.com/BLC-HTWChur/moodle_eduid)
+
 
 ## Contributors
 
 * Christian Glahn (HTW Chur)
+* Ulrich Hauser (HTW Chur)
 * Riccardo Mazza (USI)
 * Goran Jusic (USI)
+* Yann Cuttaz (USI)
+* Ioana Gatska (FHNW)
+* Michael Hausherr (FHNW)
 
 ## License
 
-The architecture documents are licensed under the [Creative Commons Version 4.0 Attribution Share-Alike](LICENSE.md). Commercial use of these documents is allowed under the conditions of the  license.
+The edu-ID Mobile App Architecture documents and all images are licensed under the [Creative Commons Version 4.0 Attribution Share-Alike](LICENSE.md). Commercial use of these documents is allowed under the conditions of the license.
 
 For more details please refer to the [LICENSE.md](LICENSE.md) document that came with this repository or visit the [Creative Commons web-site](https://creativecommons.org/licenses/by-sa/4.0/).
 
 2016 CC BY-SA 4.0
+

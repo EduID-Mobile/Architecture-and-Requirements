@@ -85,3 +85,5 @@ The following institutions have special apps available or are presently developi
 First contacts to commercial app developers have been initiated and positive responses have been declared but actual committment depends on the actual integration into the edu-ID Service infrastructure or into a different but equally scalable operation model.
 
 __DISCLAIMER__: Concrete integration tests and collaboration committments are beyond the scope of this architecture document at the time of this writing.
+
+[Previous: NAIL API](40-nail-api.md) [Return Architecture Overview](00-overview.md)

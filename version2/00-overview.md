@@ -47,3 +47,5 @@ The architecture documents are licensed under the [Creative Commons Version 4.0 
 For more details please refer to the [LICENSE.md](LICENSE.md) document that came with this repository or visit the [Creative Commons web-site](https://creativecommons.org/licenses/by-sa/4.0/).
 
 2016 CC BY-SA 4.0
+
+[Next: Use Cases](01-use-cases.md)

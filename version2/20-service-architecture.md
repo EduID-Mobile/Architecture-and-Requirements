@@ -378,3 +378,5 @@ For revoked tokens it MUST NOT be possible to recover via refresh tokens.
 The edu-ID Service can only revoke previous assertions, because the service access tokens are private to the edu-ID Mobile App client. However, an action can be used only once and is then invalidated for further authorization.
 
 In order to allow the edu-ID Service to revoke previous assertions at the federation services, a Federation Service MUST keep the originating assertion with the granted service access token. If the edu-ID Service revokes the assertion this is equivalent if a edu-ID Mobile App client revokes its service access token.
+
+[Previous: Artwork](03-artwork.md) [Return Architecture Overview](00-overview.md) [Next: App Architecture](30-app-architecture.md)

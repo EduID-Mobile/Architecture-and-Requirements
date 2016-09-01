@@ -57,3 +57,5 @@ Color | Monochrome
 ## Launch Screens
 
 The launch screen uses a large app icon on a white background. This allows to add the typeface logos of Swiss universities and SWITCH.
+
+[Previous: User Experience](02-user-experience.md) [Return Architecture Overview](00-overview.md) [Next: Service Architecture](20-service-architecture.md)
