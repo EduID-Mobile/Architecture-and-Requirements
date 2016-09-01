@@ -146,10 +146,13 @@ With the edu-ID Mobile App the academic institutions would agree on a verificati
 
 Provided by ETHZ, UNIGE, and USI.
 
-University Cooperations
+Campus information apps were among the first mobile apps in higher education. Serveral univeristies within the Swiss academic domain have implemented or are presently implementing respective apps. Campus information apps are typically highly tailored to a university's IT infrastructure.
 
-University Consortia
+Typically, campus information apps combine public information, such as mensa plans or room maps, with personalised information such as lesson schedules and group communication. Such personalisation requires authorized access to the supportive infrastructure.
 
+Presently, this is done through customised solutions. These solutions work well in constrained environments. However, several institutions offer joint study programmes. E.g. UNIGE, UNIL and EPFL as well as ETHZ and UZH offer joint programs in which students attend activities at the participating institutions. USI and SUPSI cooperate insentively in the area of information system integration. Similarly, practically all Swiss UAS are distributed organisations in which the member institutions have varying degrees of freedom, autonomy, and system integration.
+
+With the edu-ID Mobile App campus information apps can integrate also information for cooperation programms for personalising the user experience in the varying apps. If IT Systems support the same web-service protocols, even deeper integration of these apps for enriching the study experience of mobile students can get achieved. The different campus information apps could also rely on a unified user management that allows them to differentiate between students, staff, and visitors.
 
 ## edu-ID Mobile App Ecosystem Stakeholders
 
