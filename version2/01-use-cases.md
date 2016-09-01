@@ -37,29 +37,115 @@ While this is not specific to mobile apps, mobile app are more affected than des
 
 ## Use Cases for the edu-ID Mobile App
 
-For the edu-ID Mobile App four initial use cases were identified. The use cases were collected in cooperation with the participants of the eduhub SIG Mobile Learning.
+For the edu-ID Mobile App four initial use cases were identified. The use cases were collected in cooperation with the participants of the eduhub SIG Mobile Learning. All use cases rely on the [edu-ID Mobile App user experience](03-user-experience.md).
 
 ### Mobile Learning Use Case
 
-iCorsi
+Integrating mobile technologies into higher education is still a challenge in higher education. While pedagogies become clearer, the integration of mobile tools into overall educational proceses remains a key challenge. This use case has three facets
 
-Mobler App
+1. Extended responsive design
+2. Extended mobility
+3. Location-based activities
 
-Location-based learning
+#### Extended responsive design
+
+Provided by FHNW, HTW Chur, USI, and ZHAW.
+
+All recent versions of web-based learning management systems (LMS) provide so called responsive user interfaces. Browser-based responsive design provide good solutions for quick connections to the learning management system and users can navigate the system using well-known metaphors. However, responsive designs require a standing connection to the learning management systems and as all browser-based apps they have limited access to the advanced device capabilities.
+
+Many LMS platforms offer dedicated mobile apps for their systems to bridge the gap. This is also the case for [Moodle](http://www.moodle.org), a widely used LMS in Swiss Higher Education. Due to specific functional limitations of the Moodle App, USI has developed the iCorsi App. iCorsi is an alternative native App for the Moodle platform. The key function of both apps are improved user interfaces, extended offline capabilities, and improved resource uploading. Apart from this extended features, both apps resemble the concept of the responsive counter parts on the web.
+
+Presently the Moodle App can be integrated into Moodle systems through managed accounts. A SAML2 integration has been added, recently. However, the SAML integration needs activation in customised versions of the app, which tends to confuse students. The alternative approach is the concept of "alternative logins". Alternative logins assign a password to the user accounts, so users can log into a system using an alternative authentication scheme for that system.
+
+In this scenario students and lecturers have to to remember alternative passwords. Also all participants have to be registered on the platform when the alternative login information is generated. On the federation management side this undermines the password security policy, because the passwords have to be stored for the LMS while with the federation signle sign on no user credentials are present on the system. For system administrators or course managers this means overhead work for user management that would be otherwise part of the federation single sign on.
+
+With the edu-ID Mobile App the integration of the Native Application Integration Layer (NAIL) API allows both apps to use the standard authorizations for the Swiss Academic Domain without adding alternative user management requirements to the local LMS instance. Students and Lecturers don't have to remember alternative usernames and passwords. System administrators don't have to coordinate alternative authorizations on the system or maintain customised versions of a native app but use the officially release software.
+
+For alternative variants such as the iCorsi app, it would be possible for students and lecturers to connect to Moodle instances of other institutions using the known mobile environment. Also other institutions with similar requirements as USI could easily adopt the app without having to support app development or customisation in house.
+
+#### Extended mobility
+
+Provided by HTW Chur and UZH.
+
+Mobile learning includes also activities that are typically not performed in onlie or class room settings. This means that an app offers alternative learning activities that are particularly tailored or optimised for supporting student (and lecturer) mobility on top of existing learning resources. At the same time, lecturers and students are interested that the learning experiences are also documented in the universities LMS, so they can be considered to collaboration, learning support, and ultimatively for grading.
+
+The Mobler App by the BLC of the HTW Chur is one case of such extended mobility. The Mobler App is a flash card learning app that has no service infrastructure on its own account. It can load learning resources as well as user interface customisations from different LMS instances. It already supports the simulteneous use of several authorized connections. Students can use the Mobler App to practice exam questions whenever they choose. Mobler uses the LMSes' question pool/question bank features for loading test questions. Lecturers can arrange the questions' availability as part of the online course management. The student activity on the mobile devices is also reported back to the LMS, so the student's mobile activity can be used for student support, for course personalization, or for inclass collaboration.
+
+The Mobler app has been tested in Switzerland at the HTW Chur (BSc Level), ETHZ (Professional Further Education), and UZH (BSc Level) in customized environments. Mobler can work with Moodle and Ilias Systems if these systems expose standard protocol web-service endpoints. OpenOLAT support is presently prepared.
+
+Like in the case of Extended responsive design, Mobler builds on top of the LMSes standard interactive authorization and presently relies on the availability of user crendentials in the LMS. An alternative PIN-based authetication is also available, where a signle sign on PIN is generated on the LMS that can be used for personalised system access. The PIN generation requires a special plugin for each LMS that wishes to use the Mobler app.
+
+Both authentication schemes create significant overhead for the students. Evaluations have shown that both alternative passwords and PIN-based authentications create a significant barrier for students. This causes that around 5-10% of the students cannot manage independently to authenticate with the system without assistance of a tutor or professor. Typical reasons for this are listed below.
+
+* Wrong usernames
+* Wrong password
+* Wrong authententication system selection
+* Usage of passwords instead of PINs
+* Usage of usernames instead of PINs
+* PIN reuse
+
+In medium-sized and large groups between 100 and 500 students this requires substansive human resources and teaching time for bridging this barrier.
+
+For the app development this creates also an overhead, because the different authentication schemes and additional user interfaces for selecting the authentication endpoint increase the complexity of the business logic. If PIN authentication should be used, then this adds significant overhead for maintaining the respective platform extensions.
+
+With the edu-ID Mobile App and integration of its NAIL API into the Mobler app, students and lecturers can just authorize the Mobler App and automatically provide all relevant authorizations to LMSes where a person has active accounts. This increases learning activity participation and lowers support and maintenance time.
+
+#### Location-based activities
+
+Provided by ETHZ.
+
+The OMLETH developed at the institute of Geo-information Systems at ETHZ is a mobile learning solutions for location-based activities. OMLETH is developed under the umbrella of the ETHZ' educational innovation program "innovedum".
+
+In OMLETH lecturers can place "points of interests" (POI) to locations on a map and assign learning activities to these locations. The POIs and activities can be arranged and sequenced by the lecturer to build different learning scenarios. Students can use the OMLETH mobile app to move to the different POI and get there access to the related learning activities. The lecturers can monitor the student activity on a live map and can send messages to the students.
+
+The OMLETH system relies on personalised experiences. Therefore, it requires authenticated users. One of the key challenges is the setup of the system for classes and cohorts.
+
+With the edu-ID Mobile App students and lecturers can authenticate just with their university accounts and by using LMS information about courses and learning tasks, the OMLETH system could preconfigure itself. This would lower the administrative overhead for setting up location-based learning activities. Furthermore, other institutions could use OMLETH in their environment without altering the overall business logic of the OMLETH system.
+
+#### Augmented Reality
+
+Provided by HES-SO.
+
+The Cyberlearn team at HES-SO implemented a Augmented Reality system that is integrated with the universities' Moodle system. The solution allows to connect and overlay learning resources defined in the learning management system into real world experiences via head-on displays.
+
+Presently each head-on display has to be actively linked to the LMS system that provides the relevant learning resources. This typically involves a smart phone that the student carries together with the head-on display. The present system reqiures system administrators to connect the display technology with the relevant resources in the LMS through and alternative authoriztion scheme.
+
+With the edu-ID Mobile App and wider adoption of smart wearable devices such as smart watches and head-on displays students could authorize directly on their smart phones and an AR app on the phone would automatically connect the head-on display of the HES-SO AR Solution.
+
+#### Mobile Assessment
+
+Provided by UZH and ZHAW.
+
+E-Assessment becomes increasingly relevant for all academic institutions. Bring your own device (BYOD) policies become increasingly relevant for upscaling as the  uptake of e-assessment practices increases in the Swiss institutions. BYOD also implies that students may bring any computing device for participating in an e-assessment exam. Today, this already involves tablets as alternatives to laptop computers. Swiss universities have developed already solutions for supporting e-assessment of tablets. A prominent example is the Beaxi App of the University of Basel. Alternatively, the ETHZ reported that it plans a mobile version of its safe exam browser, which is already actively used within the Swiss academic community. Presently, such apps require alternative authentication.
+
+With the edu-ID Mobile App e-assessment apps on tablets could use the official authorization of the Swiss academic community. By connecting to authorized LMSes these apps could even identify active exams automatically. This could increase the acceptance of e-assessments in BYOD settings.
 
 ### Mobile Video Conferencing
+
+Provided by HTW Chur.
+
+
 
 Adobe Connect (and alternatives)
 
 ### Commercial Partner Use Case
 
-SBB Mobile Ticket Service
+Provided by FHNW.
+
+Many academic institutions partner with commercial parties to provide benefits for their students and staff. Among these partnerships are transportation discounts with the SBB (Swiss National Trainservices). Students can buy discount tickets for their visits on campus. Such partnerships are specifically relevant for institutions with distributed campus locations in different cities, such as FHNW.
+
+Mobile tickets become increasingly relevant especially in the public transportation sector. The public transport companies have no interest to integrate proprietary identity systems for the academic institutions into their mobile payment solutions. Consequently, students can only obtain discounted tickets on staffed counters where their student affiliation can be verified.
+
+With the edu-ID Mobile App the academic institutions would agree on a verification protocol with the SBB payment solutions. Students could connect their student account to the SBB mobile app and authorize access to the respective verification service. This would allow students to directly benefit from discount opportunities for public transportation and benefitting from mobile payment solutions. For the institutions there would be a transparent reporting mechanism if the protocol requires to report every validated ticket back into the universities administrative system.
 
 ### Campus Information Apps
+
+Provided by ETHZ, UNIGE, and USI.
 
 University Cooperations
 
 University Consortia
+
 
 ## edu-ID Mobile App Ecosystem Stakeholders
 
@@ -97,6 +183,12 @@ Human stakeholders play a key role in the process of machine-to-machine communic
 
 - control over which apps can access user data
 
+With the edu-ID Mobile App students and lecturers can just authorize the app for their courses without having to choose their institutions' LMS or remember alternative passwords or invoke one-time PINs. This lowers the barrier for students because they can require to install just one app on their device and use just one set of credentials for all services and apps, independently of what is actually used in their curriculum at their institutions.
+
+With persistent authorizations for the edu-ID Mobile App, students have to enter their password on their mobile device only in an interoductionary session and then the authorziation remains active as long they study or as long as they use a device.
+
+
+
 ### Benefits for Application Developers
 
 - simple authorization scheme
@@ -104,3 +196,5 @@ Human stakeholders play a key role in the process of machine-to-machine communic
 - faster time to market because of a simple and edu-ID App independent authorization scheme.
 
 - support of multiple endpoints from within a single app
+
+The edu-ID Mobile App would also eliminate the need for alternative authentication schemes or special platform extensions. This simplifies the app maintenance process and reduces resource requirements. The now free resources can be used for other educational innovations.
