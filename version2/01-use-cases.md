@@ -207,13 +207,11 @@ As the edu-ID Mobile App authorizes publicised protocols, it becomes easier for 
 
 ### Benefits for Mobile Device Owners
 
-- single sign in for native applications
+Mobile device owners include students, staff, and visitors of academic institutions alike. They benefit from the edu-ID Mobile App by having a central place for managing their federation affiliation and their app authorizations to their federation services. Using the app reduces the need to entering the username and password through cumbersome mobile device keyboards.
 
-- control over which apps can access user data
+Also it decreases the risk that device owners accidentally expose their user credentials to third party apps. With persistent authorizations for the edu-ID Mobile App, students have to enter their password on their mobile device only in an interoductionary session and then the authorziation remains active as long they study or as long as they use a device.
 
-With the edu-ID Mobile App students and lecturers can just authorize the app for their courses without having to choose their institutions' LMS or remember alternative passwords or invoke one-time PINs. This lowers the barrier for students because they can require to install just one app on their device and use just one set of credentials for all services and apps, independently of what is actually used in their curriculum at their institutions.
-
-With persistent authorizations for the edu-ID Mobile App, students have to enter their password on their mobile device only in an interoductionary session and then the authorziation remains active as long they study or as long as they use a device.
+In the educational setting, students and lecturers can just authorize a mobile app to access information about their courses without having to choose their institutions' LMS, to remember alternative passwords or to request one-time PINs. Yet, the edu-ID Mobile App maintains control by requesting explicit confirmation for authorizations. This lowers the barrier for students because they can require to install just one app on their device and use just one set of credentials for all services and apps, completely independent from the tools that are actually used in their curriculum at their institutions.
 
 ### Benefits for Application Developers
 
