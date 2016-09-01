@@ -150,7 +150,7 @@ The app authorization interface connects to a Federation Service's token endpoin
 
 The app authorization interface MUST expect and respond using the following protocol name.
 
-```urn:ietf:params:oauth:assertion```
+``` urn:ietf:params:oauth:assertion ```
 
 The app authorization interface MUST add the requested protocols as scope for the Federation Service.
 
