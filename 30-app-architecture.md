@@ -148,9 +148,13 @@ On iOS the app authorization manager is part of an edu-ID Authorization Extensio
 
 The app authorization interface connects to a Federation Service's token endpoint for the OAuth2 protocol.
 
+The app authorization interface MUST expect and respond using the following protocol name.
+
+```urn:ietf:params:oauth:assertion```
+
 The app authorization interface MUST add the requested protocols as scope for the Federation Service.
 
-The result is an access token and an optional refresh token. Both tokens are
+The result is an access token and an optional refresh token.
 
 ## User Interfaces
 
@@ -190,8 +194,8 @@ The information displayed in the app authorization interface is the result of th
 
 Users can narrow down the provided information via two filters.
 
-* a personal filter, and
-* an institution filter
+* A personal filter, and
+* An institution filter
 
 The personal filter relies on the service manager to filter only services that were accessed previously.
 
