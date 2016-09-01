@@ -136,9 +136,9 @@ The NAIL protocol requires an app to present a set of information, including but
 
 The core concept of the edu-ID Mobile App is that mobile apps can request authorization through standard mechnisms of the mobile OS.
 
-On Android apps use the concept of [__intents__]().
+On Android apps use the concept of [__intents__](https://developer.android.com/training/basics/intents/sending.html).
 
-On iOS apps use the concept of [__app extensions__]().
+On iOS apps use the concept of [__app extensions__](https://developer.apple.com/library/ios/documentation/General/Conceptual/ExtensibilityPG/index.html).
 
 Intents and app extensions share the common principle of named communication. This means that  the authorizing app expects incoming requests on a named data types.
 
@@ -146,7 +146,11 @@ Both, intents and app extensions allow only one request and response. Therefore,
 
 #### Data type name
 
-The edu-ID Mobile App expects incoming requests for the data type ```urn:ietf:params:oauth:assertion```. Other data types MAY be supported, but are beyond the scope of this architecture.
+The edu-ID Mobile App expects incoming requests for the follwing data type.
+
+``` urn:ietf:params:oauth:assertion ```
+
+Other data types MAY be supported, but are beyond the scope of this architecture.
 
 #### Request data structure
 
