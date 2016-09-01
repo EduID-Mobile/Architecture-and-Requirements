@@ -124,9 +124,13 @@ With the edu-ID Mobile App e-assessment apps on tablets could use the official a
 
 Provided by HTW Chur.
 
+Video conferencing has become an important tool for scientific collaboration and educational activities alike. Web-based video conferencing solutions have liberated video conferencing from dedicated hardware and installations.
 
+All contemporary web-based video conferencing solutions have special mobile apps that enable users to join video conferences from smart phones and tablets. Switch provides the widely used Adobe Connect and the more recent Vydeo platforms. For both platforms there is option to authenticate their mobile apps through the existing single sign-on solutions of the Swiss academic federation.
 
-Adobe Connect (and alternatives)
+Presently, video conference organisers must open the video conference to anonymous guest access if parties wish to join a video conference from their mobile devices. While this guest access can be protected through a public password, there is no option for the video conference organisers to identify guest participants until these participants actively unveil their identity (by voice or video) in the running video conference session. If participants wish to join through the respective mobile app they have to type the full web address of the video conference room, a guest username, and the guest password in the app. For recurring events, like online classes, this has to be done for every session.
+
+With the edu-ID Mobile App commercial vendors can add support for app-based authorization for their plattform specific protocols. This allows to fully benefit from already existing user experience of the native app for managed video conferences. Participants don't have to enter cryptic URLs, usernames, and passwords but can join with their institutional identities. In these scenarios also video conference hosts could join a video conference meeting from their mobile device and have the moderation tools available. For video conference organisers this also allows to actively restrict the participants for closed meetings.
 
 ### Commercial Partner Use Case
 
