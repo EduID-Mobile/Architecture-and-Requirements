@@ -1,3 +1,4 @@
+![edu-ID Mobile App: Academic Identity Management for Mobile Users](images/03-artwork-icons/playstore_featured_graphics.png)
 # Swiss edu-ID Mobile App Architecture Documentation
 
 The Swiss edu-ID mobile app aims for improving the integration of mobiles apps with IT services provided by Swiss Universities.
