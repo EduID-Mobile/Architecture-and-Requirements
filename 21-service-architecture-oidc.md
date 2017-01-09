@@ -24,11 +24,15 @@ After the Authorization has completed, the EduID Authorization Service is no lon
 
 ## Initiating the Authorization
 
-The EduID Authorization initiates the Authorization through a self-assigned client assertion. The client assertion is targeted for the academic service using a code and an id_token for the academic service. The id_token holds a JWS. The JWS is signed and the provided ```kid``` header is set to ```urn:oidc:email```. In this case the academic service generates the shared key through cancatenation the values provided the scope claims in the order listed in [OIDC Core 1.0, Section 5.4](http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims).
+The EduID Authorization initiates the Authorization through a self-assigned client assertion. The client assertion is targeted for the academic service using a code and an id_token for the academic service. The id_token holds a JWS. The JWS is signed and the provided ```kid``` header is set to ```urn:oidc:CLAIM```, where claim can be of the value ```email```, ```profile```, ```address```, or ```phone```. In this case the academic service generates the shared key through concatenation of the string values provided the scope claims in the order listed in [OIDC Core 1.0, Section 5.4](http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims).
 
 The Academic Service MUST trigger all requests through redirects as a response to the incoming assertion request. If the EduID Service and the Academic Service accept the request for the provided ```sub```-claim, the Academic service MUST create a response according to [OAuth2 section 4.1.4](https://tools.ietf.org/html/rfc6749#section-4.1.4).
 
 The EduID Mobile App will include a JWK signing key into the assertion. This JWK key is used for signing assertions for sub token requests. The academic service MUST store this JWK for validating sub-request issues.
+
+### Identifying the authorizing party
+
+The EduID Mobile App will send an ```azp```-claim as part of the assertion. The azp holds the link to the authorizing party's OAuth2 root.
 
 ### sub-claim validation
 
