@@ -16,7 +16,7 @@ The academic service itself provides the required token service endpoint as requ
 
 ## Flow Support
 
-The academic service MUST use an [OIDC Authorization Flow](http://openid.net/specs/openid-connect-core-1_0.html) to obtain the the client authorization from the authorization service.
+The academic service MUST use an [OIDC Authorization Flow](http://openid.net/specs/openid-connect-core-1_0.html) to obtain the client authorization from the authorization service.
 
 If the EduID Mobile App requests authorization, the authentication request MUST contain the ```prompt```-claim with the value 'none'.
 
@@ -24,7 +24,7 @@ After the Authorization has completed, the EduID Authorization Service is no lon
 
 ## Initiating the Authorization
 
-The EduID Authorization initiates the Authorization through a self-assigned client assertion. The client assertion is targeted for the academic service using a code and an id_token for the academic service. The id_token holds a JWS. The JWS is signed and the provided ```kid``` header is set to ```urn:oidc:CLAIM```, where claim can be of the value ```email```, ```profile```, ```address```, or ```phone```. In this case the academic service generates the shared key through concatenation of the string values provided the scope claims in the order listed in [OIDC Core 1.0, Section 5.4](http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims).
+The EduID Mobile App initiates the Authorization through a self-assigned client assertion. The client assertion is targeted for the academic service using a code and an id_token for the academic service. The id_token holds a JWS. The JWS is signed and the provided ```kid``` header is set to ```urn:oidc:CLAIM```, where claim can be of the value ```email```, ```profile```, ```address```, or ```phone```. In this case the academic service generates the shared key through concatenation of the string values provided the scope claims in the order listed in [OIDC Core 1.0, Section 5.4](http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims).
 
 The Academic Service MUST trigger all requests through redirects as a response to the incoming assertion request. If the EduID Service and the Academic Service accept the request for the provided ```sub```-claim, the Academic service MUST create a response according to [OAuth2 section 4.1.4](https://tools.ietf.org/html/rfc6749#section-4.1.4).
 
@@ -47,7 +47,7 @@ If the ```azp```-claim is present in the id_token presented by the EduID Authori
 
 ## Issuing the primary access_token and id_token
 
-The primary access_token is issued to the EduID Mobile App through the EduID Authorization Service. Therefore, the academic service MUST pass the access_token and the refresh_token to the academic service.
+The primary access_token is issued to the EduID Mobile App through the EduID Authorization Service. Therefore, the academic service MUST pass the access_token and the refresh_token to the EduID Mobile App.
 
 The use of a separate sign key for secondary tokens is RECOMMENDED, if the academic service uses an independent session management and not OAuth2 Tokens.
 
@@ -57,7 +57,7 @@ The academic serivce MUST encrypt the JWK if the EduID Mobile App's assertion co
 
 The EduID Mobile App will use [JWT assertions](https://tools.ietf.org/html/rfc7523) for issuing sub-tokens for third party apps. The secondary token assertion will be signed using the JWK provided in the EduID Mobile App's initial assertion. The assertion request will contain a client authorization using the Authorization header.
 
-The academic serice MAY initiate a normal authorization request as with the primary key from the EduID Authorization service or the authorization service associated with the primary key. In this case the academic service MUST verify that the ```sub```-claim of the Authorization response matches the primary token.
+The academic service MAY initiate a normal authorization request as with the primary key from the EduID Authorization service or the authorization service associated with the primary key. In this case the academic service MUST verify that the ```sub```-claim of the Authorization response matches the primary token.
 
 The academic service MAY immediately accept the assertion and issue its own authorization token to the EduID Mobile App. This is the RECOMMENDED behavior if the academic service implements its own session and access management.
 
@@ -75,4 +75,4 @@ If refresh_tokens are used, the refresh token will get consumed immediately. MUS
 
 Third party apps MAY refresh their tokens without the EduID Mobile App.
 
-The academic service MUST keep the initial secondary access_token and refresh_token that were responded to the EduID Mobile App.
+The academic service MUST keep the initial secondary access_token and refresh_token that were sent to the EduID Mobile App.
