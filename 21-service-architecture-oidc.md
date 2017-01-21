@@ -14,6 +14,49 @@ The academic service acts as a Resource Provider from the perspective of the Edu
 
 The academic service itself provides the required token service endpoint as required by [OIDC Core 1.0](http://openid.net/specs/openid-connect-core-1_0.html). Additionally, the token endpoint MUST allow JWT assertions, so the EduID Mobile App can initiate the OIDC process at the Academic Service. After successful authorization the EduID Mobile App acts as a [Token Agent](http://openid.bitbucket.org/draft-native-application-agent-core-01.html) to the acadmic service. In this role the EduID Mobile App uses the OAuth2 authorization codes to the client as defined in the [OIDC Native Application Agent Core 1.0](http://openid.bitbucket.org/draft-native-application-agent-core-01.html).
 
+## Overview
+
+```
++----------------+
+|                |
+|     Device     |
+|                |
+| +------------+ |                                        +-------------+
+| |            | |                                        |             |
+| |            +------(1) Login + Agent-Authorization---->+             |
+| |            | |                                        |     AP      |
+| |            | |                                        |             |
+| |            +<--------------(2) Agent Token------------+             |
+| |            | |                                        |             |
+| |    Token   | |                                        +---+-----+---+
+| |    Agent   | |                                            ^     |
+| |            | |                                   rfc7521  |    (6)
+| |            | |                                           (5)    |
+| |            | |                                            |     V
+| |            | |                                        +---+---------+
+| |            | |                                        |             |
+| |            +-------------(4) Assertion Code---------->+             |
+| |            | |                                        |             |
+| |            | |                                        |             |
+| |            +<-----------(7) App Access Token----------+             |
+| |            | |                                        |             |
+| +---+----+---+ |                                        |             |
+|     ^    |     |                                        |             |
+|     |   (8)    |                                        |     RP      |
+|    (3)   |     |                                        |             |
+|     |    V     |                                        |             |
+| +---+--------+ |                                        |             |
+| |            | |                                        |             |
+| |            +----------(10) Operation Request--------->+             |
+| |    App     | |                                        |             |
+| |            | |                                        |             |
+| |            +<---------(10) Operation Response---------+             |
+| |            | |                                        |             |
+| +------------+ |                                        +-------------+
+|                |
++----------------+
+```
+
 ## Flow Support
 
 The academic service MUST use an [OIDC Authorization Flow](http://openid.net/specs/openid-connect-core-1_0.html) to obtain the the client authorization from the authorization service.
@@ -40,10 +83,6 @@ The JWS always contains a ```sub```claim. This claim MUST match the sub claim in
 academic service as result of the Authorization Code Flow by the EduID Authorization Service.
 
 The academic service MUST accept a request only if the ```sub```-claims of the EduID Authorization Service and the EduID Mobile App matches and the JWS is validated with the respective id_token claims.
-
-### Issuer Validation
-
-If the ```azp```-claim is present in the id_token presented by the EduID Authorization Service it MUST match the ```iss```-claim of the assertion's JWS. If the ```azp-claim``` is not present in the ```id_token```, then the academic service MUST NOT validate the assertion ```iss```-claim
 
 ## Issuing the primary access_token and id_token
 
