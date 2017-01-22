@@ -91,21 +91,21 @@ The token agent authorizes itself using a [client-authentication assertion](http
 
 The client assertion MUST signed using a shared secret between the token-agent and the authorization service. The shared secret identifies a group of token agents (e.g., platform and version).
 
-The client assertion MUST use the iss claim to identify the device token group. The MUST match the signature.
+The client assertion MUST use the ```iss``` claim to identify the device token group. The MUST match the signature.
 
-The client assertion MUST include a sub claim, that identifies the token agent's instance. The sub claim MUST include a globally unique identifier for the token-agent instance. This is typically the device id as provided by the device's operating system.
+The client assertion MUST include a ```sub``` claim, that identifies the token agent's instance. The ```sub``` claim MUST include a globaly unique identifier for the token-agent instance. This is typically the device id as provided by the device's operating system.
 
-The client assertion MUST include a cnf claim that includes a key for signing the token requests for the authorized user. A token agent MUST NOT reuse keys for different users using the same token agent. The format of the cnf claims is defined by the [Proof-of-Possession Key Semantics](https://tools.ietf.org/html/rfc7800).
+The client assertion MUST include a ```cnf``` claim that includes a key for signing the token requests for the authorized user. A token agent MUST NOT reuse keys for different users using the same token agent. The format of the ```cnf``` claim is defined by the [Proof-of-Possession Key Semantics](https://tools.ietf.org/html/rfc7800).
 
 The authorization service MUST not prompt the user for further authentication if the client authorization assertion is accepted.
 
 ### Successful response
 
-A successful response includes an access_token and a refresh_token for the token agent (2) as specified for [OAuth2 Section 4.3.3](https://tools.ietf.org/html/rfc6749#section-4.3.3).
+A successful response includes an ```access_token``` and a ```refresh_token``` for the token agent (2) as specified for [OAuth2 Section 4.3.3](https://tools.ietf.org/html/rfc6749#section-4.3.3).
 
-The authorization service MAY include an id_token.
+The authorization service MAY include an ```id_token```.
 
-The access_token MUST be valid for the authorization service's endpoints that require user-level authorization.
+The ```access_token``` MUST be valid for the authorization service's endpoints that require user-level authorization.
 
 ### Error response
 
@@ -141,21 +141,21 @@ For requesting apps the token agent will select one or more suitable services fo
 
 The assertion is a [JWT](https://tools.ietf.org/html/rfc7519).
 
-The assertion MUST include an iss claim that points to the token agent's instance as presented in (1) to the authorization service.
+The assertion MUST include an ```iss``` claim that points to the token agent's instance as presented in (1) to the authorization service.
 
-The assertion MUST include an aud claim that points to the authorization service token endpoint.
+The assertion MUST include an ```aud``` claim that points to the authorization service token endpoint.
 
-The assertion MUST include an OIDC azp claim that includes the client_id of the resource provider.
+The assertion MUST include an OIDC ```azp``` claim that includes the client_id of the resource provider.
 
-The assertion MUST include a sub claim that identifies the requesting app.
+The assertion MUST include a ```sub``` claim that identifies the requesting app.
 
-The assertion MUST include an iat claim as defined for JWT.
+The assertion MUST include an ```iat``` claim as defined for JWT.
 
-The assertion MUST include an exp claim as defined for JWT.
+The assertion MUST include an ```exp``` claim as defined for JWT.
 
-The assertion MUST be signed using the key presented in the cnf claim in (1).
+The assertion MUST be signed using the key presented in the ```cnf``` claim in (1).
 
-The assertion MAY be encrypted for the authorization service.
+The assertion MAY be ```JWA``` encrypted for the authorization service.
 
 ### Authorization request
 
@@ -163,17 +163,17 @@ The token agent sends an authorization request to the resource provider's redire
 
 All parameters MUST get encoded as form parameters into the request url.
 
-The request MUST include a aud parameter to points to the authorization service's endpoint root.
+The request MUST include a ```aud``` parameter to points to the authorization service's endpoint root.
 
 A resource provider MUST verify that it is a registered client at the requested aud value.
 
-The request MUST include an assertion parameter containing the assertion token.
+The request MUST include an ```assertion``` parameter containing the assertion token.
 
-The request MUST include an grant_type prameter containing the grant_type for the assertion parameter as defined in [JSON Web Token (JWT) Profile for OAuth 2, Section 2.1](https://tools.ietf.org/html/rfc7523#section-2.1).
+The request MUST include an ```grant_type``` prameter containing the grant_type for the assertion parameter as defined in [JSON Web Token (JWT) Profile for OAuth 2, Section 2.1](https://tools.ietf.org/html/rfc7523#section-2.1).
 
-The resource provider MUST forward all request parameters but the aud parameter to the authorization service. It MUST NOT alter these parameters.
+The resource provider MUST forward all request parameters but the ```aud``` parameter to the authorization service. It MUST NOT alter these parameters.
 
-The resource provider MUST include a scope parameter for tailoring the id_token's contents. The scope parameter MUST follow [OpenID Connect Core, Section 5.2](http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims).
+The resource provider MUST include a ```scope``` parameter for tailoring the id_token's contents. The ```scope``` parameter MUST follow [OpenID Connect Core, Section 5.2](http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims).
 
 #### Successful response
 
@@ -191,11 +191,11 @@ The autorization service MUST verify the assertion's signature.
 
 The authorization service MUST select the authorized user based on the signature used for signing the assertion.
 
-The authorization service MUST generate the id_token based on the azp claim of the assertion.
+The authorization service MUST generate the ```id_token```-based on the azp claim of the assertion.
 
-The resource provider MUST validate the id_token and access_token as required as of [OpenID Connect Core, Section 3.1.3.7](http://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation).
+The resource provider MUST validate the ```id_token``` and ```access_token``` as required as of [OpenID Connect Core, Section 3.1.3.7](http://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation).
 
-The resource provider MUST forward all but the id_token to the token agent as in the code flow (7).
+The resource provider MUST forward all but the ```id_token``` to the token agent as in the code flow (7).
 
 The token agent MUST forward the token information to the requesting app (8) as a response for the access request (3).
 
