@@ -85,33 +85,47 @@ The app authentication has 9 steps.
 ```
 Figure 1: App authorization using a token agent authorization
 
+## Terminology
+
+* Token Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network.
+
+* Authorization service (AP) - OpenID Connect authorization service/ authorization provider.
+
+* Resource provider (RP) - OpenID Connect party that uses one or more AP for authorization.
+
+* Resource owner (RO) - Agent, who uses the AP for authorization, typically indicating the human end-user.
+
+* App - Native app on the same device or within the same application context as the TA.
+
 ## Token-agent authorization for a resource owner
 
-The token agent authorizes with the authorization service using the [OAuth2 resource owner password flow](https://tools.ietf.org/html/rfc6749#section-4.3) to the authorization service's token endpoint.
+The TA authorizes with the AP using the [OAuth2 resource owner password flow](https://tools.ietf.org/html/rfc6749#section-4.3) to the authorization service's token endpoint.
 
-The token agent authorizes itself using a [client-authentication assertion](https://tools.ietf.org/html/rfc7521#section-4.2).
+The TA authorizes itself using a [client-authentication assertion](https://tools.ietf.org/html/rfc7521#section-4.2).
 
-1. The client assertion MUST signed using a shared secret between the token-agent and the authorization service. The shared secret identifies a group of token agents (e.g., platform and version).
+1. The client assertion MUST signed using a shared secret between the TA and the AP. The shared secret identifies a group of TAs (e.g., platform and version).
 
-2. The client assertion MUST use the ```iss``` claim to identify the device token group. The MUST match the signature.
+2. The client assertion MUST use the ```iss``` claim to identify the device TA group. The MUST match the signature.
 
-3. The client assertion MUST include a ```sub``` claim, that identifies the token agent's instance. The ```sub``` claim MUST include a globaly unique identifier for the token-agent instance. This is typically the device id as provided by the device's operating system.
+3. The client assertion MUST include a ```sub``` claim, that identifies the TA's instance. The ```sub``` claim MUST include a globaly unique identifier for the TA instance. This is typically the device id as provided by the device's operating system.
 
-4. The client assertion MUST include a ```cnf``` claim that includes a key for signing the token requests for the authorized user. A token agent MUST NOT reuse keys for different users using the same token agent. The format of the ```cnf``` claim as specified by the [Proof-of-Possession Key Semantics](https://tools.ietf.org/html/rfc7800).
+4. The client assertion MUST include a ```cnf``` claim that includes a key for signing the token requests for the RO. The format of the ```cnf``` claim as specified by the [Proof-of-Possession Key Semantics](https://tools.ietf.org/html/rfc7800).
 
-5. The authorization service MUST not prompt the user for further authentication if a client authorization is presented.
+5. A TA MUST NOT reuse keys for different RO using the same TA.
 
-6. The authorization service MUST report authorization errors to the token agent if the client authorization failed.
+6. The AP MUST not prompt the user for further authentication if a client authorization is presented.
 
-7. An authorization service MAY require password encryption as defined in [Section Password Encryption](#password-encryption), below.
+7. The AP MUST report authorization errors to the TA if the client authorization failed.
+
+8. An AP MAY require password encryption as defined in [Section Password Encryption](#password-encryption), below.
 
 ### Successful response
 
-A successful response includes an ```access_token``` and a ```refresh_token``` for the token agent (2) as specified for [OAuth2 Section 4.3.3](https://tools.ietf.org/html/rfc6749#section-4.3.3).
+A successful response includes an ```access_token``` and a ```refresh_token``` for the TA (2) as specified for [OAuth2 Section 4.3.3](https://tools.ietf.org/html/rfc6749#section-4.3.3).
 
-The authorization service MAY include an ```id_token```.
+1. The AP MAY include an ```id_token```.
 
-The ```access_token``` MUST be valid for the authorization service's endpoints that require user-level authorization.
+2. The ```access_token``` MUST be valid for the AP's endpoints that require user-level authorization.
 
 ### Error response
 
@@ -119,65 +133,69 @@ The error response is specified in [OAuth2 Section 5.2](https://tools.ietf.org/h
 
 ## Access request of an app
 
-An app forwards an access request to the token agent through the device's operating system's means. These requests are defined by the [edu-ID NAIL API](40-nail-api.md). Any access request must include scope information that can be used to identify suitable services that can respond to the requirements of the requesting app.
+An App forwards an access request to the TA through the device's operating system's means. These requests are defined by the [edu-ID NAIL API](40-nail-api.md). Any access request must include scope information that can be used to identify suitable services that can respond to the requirements of the requesting app.
 
-1. An requesting app MUST identify itself in the request.
+1. An App MUST identify itself in the request.
 
-2. The token agent MUST NOT respond to a request before it completed the authorization request(s) (8).
+2. The TA MUST NOT respond to a request before it completed all [authorization request(s) (8)](#authorization-request).
 
 ### Successful response
 
-An successful response includes the authorization token as provided by the resource provider (7).
+An successful response includes the authorization token as provided by the RP (7).
 
 ### Error response
 
-1. The token agent MUST NOT include reasons for authorization failures to the requesting app. An error is indicated by not providing any token information to the requesting app.
+1. The TA MUST NOT include reasons for authorization failures to the requesting App. An error is indicated by not providing any token information to the requesting App.
 
-2. The requesting app MUST NOT make any assumptions why the authorization has failed.
+2. The requesting App MUST NOT make any assumptions why the authorization has failed.
 
-3. The requesting app MUST remain in an unauthorized state if no token information has been provided.
+3. The requesting App MUST remain in an unauthorized state if no token information has been provided.
 
 ## Assertion code request to the resource provider
 
-For requesting apps the token agent will select one or more suitable services for authorization. This can be either automatic or through user interaction. For each service, the token agent generates an authorization assertion on behalf of the requesting app.
+For requesting Apps, the TA SHOULD select one or more suitable RP for authorization. This can be either automatic or through user interaction. For each RP, the TA generates an authorization assertion on behalf of the requesting App.
 
 ### Assertion format
 
 1. The assertion MUST be provided as [JWT](https://tools.ietf.org/html/rfc7519).
 
-2. The assertion MUST include an ```iss``` claim that points to the token agent's instance as presented in (1) to the authorization service.
+2. The assertion MUST include an ```iss``` claim that points to the TA's instance as presented in (1) to the AP.
 
-3. The assertion MUST include an ```aud``` claim that points to the authorization service token endpoint.
+3. The assertion MUST include an ```aud``` claim that points to the AP's token endpoint.
 
-4. The assertion MUST include an OIDC ```azp``` claim that includes the client_id of the resource provider.
+4. The assertion MUST include an OIDC ```azp``` claim that includes the client_id of the RP.
 
-5. The assertion MUST include a ```sub``` claim that identifies the requesting app.
+5. The assertion MUST include a ```sub``` claim that identifies the requesting App.
 
 6. The assertion MUST include an ```iat``` claim as defined for JWT.
 
 7. The assertion MUST include an ```exp``` claim as defined for JWT.
 
-8. The assertion MUST be signed using the key presented in the ```cnf``` claim in (1).
+8. The assertion MUST be signed using the key presented in the ```cnf``` claim during the [TA authorization(1)](#token-agent-authorization-for-a-resource owner).
 
-9. The token agent MAY include additional claims for the authorization agent into the assertion.
+9. The TA MAY include additional claims for the AP into the assertion.
 
 ### Authorization request
 
-The token agent sends an authorization request to the resource provider's redirect_uri as registered for the resouce provider at the authorization service (4).
+The TA sends an authorization request to the RP's ```redirect_uri``` (4). The ```redirect_uri``` is the same as it registered for the RP at the AP.
 
 1. All parameters MUST get encoded as form parameters into the request url.
 
-2. The request MUST include a ```aud``` parameter to points to the authorization service's endpoint root.
+2. The request MUST include a ```aud``` parameter to points to the AP's token endpoint.
 
-3. A resource provider MUST verify that it is a registered client at the requested aud value.
+3. A RP SHOULD verify that it is a registered client for the AP indicated in the ```aud``` parameter.
 
 4. The request MUST include an ```assertion``` parameter containing the assertion token.
 
 5. The request MUST include an ```grant_type``` prameter containing the grant_type for the assertion parameter as defined in [JSON Web Token (JWT) Profile for OAuth 2, Section 2.1](https://tools.ietf.org/html/rfc7523#section-2.1).
 
-6. The resource provider MUST forward all request parameters but the ```aud``` parameter to the authorization service. It MUST NOT alter these parameters.
+6. The RP MUST forward all request parameters to the AP in the ```POST```request.
 
-7. The resource provider MUST include a ```scope``` parameter for tailoring the id_token's contents. The ```scope``` parameter MUST follow [OpenID Connect Core, Section 5.2](http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims).
+7. The RP MUST NOT alter the parameters when forwarding them to the AP.
+
+8. The RP MUST add a ```scope``` parameter into the request to the AP.
+
+9. The ```scope``` parameter MUST follow [OpenID Connect Core, Section 5.2](http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims).
 
 #### Successful response
 
@@ -185,49 +203,49 @@ Successful responses are handled as the [OpenID Connect Core, Section 3.1.3.3](h
 
 #### Error response
 
-The resource provider MAY use HTTP Status codes in case of errors before forwarding the assertion to the authorization service. Otherwise, error responses are handled as the [OpenID Connect Core, Section 3.1.3.4](http://openid.net/specs/openid-connect-core-1_0.html#TokenErrorResponse).
+The RP MAY use HTTP Status codes in case of errors before forwarding the assertion to the AP. Otherwise, error responses are handled as the [OpenID Connect Core, Section 3.1.3.4](http://openid.net/specs/openid-connect-core-1_0.html#TokenErrorResponse).
 
 ## Assertion grant request to the authrozation service
 
-The resource provider POSTs the authorization assertion to the authorization service's token endpoint (5). For the resource provider this is an alternate call to the regular token endpoint call in the [OpenID Connect Core, Section 3.1.3.1](http://openid.net/specs/openid-connect-core-1_0.html#TokenRequest).
+The RP POSTs the authorization assertion to the AP's token endpoint (5). For the resource provider this is an alternate call to the regular token endpoint call in the [OpenID Connect Core, Section 3.1.3.1](http://openid.net/specs/openid-connect-core-1_0.html#TokenRequest).
 
 1. The token response is identical to [OpenID Connect Core, Section 3.1.3.3]()
 
-2. The autorization service MUST verify the assertion's signature.
+2. The AP MUST verify the assertion's signature.
 
-3. The authorization service MUST select the authorized user based on the signature used for signing the assertion as provided in (1).
+3. The AP MUST select the authorized user based on the signature used for signing the assertion as provided in (1).
 
-4. The authorization service MUST validate the assertion's ```azp``` and the provided ```redirect_uri``` of the provided client_id.
+4. The AP MUST validate the assertion's ```azp``` and the provided ```redirect_uri``` of the provided client_id.
 
-5. The resource provider MUST validate the ```id_token``` and ```access_token``` as required as of [OpenID Connect Core, Section 3.1.3.7](http://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation).
+5. The RP MUST validate the ```id_token``` and ```access_token``` as required as of [OpenID Connect Core, Section 3.1.3.7](http://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation).
 
-6. The resource provider MUST forward all but the ```id_token``` to the token agent as in the code flow (7).
+6. The RP MUST forward all but the ```id_token``` to the TA as in the code flow (7).
 
-7. A resource provider MUST indicate an error to the token agent, if it rejects the assertion based on its internal usage policies.
+7. A RP MUST indicate an error to the TA, if it rejects the assertion based on its internal usage policies.
 
-8. The token agent MUST forward the token information to the requesting app (8) as a response for the access request (3).
+8. The TA MUST forward the token information to the requesting App (8) as a response for the access request (3).
 
-9. If the token agent obtained more than one token as a result to one access request (3), it MUST include ALL obtained tokens into the response to the requesting app (8).
+9. The TA MUST include ALL obtained tokens into the response to the requesting App (8), if it obtained for more than one RP in the process of one access request (3).
 
-10. The token agent MUST include access URLs for the requesting app's API calls (9) in the response (8) for an access request (3).
+10. The TA MUST include access URLs for the requesting App's API calls (9) in the response (8) for an access request (3).
 
 ## Security considerations
 
 ### Client assertion encryption
 
-As the client assertion contains a shared key for communication between the authorization service and the token agent, this key might be intercepted though a man in the middle attack.
+As the client assertion contains a shared key for communication between the authorization service and the TA, this key might be intercepted though a man-in-the-middle attack.
 
-Therefore, it is RECOMMENDED to encrypt the client assertion for the authorization service and provide it as JWE.
+It is RECOMMENDED to encrypt the client assertion for the AP and provide it as JWE.
 
 ### App assertion encryption
 
-Although the app assertion does not contain security relevant information, a token agent MAY use it to pass implementation specific parameters to the authorization service.
+Although the app assertion does not contain security relevant information, a TA MAY use it to pass implementation specific parameters to the AP.
 
-Therefore, it is RECOMMENDED to encrypt the app assertion and provide it as JWE.
+It is RECOMMENDED to encrypt the app assertion and provide it as JWE.
 
 ### Password Encryption
 
-Authorization services MAY require password encryption for authenticating users for a token agent. If an authorization service requires password encryption, the token request MUST be formatted as following:
+APs MAY require TAs to use password encryption for authenticating ROs. If an AP requires password encryption, the TA MUST format the token request as following:
 
 1. The password MUST contain a [JWE](https://tools.ietf.org/html/rfc7516) as password token.
 
