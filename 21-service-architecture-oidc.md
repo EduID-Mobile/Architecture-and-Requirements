@@ -103,7 +103,7 @@ The TA authorizes with the AP using the [OAuth2 resource owner password flow](ht
 
 The TA authorizes itself using a [client-authentication assertion](https://tools.ietf.org/html/rfc7521#section-4.2).
 
-1. The client assertion MUST signed using a shared secret between the TA and the AP. The shared secret identifies a group of TAs (e.g., platform and version).
+1. The client assertion MUST signed using a shared secret between the TA and the AP. The shared secret identifies a group of TAs (e.g., platform and version). The exchange of this shared secret between the AP and the TA is out of scope for this document.
 
 2. The client assertion MUST use the ```iss``` claim to identify the device TA group. The MUST match the signature.
 
