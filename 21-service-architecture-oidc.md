@@ -97,7 +97,7 @@ Figure 1: App authorization using a token agent authorization
 
 * Token Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network.
 
-* Authorization service (AP) - OpenID Connect authorization service/ authorization provider.
+* Authorization provider (AP) - OpenID Connect authorization service/ authorization provider.
 
 * Resource provider (RP) - OpenID Connect party that uses one or more AP for authorization.
 
@@ -118,7 +118,7 @@ The TA authorizes itself using a [client-authentication assertion](https://tools
 1. The client assertion MUST signed using a shared secret between the TA and the AP. The shared secret identifies a group of TAs (e.g., platform and version). The exchange of this shared secret between the AP and the TA is out of scope for this document.
 
 <<<<<<< HEAD
-The academic service MAY initiate a normal authorization request as with the primary key from the EduID Authorization service or the authorization service associated with the primary key. In this case the academic service MUST verify that the ```sub```-claim of the Authorization response matches the primary token.
+The academic service MAY initiate a normal authorization request as with the primary key from the EduID Authorization provider or the authorization service associated with the primary key. In this case the academic service MUST verify that the ```sub```-claim of the Authorization response matches the primary token.
 =======
 2. The client assertion MUST use the ```iss``` claim to identify the device TA group. The MUST match the signature.
 >>>>>>> eb70175c6d7ee245068d0fc567b1b2c4ef6c542c
