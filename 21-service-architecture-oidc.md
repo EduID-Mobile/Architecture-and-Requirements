@@ -42,7 +42,7 @@ The app authentication has 9 steps.
 2. The issuing of a primary token for the token agent
 3. The access request of an app on the device
 4. An assertion code request to the resource provider using its client url.
-5. An assertion grant request to the authrozation service's token endpoint.
+5. An assertion grant request to the authorization service's token endpoint.
 6. An OpenID Connect id_token and token response from the token endpoint.
 7. Access confirmation by the resource provider to the token-agent.
 8. The token-agent passes the access tokens to the requesting app.
@@ -224,7 +224,7 @@ Successful responses are handled as the [OpenID Connect Core, Section 3.1.3.3](h
 
 The RP MAY use HTTP Status codes in case of errors before forwarding the assertion to the AP. Otherwise, error responses are handled as the [OpenID Connect Core, Section 3.1.3.4](http://openid.net/specs/openid-connect-core-1_0.html#TokenErrorResponse).
 
-## Assertion grant request to the authrozation service
+## Assertion grant request to the authorization service
 
 The RP POSTs the authorization assertion to the AP's token endpoint (5). For the resource provider this is an alternate call to the regular token endpoint call in the [OpenID Connect Core, Section 3.1.3.1](http://openid.net/specs/openid-connect-core-1_0.html#TokenRequest).
 
