@@ -87,19 +87,19 @@ Figure 1: App authorization using a token agent authorization
 
 ## Terminology
 
-* Token Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network.
+* Authorization service (AP) - OpenID Connect authorization service/authorization provider. This refers to the edu-ID Service.
 
-* Authorization service (AP) - OpenID Connect authorization service/ authorization provider.
+* Token Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network. A TA is a confidential client to the AP. The TA is capable to authenticate ROs and request access confirmation for the AP. This refers to the edu-ID Mobile App.
 
-* Resource provider (RP) - OpenID Connect party that uses one or more AP for authorization.
+* Resource provider (RP) - OpenID Connect party that uses one or more AP for authorization. This refers to academic services.
 
-* Resource owner (RO) - Agent, who uses the AP for authorization, typically indicating the human end-user.
+* Resource owner (RO) - Agent, who uses the AP for authorization, typically a human end-user.
 
 * App - Native app on the same device or within the same application context as the TA.
 
 ## Token-agent authorization for a resource owner
 
-The TA authorizes with the AP using the [OAuth2 resource owner password flow](https://tools.ietf.org/html/rfc6749#section-4.3) to the authorization service's token endpoint.
+The TA authorizes with the AP using the [OAuth2 resource owner password flow](https://tools.ietf.org/html/rfc6749#section-4.3) to the AP's token endpoint.
 
 The TA authorizes itself using a [client-authentication assertion](https://tools.ietf.org/html/rfc7521#section-4.2).
 
