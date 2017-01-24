@@ -16,7 +16,11 @@ The objective of this document is to specify trust agent support with minimal ch
 
 ## Background
 
+<<<<<<< HEAD
+The academic service MUST use an [OIDC Authorization Flow](http://openid.net/specs/openid-connect-core-1_0.html) to obtain the client authorization from the authorization service.
+=======
 Within the OIDC ecosystem, the [native application agent specification](http://openid.bitbucket.org/draft-native-application-agent-core-01.htm) has been drafted. This draft never reached completion and appears unmaintained. This draft specification assumes that any native app on a device knows about potential resource provider. This assumption is not necessarily valid for a service domain, such as national academia. In such a service domain a service MAY exist more than once for different user audiences.
+>>>>>>> eb70175c6d7ee245068d0fc567b1b2c4ef6c542c
 
 Other standardization attempts to connect native mobile apps assume that a native app connects to an authorization service through a browser proxy.  This has been identified as a [security risk](https://tools.ietf.org/html/rfc7636). This risk can only be mitigated by adding new cryptographic means to the OAuth2 protocol. However, this cannot fully solve the problem of using web-browsers and custom URLs as proxy services.
 
@@ -24,7 +28,11 @@ Other standardization attempts to connect native mobile apps assume that a nativ
 
 The edu-ID Mobile App aims for a tighter integration with the authrization service by removing the need of a mediating web-browser. In this setting the edu-ID Mobile App is a Token and Trust Agent that acts as a confidential client to the authorization service. This removes the security risk of  authorization code interceptions and the risk of exposing institutional affiliations to third parties before authorization has been granted.
 
+<<<<<<< HEAD
+The EduID Mobile App initiates the Authorization through a self-assigned client assertion. The client assertion is targeted for the academic service using a code and an id_token for the academic service. The id_token holds a JWS. The JWS is signed and the provided ```kid``` header is set to ```urn:oidc:CLAIM```, where claim can be of the value ```email```, ```profile```, ```address```, or ```phone```. In this case the academic service generates the shared key through concatenation of the string values provided the scope claims in the order listed in [OIDC Core 1.0, Section 5.4](http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims).
+=======
 ## OIDC Architecture Overview
+>>>>>>> eb70175c6d7ee245068d0fc567b1b2c4ef6c542c
 
 The edu-ID Mobile App architecture builds on top of the [Assertion Framework for OAuth2](https://tools.ietf.org/html/rfc7521) and [Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7800). Within this framework the authorization service can assume that the requests issued by the token-agent are confirmed by the user and no further interaction is required.
 
@@ -34,7 +42,7 @@ The app authentication has 9 steps.
 2. The issuing of a primary token for the token agent
 3. The access request of an app on the device
 4. An assertion code request to the resource provider using its client url.
-5. An assertion grant request to the authrozation service's token endpoint.
+5. An assertion grant request to the authorization service's token endpoint.
 6. An OpenID Connect id_token and token response from the token endpoint.
 7. Access confirmation by the resource provider to the token-agent.
 8. The token-agent passes the access tokens to the requesting app.
@@ -89,13 +97,17 @@ Figure 1: App authorization using a token agent authorization
 
 * Token Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network.
 
-* Authorization service (AP) - OpenID Connect authorization service/ authorization provider.
+* Authorization provider (AP) - OpenID Connect authorization service/ authorization provider.
 
 * Resource provider (RP) - OpenID Connect party that uses one or more AP for authorization.
 
 * Resource owner (RO) - Agent, who uses the AP for authorization, typically indicating the human end-user.
 
+<<<<<<< HEAD
+The primary access_token is issued to the EduID Mobile App through the EduID Authorization Service. Therefore, the academic service MUST pass the access_token and the refresh_token to the EduID Mobile App.
+=======
 * App - Native app on the same device or within the same application context as the TA.
+>>>>>>> eb70175c6d7ee245068d0fc567b1b2c4ef6c542c
 
 ## Token-agent authorization for a resource owner
 
@@ -105,7 +117,11 @@ The TA authorizes itself using a [client-authentication assertion](https://tools
 
 1. The client assertion MUST signed using a shared secret between the TA and the AP. The shared secret identifies a group of TAs (e.g., platform and version). The exchange of this shared secret between the AP and the TA is out of scope for this document.
 
+<<<<<<< HEAD
+The academic service MAY initiate a normal authorization request as with the primary key from the EduID Authorization provider or the authorization service associated with the primary key. In this case the academic service MUST verify that the ```sub```-claim of the Authorization response matches the primary token.
+=======
 2. The client assertion MUST use the ```iss``` claim to identify the device TA group. The MUST match the signature.
+>>>>>>> eb70175c6d7ee245068d0fc567b1b2c4ef6c542c
 
 3. The client assertion MUST include a ```sub``` claim, that identifies the TA's instance. The ```sub``` claim MUST include a globaly unique identifier for the TA instance. This is typically the device id as provided by the device's operating system.
 
@@ -123,6 +139,9 @@ The TA authorizes itself using a [client-authentication assertion](https://tools
 
 A successful response includes an ```access_token``` and a ```refresh_token``` for the TA (2) as specified for [OAuth2 Section 4.3.3](https://tools.ietf.org/html/rfc6749#section-4.3.3).
 
+<<<<<<< HEAD
+The academic service MUST keep the initial secondary access_token and refresh_token that were sent to the EduID Mobile App.
+=======
 1. The AP MAY include an ```id_token```.
 
 2. The ```access_token``` MUST be valid for the AP's endpoints that require user-level authorization.
@@ -205,7 +224,7 @@ Successful responses are handled as the [OpenID Connect Core, Section 3.1.3.3](h
 
 The RP MAY use HTTP Status codes in case of errors before forwarding the assertion to the AP. Otherwise, error responses are handled as the [OpenID Connect Core, Section 3.1.3.4](http://openid.net/specs/openid-connect-core-1_0.html#TokenErrorResponse).
 
-## Assertion grant request to the authrozation service
+## Assertion grant request to the authorization service
 
 The RP POSTs the authorization assertion to the AP's token endpoint (5). For the resource provider this is an alternate call to the regular token endpoint call in the [OpenID Connect Core, Section 3.1.3.1](http://openid.net/specs/openid-connect-core-1_0.html#TokenRequest).
 
@@ -260,3 +279,4 @@ APs MAY require TAs to use password encryption for authenticating ROs. If an AP 
 5. The user token MUST contain a ```password``` claim.
 
 6. The user token's ```password``` claim MUST contain the password as provided by the resource owner.
+>>>>>>> eb70175c6d7ee245068d0fc567b1b2c4ef6c542c
