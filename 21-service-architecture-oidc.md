@@ -8,7 +8,7 @@ This document describes the details for connecting with OpenID Connect (OIDC) au
 
 ## Introduction
 
-The edu-ID infrastructure will rely on an OpenID Connect authorization services at its core. OpenID Connect builds on top of OAuth2, while focusing only on the ```code``` and ```implicit``` grants of OAuth2. However, OAuth2 also specifies additional flows, such as [client credentials](https://tools.ietf.org/html/rfc6749#section-4.4) and [resource-owner password](https://tools.ietf.org/html/rfc6749#section-4.3) grants. These alternative grant types allow tighter integration of trusted components.
+The edu-ID infrastructure will rely on an OpenID Connect authorization provider at its core. OpenID Connect builds on top of OAuth2, while focusing only on the ```code``` and ```implicit``` grants of OAuth2. However, OAuth2 also specifies additional flows, such as [client credentials](https://tools.ietf.org/html/rfc6749#section-4.4) and [resource-owner password](https://tools.ietf.org/html/rfc6749#section-4.3) grants. These alternative grant types allow tighter integration of trusted components.
 
 Within the edu-ID ecosystem a mobile app may not necessarily be tightly integrated with one specific resource provider, but has to be directed to the appropriate resource providers depending on the resource owner's choice. The edu-ID mobile app acts as a Trust- and Token Agent to mobile apps that want to access resource providers of the edu-ID ecosystem. Moreover, the edu-ID Mobile App allows resource owners to choose from appropriate resource providers, without exposing access URLs to a requesting app on the device.
 
@@ -18,23 +18,23 @@ The objective of this document is to specify trust agent support with minimal ch
 
 Within the OIDC ecosystem, the [native application agent specification](http://openid.bitbucket.org/draft-native-application-agent-core-01.htm) has been drafted. This draft never reached completion and appears unmaintained. This draft specification assumes that any native app on a device knows about potential resource provider. This assumption is not necessarily valid for a service domain, such as national academia. In such a service domain a service MAY exist more than once for different user audiences.
 
-Other standardization attempts to connect native mobile apps assume that a native app connects to an authorization service through a browser proxy.  This has been identified as a [security risk](https://tools.ietf.org/html/rfc7636). This risk can only be mitigated by adding new cryptographic means to the OAuth2 protocol. However, this cannot fully solve the problem of using web-browsers and custom URLs as proxy services.
+Other standardization attempts to connect native mobile apps assume that a native app connects to an authorization provider through a browser proxy. This has been identified as a [security risk](https://tools.ietf.org/html/rfc7636). This risk can only be mitigated by adding new cryptographic means to the OAuth2 protocol. However, this cannot fully solve the problem of using web-browsers and custom URLs as proxy services.
 
 ## Objective
 
-The edu-ID Mobile App aims for a tighter integration with the authrization service by removing the need of a mediating web-browser. In this setting the edu-ID Mobile App is a Token and Trust Agent that acts as a confidential client to the authorization service. This removes the security risk of  authorization code interceptions and the risk of exposing institutional affiliations to third parties before authorization has been granted.
+The edu-ID Mobile App aims for a tighter integration with the authorization provider by removing the need of a mediating web-browser. In this setting the edu-ID Mobile App is a Token and Trust Agent that acts as a confidential client to the authorization provider. This removes the security risk of authorization code interceptions and the risk of exposing institutional affiliations to third parties before authorization has been granted.
 
 ## OIDC Architecture Overview
 
-The edu-ID Mobile App architecture builds on top of the [Assertion Framework for OAuth2](https://tools.ietf.org/html/rfc7521) and [Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7800). Within this framework the authorization service can assume that the requests issued by the token-agent are confirmed by the user and no further interaction is required.
+The edu-ID Mobile App architecture builds on top of the [Assertion Framework for OAuth2](https://tools.ietf.org/html/rfc7521) and [Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7800). Within this framework the authorization provider can assume that the requests issued by the token-agent are confirmed by the user and no further interaction is required.
 
 The app authentication has 9 steps.
 
-1. The token-agent authorization for a resource owner with the authorization service
+1. The token-agent authorization for a resource owner with the authorization provider
 2. The issuing of a primary token for the token agent
 3. The access request of an app on the device
 4. An assertion code request to the resource provider using its client url.
-5. An assertion grant request to the authrozation service's token endpoint.
+5. An assertion grant request to the authorization provider's token endpoint.
 6. An OpenID Connect id_token and token response from the token endpoint.
 7. Access confirmation by the resource provider to the token-agent.
 8. The token-agent passes the access tokens to the requesting app.
@@ -89,7 +89,7 @@ Figure 1: App authorization using a token agent authorization
 
 * Token Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network.
 
-* Authorization service (AP) - OpenID Connect authorization service/ authorization provider.
+* Authorization provider (AP) - OpenID Connect authorization provider.
 
 * Resource provider (RP) - OpenID Connect party that uses one or more AP for authorization.
 
@@ -99,7 +99,7 @@ Figure 1: App authorization using a token agent authorization
 
 ## Token-agent authorization for a resource owner
 
-The TA authorizes with the AP using the [OAuth2 resource owner password flow](https://tools.ietf.org/html/rfc6749#section-4.3) to the authorization service's token endpoint.
+The TA authorizes with the AP using the [OAuth2 resource owner password flow](https://tools.ietf.org/html/rfc6749#section-4.3) to the authorization providers's token endpoint.
 
 The TA authorizes itself using a [client-authentication assertion](https://tools.ietf.org/html/rfc7521#section-4.2).
 
@@ -205,7 +205,7 @@ Successful responses are handled as the [OpenID Connect Core, Section 3.1.3.3](h
 
 The RP MAY use HTTP Status codes in case of errors before forwarding the assertion to the AP. Otherwise, error responses are handled as the [OpenID Connect Core, Section 3.1.3.4](http://openid.net/specs/openid-connect-core-1_0.html#TokenErrorResponse).
 
-## Assertion grant request to the authrozation service
+## Assertion grant request to the authorization provider
 
 The RP POSTs the authorization assertion to the AP's token endpoint (5). For the resource provider this is an alternate call to the regular token endpoint call in the [OpenID Connect Core, Section 3.1.3.1](http://openid.net/specs/openid-connect-core-1_0.html#TokenRequest).
 
@@ -233,7 +233,7 @@ The RP POSTs the authorization assertion to the AP's token endpoint (5). For the
 
 ### Client assertion encryption
 
-As the client assertion contains a shared key for communication between the authorization service and the TA, this key might be intercepted though a man-in-the-middle attack.
+As the client assertion contains a shared key for communication between the authorization provider and the TA, this key might be intercepted though a man-in-the-middle attack.
 
 It is RECOMMENDED to encrypt the client assertion for the AP and provide it as JWE.
 
@@ -249,7 +249,7 @@ APs MAY require TAs to use password encryption for authenticating ROs. If an AP 
 
 1. The password MUST contain a [JWE](https://tools.ietf.org/html/rfc7516) as password token.
 
-2. The password token MUST be encrypted for the authorization service following the encryption requirements of the authorization service.
+2. The password token MUST be encrypted for the authorization provider following the encryption requirements of the authorization provider.
 
 3. The password token's payload MUST contain a JWS as user token.
 
