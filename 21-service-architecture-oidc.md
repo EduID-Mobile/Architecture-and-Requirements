@@ -16,9 +16,9 @@ The objective of this document is to specify trust agent support with minimal ch
 
 ## Background
 
-Within the OIDC ecosystem, the [native application agent specification](http://openid.bitbucket.org/draft-native-application-agent-core-01.htm) has been drafted. This draft never reached completion and appears unmaintained. This draft specification assumes that any native app on a device knows about potential resource provider. This assumption is not necessarily valid for a service domain, such as national academia. In such a service domain a service MAY exist more than once for different user audiences.
+Within the OIDC ecosystem, the [native application agent specification](http://openid.bitbucket.org/draft-native-application-agent-core-01.htm) has been drafted. This draft never reached completion and has been abandoned. This draft specification assumes that any native app on a device knows about potential resource provider. This assumption is not necessarily valid for a service domain, such as national academia. In such a service domain a service MAY exist more than once for different user audiences.
 
-Other standardization attempts to connect native mobile apps assume that a native app connects to an authorization service through a browser proxy.  This has been identified as a [security risk](https://tools.ietf.org/html/rfc7636). This risk can only be mitigated by adding new cryptographic means to the OAuth2 protocol. However, this cannot fully solve the problem of using web-browsers and custom URLs as proxy services.
+Other standardization attempts to connect native mobile apps assume that a native app connects to an authorization service through a browser proxy.  This has been identified as a [security risk](https://tools.ietf.org/html/rfc7636). This risk can only be mitigated by adding new cryptographic means to the OAuth2 protocol. An attempt for authorizing native apps through a proxy browser is the [AppAuth specification draft]. However, AppAuth is not designed to authorizing native apps for RP services. 
 
 ## Objective
 
@@ -48,12 +48,12 @@ The app authentication has 9 steps.
 |                |
 | +------------+ |                                        +-------------+
 | |            | |                                        |             |
-| |            |>----(1) Login + Client-Authorization---->|             |
+| |            |>--(1) Assertion + Client-Authorization-->|             |
 | |            | |                  rfc7521               |     AP      |
 | |            | |                                        |             |
 | |            |<--------------(2) Agent Token-----------<|             |
 | |            | |                                        |             |
-| |    Token   | |                                        +---+-----+---+
+| |    Trust   | |                                        +---+-----+---+
 | |    Agent   | |                                            ^     V
 | |            | |                                   rfc7521  |     |
 | |            | |                                   rfc7523 (5)   (6) id_token
@@ -87,7 +87,7 @@ Figure 1: App authorization using a token agent authorization
 
 ## Terminology
 
-* Token Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network.
+* Trust Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network.
 
 * Authorization service (AP) - OpenID Connect authorization service/ authorization provider.
 
@@ -97,27 +97,104 @@ Figure 1: App authorization using a token agent authorization
 
 * App - Native app on the same device or within the same application context as the TA.
 
-## Token-agent authorization for a resource owner
+## Trust Agent authorization
 
-The TA authorizes with the AP using the [OAuth2 resource owner password flow](https://tools.ietf.org/html/rfc6749#section-4.3) to the authorization service's token endpoint.
+A TA is a special client to the AP. It is registered to the AP just like a regular 
+RP. 
 
-The TA authorizes itself using a [client-authentication assertion](https://tools.ietf.org/html/rfc7521#section-4.2).
+The main difference to regular RP is that it only communicates to the AP through 
+assertion grants as defined by [RFC7521](https://tools.ietf.org/html/rfc7521)
+and [RFC7523](https://tools.ietf.org/html/rfc7523) to the 
+token endpoint of the AP. 
 
-1. The client assertion MUST signed using a shared secret between the TA and the AP. The shared secret identifies a group of TAs (e.g., platform and version). The exchange of this shared secret between the AP and the TA is out of scope for this document.
+A TA MUST NOT use any other channel to the AP, unless it implements AppAuth for the 
+initial authorization of the RO. 
 
-2. The client assertion MUST use the ```iss``` claim to identify the device TA group. The MUST match the signature.
+A TA MUST always use ```client_secret_jwt``` authentication as specificed by 
+[OIDC Core 1.0, Section 9](http://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication).
 
-3. The client assertion MUST include a ```sub``` claim, that identifies the TA's instance. The ```sub``` claim MUST include a globaly unique identifier for the TA instance. This is typically the device id as provided by the device's operating system.
 
-4. The client assertion MUST include a ```cnf``` claim that includes a key for signing the token requests for the RO. The format of the ```cnf``` claim as specified by the [Proof-of-Possession Key Semantics](https://tools.ietf.org/html/rfc7800).
+## Trust Agent authorization for a resource owner
 
-5. A TA MUST NOT reuse keys for different RO using the same TA.
+A TA MUST be able to authorize a RO to its AP either through 
+[authorization assertions](https://tools.ietf.org/html/rfc7523#section-8.1). 
 
-6. The AP MUST not prompt the user for further authentication if a client authorization is presented.
+The TA authorization can be preceeded by a RO authentication using  
+[AppAuth](). 
 
-7. The AP MUST report authorization errors to the TA if the client authorization failed.
+The TA MUST establish a unique cryptographically secured session for the RO with the AP 
+that allows the AP to bind a TA instance to an RO. Only after a secured session has been
+established with the AP, the TA can handle authorization requests for other apps.
 
-8. An AP MAY require password encryption as defined in [Section Password Encryption](#password-encryption), below.
+### The TA authorization process
+
+The abstract TA authorization process is defined as following. 
+
+* The TA establishes an identified session for a RO with the AP through an authorization assertion to the AP's token endpoint.
+
+* The AP's token endpoint accepts or rejects the assertion request.
+
+If the AP accepts an assertion, it MUST respond with an access token as defined 
+for [OAuth2](https://tools.ietf.org/html/rfc6749).
+
+The TA MUST provide a client assertion that together with the authorization assertion.
+
+The ```iss``` claim of the authorization and the client assertion MUST match. 
+
+An AP MUST reject TA authorization assertions, if other forms of client authorizations 
+are used.
+
+### The authorization assertion
+
+The authorization assertion MUST be provided as a [JWE](https://tools.ietf.org/html/rfc7516).
+
+The payload of the JWE MUST be a [JWS](https://tools.ietf.org/html/rfc7515), signed with 
+a key associated to the TA. 
+
+The authorization assertion MUST contain a ```cnf``` claim that includes a JWK for signing 
+the token requests for the RO. The format of the ```cnf``` claim as specified by the 
+[Proof-of-Possession Key Semantics](https://tools.ietf.org/html/rfc7800).
+
+A TA MUST NOT reuse ```cnf``` keys for different RO using the same TA.
+
+The authorization assertion MUST include an ```iss``` claim that identifies the TA through 
+its registered client id. 
+
+The authorization assertion MUST include a ```azp``` claim that identifies the TA's instance.
+The ```azp``` claim MUST include a globaly unique identifier for the TA instance. This is
+typically the device or application id as provided by the device's operating system.
+
+The authorization assertion MUST contain either a ```sub``` claim for identifying the RO. 
+
+The authorization assertion MUST contain an ```auth``` claim. 
+
+### Auth claim handling
+
+The ```auth``` claim is used to verify that a TA is authorized by the RO to operate 
+on its behalf.
+
+The ```auth``` claim is a JSON object. This JSON object can have one of two keys.
+
+* ```password``` - the value holds a password credential that can be used by the AP. 
+
+* ```token```- the value is a access_token that has been provided by the AP to the client. 
+
+If the key ```password``` is used, then the assertion's ```sub``` claim contains the username. 
+
+If the key ```token``` is used, then the assertion's ```sub``` claim MUST match the tokens
+the RO for whom the token has been issued. 
+
+### Authorization grant processing
+
+The authorization grant processing allows an TA instance to handle the authentication of a RO 
+on behalf of the AP.
+
+The authorization grant is constructed based on the credentials provided by the RO. 
+
+The AP MUST process the assertion for the TA and verify the RO authorization. 
+
+The AP MUST store the ```azp``` claim and the ```cnf``` key. For each following assertion 
+that uses the ```cnf``` key, the value of the the ```iss```claim MUST match the ```azp``` claim of the authorization request.
 
 ### Successful response
 
@@ -167,7 +244,7 @@ For requesting Apps, the TA SHOULD select one or more suitable RP for authorizat
 
 5. The assertion MUST include a ```sub``` claim that identifies the requesting App.
 
-6. The assertion MUST include an ```iat``` claim as defined for JWT.
+6. The assertion MAY include an ```iat``` claim as defined for JWT.
 
 7. The assertion MUST include an ```exp``` claim as defined for JWT.
 
@@ -240,23 +317,3 @@ It is RECOMMENDED to encrypt the client assertion for the AP and provide it as J
 ### App assertion encryption
 
 Although the app assertion does not contain security relevant information, a TA MAY use it to pass implementation specific parameters to the AP.
-
-It is RECOMMENDED to encrypt the app assertion and provide it as JWE.
-
-### Password Encryption
-
-APs MAY require TAs to use password encryption for authenticating ROs. If an AP requires password encryption, the TA MUST format the token request as following:
-
-1. The password MUST contain a [JWE](https://tools.ietf.org/html/rfc7516) as password token.
-
-2. The password token MUST be encrypted for the authorization service following the encryption requirements of the authorization service.
-
-3. The password token's payload MUST contain a JWS as user token.
-
-4. The user token MUST be signed by the token agent using the same key as the client assertion.
-
-4. The user token's ```sub``` claim MUST match the username of the request.
-
-5. The user token MUST contain a ```password``` claim.
-
-6. The user token's ```password``` claim MUST contain the password as provided by the resource owner.
