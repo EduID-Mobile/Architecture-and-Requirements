@@ -54,7 +54,7 @@ Given that the service URL provides the initial connection information for the a
 
 Ideally, an app would be presented with the service information and the connection endpoints of the service only after the authorization has been granted. In this case an app would not be able to determine, whether an authentication or authorization succeeded or even took place.
 
-All use-cases in this document refer to scenarios, in which **protocol-bound mobile apps** can be applied and that are concerned in one way or the other to the authentication challenge of such mobile apps.
+All use-cases in this document refer to scenarios, in which **protocol-bound mobile apps** can be applied and that are concerning in one way or the other the authentication challenge.
 
 ## The Problem of Integrating Service independent Mobile Apps into Service Federations
 
