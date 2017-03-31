@@ -16,7 +16,7 @@ Single user apps are tied to a single user and run anonymously on the device. Al
 
 Apps for anonymous communication or collaboration provide communication means between unauthorized actors. All transactions between users are tied to the personal devices of the actors. Actors may have to opportunity to limit the communication through shared channels. These channels can be shared through visual cues (such as QR-Codes), channel names, location, time, or a combination of the previous identifiers. Again, any infrastructure service in the background needs only to distinguish individual devices.
 
-These types of apps authorize transactions on the **device level**. **Device-level authentication** does not allow the identification of actors and restricts multi-device persistency for an actor.
+These types of apps authorize transactions on the **device level**. **Device-level authorization** does not allow the identification of actors and restricts multi-device persistency for an actor.
 
 In order to allow the identification of actors or to provide multi-device persistency it is necessary to authenticate and often to authorize an actor across devices. In such scenarios it is necessary to authorize transactions on the **actor level**, typically through one or more credentials and challenges that verify the identity of an actor. **Actor-level authentication** enables actors to switch devices or applications while maintaining the state of their actions.  **Actor-level authentication** allows restricting the access, use, and manipulation of resources depending on the privileges of an actor.
 
