@@ -11,7 +11,7 @@ The documentation has the following parts.
 * [User Experience](02-user-experience.md)
 * [Artwork](03-artwork.md)
 * [Technical Terminology](10-terminology.md)
-* [Service Architecture](20-service-architecture.md)
+* [Service Architecture](21-service-architecture-oidc.md)
 * [App Architecture](30-app-architecture.md)
 * [iOS-specific Architecture](32-ios-architecture.md)
 * [Native Application Integration Layer (NAIL)](40-nail-api.md)
@@ -45,5 +45,4 @@ The edu-ID Mobile App Architecture documents and all images are licensed under t
 
 For more details please refer to the [LICENSE.md](LICENSE.md) document that came with this repository or visit the [Creative Commons web-site](https://creativecommons.org/licenses/by-sa/4.0/).
 
-2016 CC BY-SA 4.0
-
+2016-2017 CC BY-SA 4.0 for the Contributors
