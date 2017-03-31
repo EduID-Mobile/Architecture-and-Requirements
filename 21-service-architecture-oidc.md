@@ -74,7 +74,7 @@ The app authentication has 9 steps.
 |     ^    V     |                                        |             |
 | +------------+ |                                        |             |
 | |            | |                                        |             |
-| |            |>---------(9) API call with token-------->|             |
+| |            |>-------(9) API call with App Token------>|             |
 | |    App     | |                                        |             |
 | |            | |                                        |             |
 | |            |<----------(9) Operation Response--------<|             |
