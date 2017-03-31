@@ -260,3 +260,10 @@ APs MAY require TAs to use password encryption for authenticating ROs. If an AP 
 5. The user token MUST contain a ```password``` claim.
 
 6. The user token's ```password``` claim MUST contain the password as provided by the resource owner.
+
+| [Previous: Terminolory](10-terminology.md) | [Return to Architecture Overview](00-overview.md) | [Next: App Architecture](30-app-architecture.md) |
+| :---- | :----: | ----: |
+
+### Version information
+
+This service architecture has been updated from a [previous version](20-service-architecture.md) that failed to meet the implementation of OpenID Connect.
