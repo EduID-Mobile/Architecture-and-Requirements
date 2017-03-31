@@ -100,7 +100,7 @@ Figure 1: App authorization using a token agent authorization
 ## Trust Agent authorization
 
 A TA is a special client to the AP. It is registered to the AP just like a regular
-RP.
+RP. It acts as a service-bound mobile app to the AP services.
 
 The main difference to regular RP is that it only communicates to the AP through
 assertion grants as defined by [RFC7521](https://tools.ietf.org/html/rfc7521)
@@ -108,11 +108,10 @@ and [RFC7523](https://tools.ietf.org/html/rfc7523) to the
 token endpoint of the AP.
 
 A TA MUST NOT use any other channel to the AP, unless it implements AppAuth for the
-initial authorization of the RO.
+initial authorization of the RO at the AP.
 
 A TA MUST always use ```client_secret_jwt``` authentication as specificed by
 [OIDC Core 1.0, Section 9](http://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication).
-
 
 ## Trust Agent authorization for a resource owner
 
