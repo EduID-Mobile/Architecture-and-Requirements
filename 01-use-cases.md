@@ -1,6 +1,62 @@
 # Swiss edu-ID Mobile App Use Cases
 
-## The Problem of Integrating Mobile Apps into Service Federations
+## Authorization Types of Mobile Apps
+
+Today, many different types of mobile apps are available that have different requirements for authentication and authorization.
+
+1. Single-user personal apps
+
+2. Apps for anonymous communication or collaboration.
+
+3. Apps that rely on and are tied to one distinct infrastructure service
+
+4. Apps that may provide authorized access to more than one infrastructure service
+
+Single user apps are tied to a single user and run anonymously on the device. All data is tied to the device. Any infrastructure service in the background needs only to distinguish individual devices.
+
+Apps for anonymous communication or collaboration provide communication means between unauthorized actors. All transactions between users are tied to the personal devices of the actors. Actors may have to opportunity to limit the communication through shared channels. These channels can be shared through visual cues (such as QR-Codes), channel names, location, time, or a combination of the previous identifiers. Again, any infrastructure service in the background needs only to distinguish individual devices.
+
+These types of apps authorize transactions on the **device level**. **Device-level authentication** does not allow the identification of actors and restricts multi-device persistency for an actor.
+
+In order to allow the identification of actors or to provide multi-device persistency it is necessary to authenticate and often to authorize an actor across devices. In such scenarios it is necessary to authorize transactions on the **actor level**, typically through one or more credentials and challenges that verify the identity of an actor. **Actor-level authentication** enables actors to switch devices or applications while maintaining the state of their actions.  **Actor-level authentication** allows restricting the access, use, and manipulation of resources depending on the privileges of an actor.
+
+The EduID Infrastructure concerns the **actor-level authentication and authorization** and thus supports more specific authorization schemes of the connected infrastructure services within its federation.
+
+### Service-bound Mobile Apps
+
+Many mobile apps rely on exactly one infrastructure service in the backend. These apps are permanently bound to their service instance. This **service binding** is typically achieved by including a distinct URL as part of the app's business logic. Such apps are typically maintained by the service provider of the underpinning service instance.
+
+A special case of **service-bound mobile apps** are customized generic apps of a commercial product that are bound to one instance of the product. Such customized apps are often called **branded apps** because customization often includes some or only customizations to the service providers corporate identity.
+
+Examples for **service-bound mobile apps** are the SWITCH Drive app or the ETHZ Polybox app that are bound to instances of the OwnCloud Service that run at SWITCH or ETHZ.
+
+**Service-bound mobile apps** and their infrastructure service might be treated as separate services from the perspective of the EduID Infrastructure, while an infrastructure service accepts both, its regular authentications as well as authentications for its mobile app. Such generalization is valid because for each infrastructure service there is one mobile app.
+
+### Protocol-bound Mobile Apps
+
+Other mobile apps do not rely on a specific infrastructure service but on the availability of well-defined service protocols. Such apps are bound to one or more protocols and can connect to any infrastructure service that supports these protocols. This **protocol binding** relies on well-defined protocols that are implemented as part of the apps business logic for communicating with infrastructure services. Such apps are typically not maintained by the provider of one service instance. This reduces costs for the service provider that originate from maintaining customized mobile apps.  
+
+Examples for **protocol-bound mobile apps** are the official OwnCloud App, the NextCloud App, the Adobe Connect App, the Moodle App, and the Mobler App. Some **protocol-bound mobile apps** can connect to multiple services at the same time (e.g., the OwnCloud App, the NextCloud App, or Mobler App), while others support only one service connection at the same time (e.g., the Adobe Connect App or the Moodle App).
+
+A special case of **protocol-bound mobile apps** are **vendor-specific mobile apps** that are tightly related to an infrastructure product. These apps can connect only to infrastructures service instances of one product, because they rely on vendor-specific and/or proprietary protocols. Examples for such **vendor-specific mobile apps** are the Moodle App, the Adobe Connect App, and the OwnCloud App.
+
+**Instance-related branding** is also possible for **protocol-bound mobile apps**. In this case an infrastructure service must provide branding information that can change the user interface on demand. This kind of branding does not require any modification of an app's business logic.
+
+**Protocol-bound mobile apps** and the infrastructure services cannot be treated as separate services, because the mobile app acts as a **client** or **user-agent** to the infrastructure services it can connect to. Different to **service-bound mobile apps** where an app authentication can be treated as equal as an direct authentication for the underpinning service, app authorizations of **protocol-bound mobile apps** would imply that **all** service instances that satisfy the protocol requirements would have to accept or reject an app authorization simultaneously. This is unwanted in all cases, in which different infrastructure instances provide a service for different groups of actors.
+
+If **service-bound mobile apps** are treated as clients to a service rather than independent services, then **service-bound mobile apps** are a special case of **protocol-bound mobile apps**.
+
+### Authentication challenge of protocol-bound mobile apps
+
+One particular challenge with protocol-bound mobile apps is that these apps need to get informed about the instance of an infrastructure service. This information is passed typically in the form of an URL by the actor to the app's business logic. Only after this information is presented, a protocol-bound mobile app can initiate the service authorization.
+
+Given that the service URL provides the initial connection information for the authorization, it is presented before an app has been authorized to access the service and before an authorizing party (in our case the EduID Service) could verify the validity of such request. This procedure also informs an app about the success of a actor connecting to an service instance.
+
+Ideally, an app would be presented with the service information and the connection endpoints of the service only after the authorization has been granted. In this case an app would not be able to determine, whether an authentication or authorization succeeded or even took place.
+
+All use-cases in this document refer to scenarios, in which **protocol-bound mobile apps** can be applied and that are concerned in one way or the other to the authentication challenge of such mobile apps.
+
+## The Problem of Integrating Service independent Mobile Apps into Service Federations
 
 The OAuth2 specification defines a protocol framework for providing access to protected resources exposed via web-services.
 
@@ -27,7 +83,7 @@ While the specification considers only embedded user-agent authorization as a se
 
 This problem does not exist for user-agent-based applications as they cannot manipulate the behaviour of the underpinning user-agent, whereas native applications typically run with the same or higher privileges than the authorizing user-agent.
 
-This problem is relatively small in centralised federations with very few (e.g. one) authorization services that connect to many resource services. In such environments the authorizing party plays a central role for managing access of native applications to resource services. This is not the case in distributed federations with many resource and many authorization services because there is a central control instance missing.
+This problem is relatively small in centralised federations with very few (e.g. one) authorization services that connect to many resource services, while the access to these services are managed via the authorization service. In such environments the authorizing party plays a central role for managing access of applications and actors to resource services. This is not the case in distributed federations with many resource and many authorization services because access control is not and often cannot get centralized.
 
 The examples of the OAuth2 specification implicitly assume that all parties are known to each other prior to the actual authorization process. In the examples of OAuth2 a client "knows" the authorization endpoint either through configuration or by asking users for their authorization endpoint. In distributed federations configuring authorization services with each app is highly inefficient and not flexible. The remaining alternative that balances flexibility within the envisioned OAuth2 protocol would be to request authorization endpoints. However, this exposes security-relevant infrastructure to third parties.
 
