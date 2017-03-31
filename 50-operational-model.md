@@ -78,7 +78,6 @@ The following institutions have special apps available or are presently developi
 * HTW Chur
 * USI
 * FHNW
-* UZH
 * ETHZ
 * UNIGE
 
