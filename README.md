@@ -6,7 +6,7 @@ The Swiss edu-ID mobile app aims for improving the integration of mobiles apps w
 This part of the project documents the architectural concepts underpinning the Swiss edu-ID Mobile App and its surrounding ecosystem.
 
 The documentation has the following parts.
-* [Architecture Overview](00-overview.md)
+* [Introduction and Overview](00-overview.md)
 * [Use Cases](01-use-cases.md)
 * [User Experience](02-user-experience.md)
 * [Artwork](03-artwork.md)
