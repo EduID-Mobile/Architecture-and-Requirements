@@ -19,6 +19,11 @@ The documentation has the following parts.
 * [Native Application Integration Layer (NAIL)](40-nail-api.md)
 * [Service Operation Model](50-operational-model.md)
 
+## Presentations and publications
+
+* [Mobile Identities with the EduID Mobile App](http://htw.ac/2kUfc0H) at the Swiss EduID Event in Bern 2016
+* [EduID Mobile App Use-Cases, Concepts and Implementation](http://htw.ac/2pl7HoJ) at the Swiss EduID Integrators Workshop in Zurich, 2017.
+
 # Source code
 
 * [iOS Mobile App](https://github.com/BLC-HTWChur/eduid-app-ios)
@@ -48,10 +53,6 @@ For more details please refer to the [LICENSE.md](LICENSE.md) document that came
 
 2016 CC BY-SA 4.0
 
-## Presentations and publications
-
-* [Mobile Identities with the EduID Mobile App](http://htw.ac/2kUfc0H) at the Swiss EduID Event in Bern 2016
-* [EduID Mobile App Use-Cases, Concepts and Implementation](http://htw.ac/2pl7HoJ) at the Swiss EduID Integrators Workshop in Zurich, 2017.
 
 | | Return to Architecture Overview | [Next: Use Cases](01-use-cases.md) |
 | :---- | :----: | ----: |
