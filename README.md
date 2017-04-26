@@ -13,7 +13,7 @@ The documentation has the following parts.
 * [Technical Terminology](10-terminology.md)
 * [Service Architecture](21-service-architecture-oidc.md)
 * [App Architecture](30-app-architecture.md)
-* [iOS-specific Architecture](32-ios-architecture.md)
+* [iOS-specific Architecture](32-ios-app-architecture.md)
 * [Native Application Integration Layer (NAIL)](40-nail-api.md)
 * [Service Operation Model](50-operational-model.md)
 
