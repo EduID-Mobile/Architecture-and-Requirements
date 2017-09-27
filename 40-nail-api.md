@@ -78,6 +78,10 @@ This method parses the serialised data. This function is typically used during i
 
 This method returns the display name of an authorized Federation Service.
 
+```getServiceUrl(serviceName) -> string```
+
+This method returns the url of an authorized Federation Service.
+
 ```getEndpointUrl(serviceName, protocolName) -> uristring```
 
 ```getEndpointUrl(serviceName, protocolName, endpointPath) -> uristring```
@@ -104,13 +108,7 @@ If present, the claims parameter holds a dictionary object with additional claim
 
 JWT tokens MUST be regenerated for every request. Basic bearer tokens are persistent across requests, but it is RECOMMENDED to always request a new token from the NAIL API, because services MAY implement different authorization schemes. A business logic MUST NOT rely on a relation between the requested protocols and an authorziation scheme.
 
-If the requested service return an empty string, the token has been expired. In this case the app's business logic SHOULD refresh the token for this service using the ```refreshToken()``` method. Alternatively, the service can be removed or a new authorization request can be triggered to the user interface.
-
-```refreshToken(serviceName) -> completionPromise```
-
-This method refreshes a service's access token.
-
-The completion handler receives a boolean value that indicates if the NAIL API was able to refresh the token. On failure the app's business logic MAY remove the service from the NAIL API.
+If the requested service return an empty string, the token has been expired. In this case the app's business logic SHOULD start a new authorization request.
 
 ``` revokeToken(serviceName) -> completionPromise```
 
