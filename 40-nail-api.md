@@ -222,5 +222,5 @@ Apps MUST pay attention that services MAY provide per endpoint authorizations. T
 
 Apps MAY revoke an access token by using the [revoke endpoint](https://tools.ietf.org/html/rfc7009) of the OAuth protocol.
 
-| [Previous: iOS App Architecture](32-ios-apparchitecture.md) | [Return to Architecture Overview](00-overview.md) | [Next: Operation Model](50-operational-model.md)|
+| [Previous: iOS App Architecture](32-ios-apparchitecture.md) | [Return to Architecture Overview](00-overview.md) | [Next: Code and Repositories](41-code.md)|
 | :---- | :----: | ----: |
