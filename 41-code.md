@@ -31,15 +31,15 @@ The helper code calls the [EduIDPlugin](https://github.com/BLC-HTWChur/EduIDPlug
 
 The following views have been changed to add the button 'ID app'. This button starts the Swiss EduID Mobile authorization and token exchange.
 
-1. www/core/components/login/templates/site.html
-2. www/core/components/login/templates/credentials.html
-3. www/core/components/login/templates/reconnect.html
+1.```www/core/components/login/templates/site.html```
+2.```www/core/components/login/templates/credentials.html```
+3.```www/core/components/login/templates/reconnect.html```
 
 The following views have been changed by adding the management of the button 'ID app' pressing event. The service helper contains the code of the function called here.
 
-1. www/core/components/login/controllers/site.js
-2. www/core/components/login/controllers/credentials.js
-3. www/core/components/login/controllers/reconnect.js
+1.```www/core/components/login/controllers/site.js```
+2.```www/core/components/login/controllers/credentials.js```
+3.```www/core/components/login/controllers/reconnect.js```
 
 
 ## Seting up the the environment
