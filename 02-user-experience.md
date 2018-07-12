@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This part of the architecture describes the core user experience of the Swiss edu-ID Mobile App.
+This part of the architecture describes the core user experience when working with the Swiss edu-ID Mobile App.
 
 The Swiss edu-ID Mobile App has two core interaction modes:
 
-* edu-ID Mode
+* Authentication Mode
 * Authorization Mode
 
 ## Core User Experience
@@ -15,15 +15,16 @@ The core user experience is the Authorization Mode. The Authorization Mode is ac
 
 The Authorization Mode is split into three parts.
 
-1. The Third Party User Experiences
-1. The Operating System Experiences
-1. The edu-ID Mobile App Experiences
+1. The third party app user experiences
+1. The operating system's experiences
+1. The edu-ID Mobile App's internal experiences
 
-For the three phases of the user experience it is necessary to understand that the *only* those experiences related to the edu-ID Mobile App are actually controllable.
+For the three phases of the user experience it is necessary to understand that the *only* those experiences related to the Swiss edu-ID Mobile App are actually controllable and outlined in the section [App UI and user experience](04-ux.md). Jointly the three aspects create a *user experience flow*.
 
-For illustration purposes the authentication scheme for the edu-ID is called "App OAuth". This indicates that other federations may use the same scheme (as opposed to the system internal schemes for large commercial IDPs).
+The authentication scheme of the edu-ID follows the RFC7521 Assertion Authorization specification.
 
 ![common user experience workflow](images/eduid_app_ux_authflow.png)
+
 The above workflow uses prototype user interfaces and does not replicated the final user experience. The visual presentation is subject for change in later stages of the project.
 
 The common workflow from the user experience is:
@@ -48,7 +49,7 @@ Third party apps are under the solitary control of the app developer. The follow
 
 Third party apps that require authorized interactions, often have a login view. For large commercial IDPs this view may already contain buttons so users can chose their preferred method of authorizing the app.
 
-Because users can choose at the OS interaction level, which app they want to use for authorization, it is not guaranteed, which app is actually granting authorization. Therefore, it is RECOMMENDED to include a button for ```secure authorization``` or for ```app authorization```.
+Because users can choose at the OS interaction level, which app they want to use for authorization, it is not guaranteed, which app is actually granting authorization. Therefore, it is RECOMMENDED to include a button for ```secure authorization```, ```ID authorization```, or ```ID App```. 
 
 If an app does not support any other authorization scheme, an authorization button can be integrated in the app's main user interface or as a configuration element in the app settings.
 

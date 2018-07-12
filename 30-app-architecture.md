@@ -220,5 +220,5 @@ The edu-ID Mobile App uses only token authorization for accessing the edu-ID Ser
 Additional authentication (e.g. biometric, beacon, network level, geo-location) using device sensors MAY be requested at the level of the edu-ID authentication, service authorizations, and app authorization if enhanced security requirements become necessary. Such extensions will be tied to the respective components and are not considered independently at the level of the app architecture.
 
 
-| [Previous: Service Architecture](21-service-architecture-oidc.md) | [Return to Architecture Overview](00-overview.md) | [Next: iOS Architecture](32-ios-app-architecture.md) |
+| [Previous: Service Implementation Checklist](22-jwt-implementer-checklist.md) | [Return to Architecture Overview](00-overview.md) | [Next: iOS Architecture](32-ios-app-architecture.md) |
 | :---- | :----: | ----: |

@@ -58,5 +58,5 @@ Color | Monochrome
 
 The launch screen uses a large app icon on a white background. This allows to add the typeface logos of Swiss universities and SWITCH.
 
-| [Previous: User Experience](02-user-experience.md) | [Return to Architecture Overview](00-overview.md) | [Next: Technical Terminology](10-terminology.md) |
+| [Previous: User Experience](02-user-experience.md) | [Return to Architecture Overview](00-overview.md) | [Next: App UI and User Experience](04-ux.md) |
 | :---- | :----: | ----: |
