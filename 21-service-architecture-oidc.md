@@ -1,4 +1,4 @@
-# Service Architecture for OpenID Connect
+# Proxy Authorization for OpenID Connect
 
 The edu-ID Mobile App provides an authorization and authentication interface for securely connecting third party apps with services in the trust domain of Swiss academic services. The edu-ID Mobile App ensures that commercial and non-commercial third party apps can provide added value services based on the existing service infrastructure in Swiss higher education institutions. The edu-ID App's key function is to authorise third party apps on a user's device with academic services within the edu-ID federation. It helps to bridge the user/app store trust domain on the user devices and the trust domain within the Swiss Academic Service Federation.
 
@@ -8,27 +8,49 @@ This document describes the details for connecting with OpenID Connect (OIDC) au
 
 ## Introduction
 
-The edu-ID infrastructure will rely on an OpenID Connect authorization services at its core. OpenID Connect builds on top of OAuth2, while focusing only on the ```code``` and ```implicit``` grants of OAuth2. However, OAuth2 also specifies additional flows, such as [client credentials](https://tools.ietf.org/html/rfc6749#section-4.4) and [resource-owner password](https://tools.ietf.org/html/rfc6749#section-4.3) grants. These alternative grant types allow tighter integration of trusted components.
+The edu-ID infrastructure will rely on an OpenID Connect authorization services at its core. OpenID Connect builds on top of OAuth2, while focusing only on the ```code``` and ```implicit``` grants of OAuth2. In addtion to these flows the OAuth2 framework includes extension grants for the more flexible integration of components.
 
-Within the edu-ID ecosystem a mobile app may not necessarily be tightly integrated with one specific resource provider, but has to be directed to the appropriate resource providers depending on the resource owner's choice. The edu-ID mobile app acts as a Trust- and Token Agent to mobile apps that want to access resource providers of the edu-ID ecosystem. Moreover, the edu-ID Mobile App allows resource owners to choose from appropriate resource providers, without exposing access URLs to a requesting app on the device.
+The objective of this document is to specify trust agent support for use cases that are not covered by the specifications. This specification defines the handling of assertion extension grants as defined in [RFC-7521] and [RFC-7523]. OAuth2 assertions leave many parts undefined for being defined for applications.
 
-The objective of this document is to specify trust agent support with minimal change requirements for OpenID Connect capable resource providers. It adds additional requirements for authorization provider.
+This document defines the use of [RFC 7523 JWT Assertions] for authentication and authorization with OpenID Connect capable authorization parties using cryptographically protected offline access using the [RFC 7800 Proof of Possession] semantics for OAuth2. This document namely covers the use of JWT Assertions for the following scenarios:
+
+- client-side user authentication
+- client instance authorization
+- proxy authorization through a trust agent
+- interaction free resource provider to resource provider authorization
+- multi-factor client authorization
 
 ## Background
 
-Within the OIDC ecosystem, the [native application agent specification](http://openid.bitbucket.org/draft-native-application-agent-core-01.htm) has been drafted. This draft never reached completion and has been abandoned. This draft specification assumes that any native app on a device knows about potential resource provider. This assumption is not necessarily valid for a service domain, such as national academia. In such a service domain a service MAY exist more than once for different user audiences.
+Within the OIDC ecosystem, the [native application agent specification](http://openid.bitbucket.org/draft-native-application-agent-core-01.htm) has been drafted. This draft never reached completion and has been abandoned. This draft specification assumes that any native app on a device knows about potential resource provider. Moreover, it provides no specification on implementing the authorization procedures.
 
-Other standardization attempts to connect native mobile apps assume that a native app connects to an authorization service through a browser proxy.  This has been identified as a [security risk](https://tools.ietf.org/html/rfc7636). This risk can only be mitigated by adding new cryptographic means to the OAuth2 protocol. An attempt for authorizing native apps through a proxy browser is the [AppAuth specification draft]. However, AppAuth is not designed to authorizing native apps for RP services.
+The OIDC native application agent specification has been abandoned in favour of the AppAuth specification. AppAuth can be used to authorize native apps as stand alone or frontend clients to a service.
+
+AppAuth does not cover the authorization of apps as frontends to OAuth2 secured resource providers. AppAuth also requires the exposure of the authorizing party to a client. This can be either by the developer of a native application or through user input.
+
+Modern operating systems provide means for authorization clients that do not need to be exposed to an authorized client prior the actual authorization took place. This could remove the need to implementing dedicated user interfaces for the different authorizing parties and service instances for specific native apps. Moreover, authorizing clients such as trust agents can also provide additional functions for alternative of multi-factor authorization that are beyond the reach of browser-based applications.
+
+More and more apps implement front-ends for OAuth2-secured services that are not tightly integrated with the actual service. Current approaches require RP to implement a full OAuth2/OIDC endpoint stack, to connect with the frontend clients of native applications.
+
+New device types, systems, and services may not have the capability for supporting browser-based user interactions as needed for the AppAuth approach.
 
 ## Objective
 
-The edu-ID Mobile App aims for a tighter integration with the authrization service by removing the need of a mediating web-browser. In this setting the edu-ID Mobile App is a Token and Trust Agent that acts as a confidential client to the authorization service. This removes the security risk of  authorization code interceptions and the risk of exposing institutional affiliations to third parties before authorization has been granted.
+The edu-ID Mobile App aims for a tighter integration with the authrization service by removing the need of a mediating web-browser. In this setting the edu-ID Mobile App is a Token and Trust Agent that acts as a confidential client to the authorizing party. This removes the security risk of  authorization code interceptions and the risk of exposing affiliations to third parties before authorization has been granted to a client.
+
+For achieving this, this document specifies those aspects that were intentionally not specified by [RFC 7521], [RFC 7523], and [RFC 7800] in order to support
+
+- client-side user authentication
+- client instance authorization
+- proxy authorization through a trust agent
+- interaction free resource provider to resource provider authorization
+- multi-factor client authorization
 
 ## OIDC Architecture Overview
 
 The edu-ID Mobile App architecture builds on top of the [Assertion Framework for OAuth2](https://tools.ietf.org/html/rfc7521) and [Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)](https://tools.ietf.org/html/rfc7800). Within this framework the authorization service can assume that the requests issued by the token-agent are confirmed by the user and no further interaction is required.
 
-The app authentication has 9 steps.
+The proxy authorization has 9 steps.
 
 1. The token-agent authorization for a resource owner with the authorization service
 2. The issuing of a primary token for the token agent
@@ -85,19 +107,55 @@ The app authentication has 9 steps.
 ```
 Figure 1: App authorization using a token agent authorization
 
+Steps 1 and 2 initiate the [RFC 7800] confirmation key, so an authorizing party can identify trust agent instance and user ties. This is similar to OIDC session management but addressing the needs of offline applications.
+
+Steps 4 to 7 refer to relaying authorization between two clients using [RFC 7521] assertion grants over redirect_uris.
+
+Steps 3 to 9 refer to proxy authorization for third party app to access a resource provider through a trust agent.     
+
 ## Terminology
 
-* Authorization service (AP) - OpenID Connect authorization service/authorization provider. This refers to the edu-ID Service.
+* Authorization party (AP) - OpenID Connect authorization service/authorization provider. This refers to the edu-ID Service.
 
-* Token Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network. A TA is a confidential client to the AP. The TA is capable to authenticate ROs and request access confirmation for the AP. This refers to the edu-ID Mobile App.
+* Clinet (CLI) - any software that access a resource provider as a OAuth2 client.
+
+* Token Agent (TA) - native app on a device that can request authorizations for other apps on the device or within the application context in a device network. A TA is a confidential client (CLI) to the AP. The TA is capable to authenticate ROs and request access confirmation for the AP. This refers to the edu-ID Mobile App.
 
 * Resource provider (RP) - OpenID Connect party that uses one or more AP for authorization. This refers to academic services.
 
 * Resource owner (RO) - Agent, who uses the AP for authorization, typically a human end-user.
 
-* App - Native app on the same device or within the same application context as the TA.
+* Authorized Party (AZP) - client or instance that is target of the authorization process.
 
-## Trust Agent authorization
+* App - Native app on the same device or within the same application context as the TA. Normally referred to as AZP.
+
+* Confirmation Key (CNF) - Cryptographic key for binding an offline session of a user at a client at the AP.  
+
+## Client authorization for RP access through redirect uris.
+
+The [RFC 7521] assertion extension grant to OAuth2 is an extension to the AP's token endpoint.
+
+Normally, a RP will access the AP's token endpoint for obtaining the access_token and id_token for a RO. This is typically performed as part of the AP's forwarding of an authorization code to the RP's redirect_uri. This step is important to obtain the access tokens together with the ID-token from the AP and forward the access_token to a client.
+
+The assertion is a variation of the OAuth2 code grant or the OpenID Connect code flow, respectively. The assertion flow removes the browser-based interaction via the service and provides the RP with a special code  
+
+A client may identify the AP either through a unique redirection URI.
+
+A client may identify the AP from the key id used for the assertion.
+
+If a client cannot identify an AP it MUST reject the assertion without forwarding it to any potential default AP.
+
+## Client-side user authentication
+
+## Client instance authorization
+
+## Proxy authorization through a trust agent
+
+## interaction free resource provider to resource provider authorization
+
+## multi-factor client authorization
+
+## Proxy Authorization throgh a Trust Agent
 
 A TA is a special client to the AP. It is registered to the AP just like a regular
 RP. It acts as a service-bound mobile app to the AP services.
@@ -113,7 +171,7 @@ initial authorization of the RO at the AP.
 A TA MUST always use ```client_secret_jwt``` authentication as specificed by
 [OIDC Core 1.0, Section 9](http://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication).
 
-## Trust Agent authorization for a resource owner
+## Proxy authorization for a resource owner
 
 A TA MUST be able to authorize a RO to its AP either through
 [authorization assertions](https://tools.ietf.org/html/rfc7523#section-8.1).
@@ -337,7 +395,7 @@ APs MAY require TAs to use password encryption for authenticating ROs. If an AP 
 
 6. The user token's ```password``` claim MUST contain the password as provided by the resource owner.
 
-| [Previous: Terminolory](10-terminology.md) | [Return to Architecture Overview](00-overview.md) | [Next: App Architecture](30-app-architecture.md) |
+| [Previous: Terminolory](10-terminology.md) | [Return to Architecture Overview](00-overview.md) | [Next: Service Implementation Checklist](22-jwt-implementer-checklist.md) |
 | :---- | :----: | ----: |
 
 ### Version information
