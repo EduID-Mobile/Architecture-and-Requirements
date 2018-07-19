@@ -69,6 +69,16 @@ The protocol discovery MAY implement result caching for reducing data transmissi
 
 The protocol discovery filters RSD2 objects according to the requested protocols. Other components of the edu-ID Mobile App typically have only access to information about OAuth2 protocol endpoints and requested protocols.
 
+For this discovery process OIDC Provider will provide a simple request for the app, that will accept assertion from the edu-ID Mobile App and a homepage URL for a specific service provider(SP). As response OIDC Provider/ IdP will send a simple package of information of an redirect URI for that service provider. This redirect URI will be used by the edu-ID Mobile App for the authorization.
+
+This are the flow of the discovery process:
+1. User open the edu-ID Mobile App through the NAIL API
+2. Edu-ID Mobile App will send a request to RSD Interface and as results get the homepage URL(s) from the available services
+3. User selects the desired Service(s)
+4. Edu-ID Mobile App sends a request to OIDC Server with assertion and hompage URL(s) of the requested service(s)
+5. OIDC providers validate the request and send redirect URI(s) of the requested service(s) to the edu-ID Mobile App
+6. Edu-ID Mobile App continue the authorization request, based on the RFC [7521](https://tools.ietf.org/html/rfc7521)+ [7523](https://tools.ietf.org/html/rfc7523), and sends the request to the obtained redirect URI(s)
+
 #### RSD2 Discovery Interface
 
 The RSD2 discovery interface allows the protocol discovery to query the federation's protocol discovery.
